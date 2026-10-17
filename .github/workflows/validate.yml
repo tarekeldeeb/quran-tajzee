@@ -16,5 +16,10 @@ jobs:
         run: python scripts/validate_phrases.py
       - name: Unit tests
         run: python -m unittest discover -s tests -t . -v
+      - name: Phrase scores are up to date
+        run: |
+          python scripts/score_phrases.py
+          python scripts/analyze_scores.py
+          git diff --exit-code data/scores docs/tasks/02-scores-analysis.md
       - name: Build review page
         run: python scripts/build_review.py

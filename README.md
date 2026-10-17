@@ -7,24 +7,36 @@ between phrases, so that each part has a similar length and opens at the start o
 
 ## Status
 
-**Task 1 — subject phrases** is drafted for the whole Quran: 6,236 ayat in 1,094 phrases of
-1–10 ayat, now under review. See the [roadmap](docs/roadmap.md) for what comes next.
+- **Task 1 — subject phrases**: drafted for the whole Quran, 6,236 ayat in 1,094 phrases of
+  1–10 ayat, under review.
+- **Task 2 — length scores**: every aya and phrase scored for recitation (Hafs madd-weighted
+  phonemes, via tajweed-embeddings) and typesetting (DigitalKhatt width, via quran-nazm).
+  See the [analysis](docs/tasks/02-scores-analysis.md).
+
+See the [roadmap](docs/roadmap.md) for what comes next.
 
 ## Layout
 
 ```
 data/
   source/quran-uthmani.txt    Tanzil Uthmani text 1.1 (verbatim, licence header kept)
+  source/hafs-rub-start-ayahs.json   traditional rub' starts (baseline for comparison)
   phrases/phrases.tsv         Task 1 output, the source of truth: sura, from, to, topic
+  scores/                     Task 2 output: per-aya and per-phrase recitation and typesetting scores
 tajzee/                       shared Python library (no dependencies)
   quran.py                    load the text, surah names, diacritic-free view
   phrases.py                  load / save / validate the phrase list
   reviews.py                  apply review marks (approve, merge, split, topic)
+  scores.py                   read the length scores; score any range of ayat
 scripts/                      command-line entry points, one per job
   validate_phrases.py         coverage and size checks
   dump_text.py                compact reading view of a passage
   build_review.py             build/review.html from the phrase list
   apply_reviews.py            apply an exported review round to phrases.tsv
+  score_recitation.py         per-aya recitation score (needs tajweed-embeddings)
+  score_typesetting.py        per-aya DigitalKhatt width (needs quran-nazm, quran-madina-html)
+  score_phrases.py            sum per-aya scores into phrases
+  analyze_scores.py           numeric analysis report
 review/template.html          the review page (marks stored by the hosting artifact)
 reviews/                      one folder per review round: marks and the list reviewed
 docs/                         roadmap and one document per task
@@ -39,10 +51,13 @@ Python 3.10+ and nothing else.
 make validate   # every aya covered once, 1..10 ayat per phrase
 make test       # unit tests
 make review     # build build/review.html
+make scores     # phrase scores + analysis report from the committed per-aya scores
 python scripts/dump_text.py 18 --words 8      # read Al-Kahf compactly
 ```
 
-CI runs `validate`, the tests and the review build on every push.
+CI runs `validate`, the tests, a check that the phrase scores are up to date, and the review
+build on every push. The per-aya scores need the external projects (see
+[Task 2](docs/tasks/02-length-scores.md)); everything downstream needs only Python.
 
 ## License
 

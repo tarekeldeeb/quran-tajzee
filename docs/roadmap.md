@@ -9,8 +9,8 @@ code in `tajzee/` (library) and `scripts/` (command-line entry points), and test
 | # | Task | Output | Status |
 |---|------|--------|--------|
 | 1 | [Subject phrases](tasks/01-phrase-segmentation.md): split the text into 1–10 aya phrases by subject | `data/phrases/phrases.tsv` | draft done, in review |
-| 2 | Length measures: size of each phrase in words, letters, and printed lines | per-phrase metrics | next |
-| 3 | Balanced Juz: group consecutive phrases into 30 parts of near-equal length | `data/juz/` | planned |
+| 2 | [Length scores](tasks/02-length-scores.md): recitation (Hafs madd-weighted phonemes) and typesetting (DigitalKhatt width) per aya and phrase, with [analysis](tasks/02-scores-analysis.md) | `data/scores/` | done |
+| 3 | Balanced Juz: group consecutive phrases into 30 parts, balancing a weighted mix of both scores and counting surah openings | `data/juz/` | next |
 | 4 | Finer divisions: Hizb and quarters inside the new Juz, by the same rules | `data/juz/` | planned |
 | 5 | Comparison: the new divisions against the traditional ones | report | planned |
 
