@@ -44,8 +44,13 @@ python scripts/dump_text.py 18 --words 8      # read Al-Kahf compactly
 
 CI runs `validate`, the tests and the review build on every push.
 
-## Text and licence
+## License
 
-The Quran text is the Tanzil Quran Text (Uthmani, Version 1.1), © Tanzil Project, used
-under its terms: verbatim, with its licence notice, credited with a link to
-[tanzil.net](https://tanzil.net). See `data/source/README.md`.
+Quran-Tajzee is released under the **Waqf General Public License 2.0** (رخصة وقف العامّة).
+The project is a perpetual endowment (وقف) for the benefit of all. The authoritative
+license text is the Arabic `LICENSE`; `LICENSE-en` is the informal English translation.
+See the [official Waqf license repository](https://github.com/ojuba-org/waqf).
+
+The Quran text in `data/source/` is the Tanzil Quran Text (Uthmani, Version 1.1),
+© Tanzil Project, and stays under its own terms: used verbatim, with its licence notice,
+credited with a link to [tanzil.net](https://tanzil.net). See `data/source/README.md`.
