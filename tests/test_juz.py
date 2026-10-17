@@ -10,6 +10,22 @@ def toy(sizes):
     return [Unit(1, i + 1, i + 1, "t", 1, 1, float(r), float(p)) for i, (r, p) in enumerate(sizes)]
 
 
+def brute_penalized(us, parts, weight, p, cap=None):
+    """Exhaustive search for the penalized objective (small inputs only)."""
+    c = juz.combined(us, weight)
+    T = sum(c) / parts
+    best = None
+    for cuts in itertools.combinations(range(1, len(us)), parts - 1):
+        b = (0,) + cuts + (len(us),)
+        sums = [sum(c[x:y]) for x, y in zip(b, b[1:])]
+        if cap is not None and any(abs(s - T) > cap * T for s in sums):
+            continue
+        cost = sum(((s - T) / T) ** 2 for s in sums) + p * p * sum(1 for x in cuts if us[x].first != 1)
+        if best is None or cost < best[0] - 1e-15:
+            best = (cost, list(cuts))
+    return best
+
+
 def brute(us, parts, weight):
     """Exhaustive search for the least-squares division (small inputs only)."""
     c = juz.combined(us, weight)
@@ -34,6 +50,36 @@ class SolverTest(unittest.TestCase):
                 (dstar, ssq), _ = brute(us, parts, 0.5)
                 self.assertAlmostEqual(sol.max_dev, dstar, places=12)
                 self.assertAlmostEqual(sol.sum_sq, ssq, places=12)
+
+    def test_penalized_matches_brute_force(self):
+        rnd = random.Random(11)
+        for _ in range(25):
+            # units in up to 4 surahs; a cut at a unit with first == 1 opens a surah
+            us, sura, aya = [], 1, 1
+            for _ in range(11):
+                if rnd.random() < 0.3:
+                    sura, aya = sura + 1, 1
+                us.append(Unit(sura, aya, aya, "t", 1, 1, float(rnd.randint(1, 40)), float(rnd.randint(1, 40))))
+                aya += 1
+            for p, cap in ((0.05, None), (0.2, None), (0.2, 0.6)):
+                want = brute_penalized(us, 3, 0.5, p, cap)
+                if want is None:  # no division within the cap
+                    continue
+                sol = juz.solve(us, 0.5, parts=3, break_penalty=p, cap=cap)
+                c = juz.combined(us, 0.5)
+                T = sum(c) / 3
+                got = sum(((sum(u_c for u_c in c[a:b]) - T) / T) ** 2
+                          for a, b in zip([0] + sol.cuts, sol.cuts + [len(us)])) + p * p * sol.surah_breaks
+                self.assertAlmostEqual(got, want[0], places=10)
+
+    def test_penalty_moves_cut_to_surah_start(self):
+        # the balanced cut (index 2) is mid-surah; surah 2 starts at index 3.
+        # Moving the cut there costs 0.405 in squared relative deviation.
+        us = [Unit(1, 1, 1, "t", 1, 1, 10, 10), Unit(1, 2, 2, "t", 1, 1, 10, 10),
+              Unit(1, 3, 3, "t", 1, 1, 9, 9), Unit(2, 1, 1, "t", 1, 1, 11, 11)]
+        self.assertEqual(juz.solve(us, 0.5, parts=2, objective="lsq").cuts, [2])
+        self.assertEqual(juz.solve(us, 0.5, parts=2, break_penalty=0.5).cuts, [2])  # 0.25 < 0.405
+        self.assertEqual(juz.solve(us, 0.5, parts=2, break_penalty=0.7).cuts, [3])  # 0.49 > 0.405
 
     def test_least_squares_tie_break(self):
         us = toy([(5, 5)] * 6)

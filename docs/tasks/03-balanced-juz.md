@@ -29,9 +29,25 @@ c_i = w · r_i / R + (1 − w) · p_i / P        w = 0.5,  Σ c_i = 1,  target T
 A division is 29 cut points in the phrase sequence. Juz j has size `S_j`, the sum of its
 `c_i`.
 
+## Surah-break penalty (default)
+
+Starting a juz in the middle of a surah is penalised. With B the number of juz that start
+mid-surah:
+
+```
+minimise   Σ_j ((S_j − T) / T)²  +  p² · B        subject to  |S_j − T| / T ≤ cap
+```
+
+p reads as "breaking a surah costs as much as one juz being off its target by p". Defaults
+are p = 4% and cap = ±5%. The analysis sweeps p and shows 4% at the knee: 10 juz open a surah
+(20 start mid-surah, against 21 for the traditional juz) and every juz is within ±3.8%.
+Without the penalty, only 2 juz open a surah but the worst juz is ±2.1%. A juz that opens a
+surah costs nothing; the first juz always starts at 1:1. The penalty is a per-cut cost, so
+the dynamic program below stays exact.
+
 ## Solver
 
-Lexicographic, exact:
+Without the penalty (`--objective minimax+lsq`), lexicographic, exact:
 
 1. **Minimax**: the smallest possible worst deviation `D* = min max_j |S_j − T|`.
 2. **Least squares**: among divisions with every `|S_j − T| ≤ D*`, the smallest `Σ_j (S_j − T)²`.
@@ -43,7 +59,9 @@ F_k(i) = min over j < i of  [ F_{k−1}(j)  ⊕  g(C_i − C_j) ]
 ```
 
 with C the prefix sums of c. For step 1, ⊕ = max and g = |x − T|. For step 2, ⊕ = + and
-g = (x − T)², with parts beyond D* excluded. A juz is a contiguous run of phrases, so the
+g = (x − T)², with parts beyond D* excluded. The penalized objective is the second recursion
+with g = ((x − T)/T)², plus p² whenever the part starting at phrase j opens mid-surah, and with
+parts beyond the cap excluded. A juz is a contiguous run of phrases, so the
 problem has optimal substructure and the DP returns the global optimum. It is not a
 heuristic. Runtime is O(30 · n · W): about 5 s in pure Python for n = 1,094 phrases and a
 window of W = 300 phrases per juz. The tests check the result against exhaustive search on
@@ -53,7 +71,8 @@ Other objectives (`--objective`):
 
 | objective | meaning |
 |---|---|
-| `minimax+lsq` | default, as above |
+| `penalized` | default: least squares plus the surah-break penalty (`--break-penalty`, `--cap`) |
+| `minimax+lsq` | as above, no penalty |
 | `lsq` | least squares only |
 | `minimax` | worst juz only |
 | `each` | no mixing: the smallest worst deviation of *either* score, then least squares |
@@ -63,6 +82,7 @@ Other objectives (`--objective`):
 ```sh
 python scripts/solve_juz.py                      # data/juz/juz.tsv, data/juz/solution.json
 python scripts/analyze_juz.py                    # docs/tasks/03-juz-analysis.md, data/juz/analysis.json
+python scripts/solve_juz.py --break-penalty 0.05 --cap 0.06 --out /tmp/juz.tsv
 python scripts/solve_juz.py --weight 0.7 --objective each --header-weight 1 --out /tmp/juz.tsv
 ```
 
@@ -76,11 +96,11 @@ phrase.
 
 ## Decisions to revisit
 
-- **Surah header lines** in print (analysis, section 5). Counted in full, Juz ʿAmma's 37 headers
+- **Surah header lines** in print (analysis, section 6). Counted in full, Juz ʿAmma's 37 headers
   make the last juz long in print and short in recitation, at ±12.5% whatever its start. The
   default leaves them out, as in Task 2. A print layout can give juz 30 extra pages instead, as
   Quran-Nazm does.
-- **Surah starts**: nothing favours a juz starting at a surah. A small bonus for surah-opening
-  cuts would be one extra term in the DP.
+- **Surah-break penalty**: p = 4% and cap ±5% are a proposal from the sweep in the analysis
+  (section 4). Raising p opens more juz on surahs at a cost in balance.
 - **Phrase review**: the balance limit is phrase granularity near the worst juz. Each review round
   changes the phrases, and re-running the solver gives the new exact optimum.

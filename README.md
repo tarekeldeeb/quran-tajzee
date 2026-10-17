@@ -13,8 +13,8 @@ between phrases, so that each part has a similar length and opens at the start o
   phonemes, via tajweed-embeddings) and typesetting (DigitalKhatt width, via quran-nazm).
   See the [analysis](docs/tasks/02-scores-analysis.md).
 - **Task 3 — balanced juz**: an exact solver divides the phrases into 30 juz on a 50/50 mix
-  of both scores. They are 3.7× more even than the traditional juz, with every juz within ±2.1%
-  of the target. See the [analysis](docs/tasks/03-juz-analysis.md).
+  of both scores, with a penalty for starting a juz mid-surah. Every juz is within ±3.8% of the
+  target (traditional: ±6.2%), and 10 open a surah. See the [analysis](docs/tasks/03-juz-analysis.md).
 
 See the [roadmap](docs/roadmap.md) for what comes next.
 

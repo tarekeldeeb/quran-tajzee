@@ -31,6 +31,16 @@ An alternative objective, 'each', treats the two scores separately instead of mi
 it minimises the worst relative deviation of either score in any juz,
 max_j max(|R_j/T_R - 1|, |P_j/T_P - 1|), then breaks ties by least squares on the mix.
 
+Surah-break penalty (objective 'penalized', used whenever break_penalty > 0): a juz that
+starts in the middle of a surah costs as much as a juz off its target by p (a fraction),
+so with B the number of such juz:
+
+    minimise   sum_j ((S_j - T) / T)^2  +  p^2 * B        subject to |S_j - T| / T <= cap
+
+p = 0 gives back plain least squares; larger p trades balance for juz that open surahs.
+The optional cap keeps every juz within a hard limit while the penalty pulls cuts to
+surah starts. Still one exact DP: the penalty is a per-cut cost.
+
 Both steps are dynamic programs over (parts used, phrases consumed). Contiguous
 partitioning has optimal substructure, so the DP is exact, not a heuristic:
 
@@ -52,6 +62,8 @@ PARTS = 30
 LINE_EM = 15.4376  # 1441H Madina line width, the line Quran-Nazm sets
 INF = float("inf")
 HEADER_WEIGHT = 0.0  # printed surah header lines in the typesetting size (0 = text only)
+BREAK_PENALTY = 0.04  # a juz starting mid-surah costs like a juz 4% off target (the knee, see analysis)
+CAP = 0.05            # hard limit: every juz within 5% of the target on the mix
 
 
 def header_lines(sura: int) -> int:
@@ -103,11 +115,12 @@ def _prefix(values):
     return pre
 
 
-def _dp(pre, parts, target, step, bound=INF, window=300, dev=None):
+def _dp(pre, parts, target, step, bound=INF, window=300, dev=None, pen=None):
     """Exact DP. step 'minimax' or 'lsq' on the part size pre[i]-pre[j] against target.
 
     bound prunes parts whose deviation exceeds it; the deviation is |S - T| unless
     dev(j, i) is given, in which case dev is used for minimax and for pruning.
+    pen[j] is added (least squares only) when a part starts at phrase j > 0.
     """
     n = len(pre) - 1
     cost = [[INF] * (n + 1) for _ in range(parts + 1)]
@@ -127,7 +140,12 @@ def _dp(pre, parts, target, step, bound=INF, window=300, dev=None):
                 e = dev(j, i) if dev is not None else d
                 if e > bound:
                     continue
-                c = (f if f > e else e) if step == "minimax" else f + d * d
+                if step == "minimax":
+                    c = f if f > e else e
+                else:
+                    c = f + d * d
+                    if pen is not None and j > 0:
+                        c += pen[j]
                 if c < best:
                     best, arg = c, j
             cur[i], bk[i] = best, arg
@@ -148,18 +166,30 @@ class Solution:
     sum_sq: float
     parts: list[list[Unit]] = field(default_factory=list)
 
+    @property
+    def surah_breaks(self) -> int:
+        """Juz (after the first) that start in the middle of a surah."""
+        return sum(1 for p in self.parts[1:] if p[0].first != 1)
+
 
 def solve(us: list[Unit], weight: float = 0.5, parts: int = PARTS, objective: str = "minimax+lsq",
-          window: int = 300) -> Solution:
+          window: int = 300, break_penalty: float = 0.0, cap: float | None = None) -> Solution:
     """Optimal division of `us` into `parts` consecutive groups.
 
-    objective: 'minimax+lsq' (default, lexicographic), 'minimax', 'lsq', or 'each'
-    (worst deviation of either score, then least squares on the mix).
+    objective: 'minimax+lsq' (lexicographic), 'minimax', 'lsq', or 'each' (worst deviation
+    of either score, then least squares on the mix). The project's default division uses
+    break_penalty=BREAK_PENALTY, cap=CAP (see scripts/solve_juz.py).
+    break_penalty p > 0 switches to the 'penalized' objective: relative least squares
+    plus p^2 per juz starting mid-surah, with every juz within `cap` (fraction) if given.
     """
     c = combined(us, weight)
     pre = _prefix(c)
     target = pre[-1] / parts
-    if objective == "each":
+    if break_penalty > 0 or objective == "penalized":
+        pen = [0.0] + [0.0 if u.first == 1 else (break_penalty * target) ** 2 for u in us[1:]]
+        bound = cap * target if cap is not None else INF
+        cuts, _ = _dp(pre, parts, target, "lsq", bound=bound, window=window, pen=pen)
+    elif objective == "each":
         pr = _prefix([u.recitation for u in us])
         pp = _prefix([u.typeset_px for u in us])
         tr, tp = pr[-1] / parts, pp[-1] / parts
