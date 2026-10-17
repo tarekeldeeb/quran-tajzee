@@ -10,8 +10,10 @@ def toy(sizes):
     return [Unit(1, i + 1, i + 1, "t", 1, 1, float(r), float(p)) for i, (r, p) in enumerate(sizes)]
 
 
-def brute_penalized(us, parts, weight, p, cap=None):
-    """Exhaustive search for the penalized objective (small inputs only)."""
+def brute_penalized(us, parts, weight, p, cap=None, late=None):
+    """Exhaustive search for the penalized objective (small inputs only).
+
+    late = (N, p_late): the last N parts use p_late instead of p."""
     c = juz.combined(us, weight)
     T = sum(c) / parts
     best = None
@@ -20,7 +22,11 @@ def brute_penalized(us, parts, weight, p, cap=None):
         sums = [sum(c[x:y]) for x, y in zip(b, b[1:])]
         if cap is not None and any(abs(s - T) > cap * T for s in sums):
             continue
-        cost = sum(((s - T) / T) ** 2 for s in sums) + p * p * sum(1 for x in cuts if us[x].first != 1)
+        cost = sum(((s - T) / T) ** 2 for s in sums)
+        for k, x in enumerate(cuts, start=2):  # cut x starts part k
+            if us[x].first != 1:
+                pk = late[1] if (late and k > parts - late[0]) else p
+                cost += float("inf") if pk == float("inf") else pk * pk
         if best is None or cost < best[0] - 1e-15:
             best = (cost, list(cuts))
     return best
@@ -71,6 +77,24 @@ class SolverTest(unittest.TestCase):
                 got = sum(((sum(u_c for u_c in c[a:b]) - T) / T) ** 2
                           for a, b in zip([0] + sol.cuts, sol.cuts + [len(us)])) + p * p * sol.surah_breaks
                 self.assertAlmostEqual(got, want[0], places=10)
+
+    def test_late_penalty_matches_brute_force(self):
+        rnd = random.Random(23)
+        for _ in range(25):
+            us, sura, aya = [], 1, 1
+            for _ in range(12):
+                if rnd.random() < 0.35:
+                    sura, aya = sura + 1, 1
+                us.append(Unit(sura, aya, aya, "t", 1, 1, float(rnd.randint(1, 40)), float(rnd.randint(1, 40))))
+                aya += 1
+            for p, pl, n in ((0.02, 0.3, 1), (0.0, float("inf"), 2), (0.1, 0.5, 2)):
+                want = brute_penalized(us, 4, 0.5, p, None, (n, pl))
+                if want is None or want[0] == float("inf"):
+                    with self.assertRaises(ValueError):
+                        juz.solve(us, 0.5, parts=4, break_penalty=p, late_penalty=pl, late_parts=n)
+                    continue
+                sol = juz.solve(us, 0.5, parts=4, break_penalty=p, late_penalty=pl, late_parts=n)
+                self.assertEqual(sol.cuts, want[1])
 
     def test_penalty_moves_cut_to_surah_start(self):
         # the balanced cut (index 2) is mid-surah; surah 2 starts at index 3.

@@ -31,19 +31,29 @@ A division is 29 cut points in the phrase sequence. Juz j has size `S_j`, the su
 
 ## Surah-break penalty (default)
 
-Starting a juz in the middle of a surah is penalised. With B the number of juz that start
-mid-surah:
+Starting a juz in the middle of a surah is penalised, more for the last juz than for the
+others. With B_j = 1 when juz j starts mid-surah:
 
 ```
-minimise   Σ_j ((S_j − T) / T)²  +  p² · B        subject to  |S_j − T| / T ≤ cap
+minimise   Σ_j ((S_j − T) / T)²  +  Σ_j p_j² · B_j        subject to  |S_j − T| / T ≤ cap
+
+p_j = 10%  for the last 5 juz (priority to open a surah)
+p_j =  3%  for juz 2–25
+cap = ±5%
 ```
 
-p reads as "breaking a surah costs as much as one juz being off its target by p". Defaults
-are p = 4% and cap = ±5%. The analysis sweeps p and shows 4% at the knee: 10 juz open a surah
-(20 start mid-surah, against 21 for the traditional juz) and every juz is within ±3.8%.
-Without the penalty, only 2 juz open a surah but the worst juz is ±2.1%. A juz that opens a
-surah costs nothing; the first juz always starts at 1:1. The penalty is a per-cut cost, so
-the dynamic program below stays exact.
+p_j reads as "starting juz j mid-surah costs as much as a juz being off its target by p_j".
+Setting p_j = ∞ makes a surah start required. The DP knows which juz it is forming, so a
+per-juz penalty is still a per-cut cost and the solution is still exact.
+
+What the data allows (analysis, section 4):
+
+- Within ±5%, the last 4 juz can all open a surah (Aṭ-Ṭūr, Al-Mujādila, Al-Mulk, Al-Mursalāt).
+- All of the last 5 opening a surah needs ±6.2%. They then start at Muḥammad, An-Najm, Al-Ḥashr,
+  Al-Qalam and An-Nabaʾ, and juz 29 absorbs the difference.
+- The default gives 4 of the last 5 within ±5%: Al-Aḥqāf, (51:38), Al-Mujādila, Al-Mulk,
+  Al-Mursalāt. The other juz have a lower penalty, so 8 juz open a surah in all. Raising the
+  others to 4% opens 12, at a larger spread.
 
 ## Solver
 
@@ -71,7 +81,7 @@ Other objectives (`--objective`):
 
 | objective | meaning |
 |---|---|
-| `penalized` | default: least squares plus the surah-break penalty (`--break-penalty`, `--cap`) |
+| `penalized` | default: least squares plus the surah-break penalty (`--break-penalty`, `--late-parts`, `--late-penalty`, `--cap`) |
 | `minimax+lsq` | as above, no penalty |
 | `lsq` | least squares only |
 | `minimax` | worst juz only |
@@ -82,7 +92,8 @@ Other objectives (`--objective`):
 ```sh
 python scripts/solve_juz.py                      # data/juz/juz.tsv, data/juz/solution.json
 python scripts/analyze_juz.py                    # docs/tasks/03-juz-analysis.md, data/juz/analysis.json
-python scripts/solve_juz.py --break-penalty 0.05 --cap 0.06 --out /tmp/juz.tsv
+python scripts/solve_juz.py --break-penalty 0.04 --out /tmp/juz.tsv                 # more surah openings
+python scripts/solve_juz.py --late-penalty inf --late-parts 5 --cap 0.065 --out /tmp/juz.tsv  # last 5 required
 python scripts/solve_juz.py --weight 0.7 --objective each --header-weight 1 --out /tmp/juz.tsv
 ```
 
@@ -100,7 +111,8 @@ phrase.
   make the last juz long in print and short in recitation, at ±12.5% whatever its start. The
   default leaves them out, as in Task 2. A print layout can give juz 30 extra pages instead, as
   Quran-Nazm does.
-- **Surah-break penalty**: p = 4% and cap ±5% are a proposal from the sweep in the analysis
-  (section 4). Raising p opens more juz on surahs at a cost in balance.
+- **Surah-break penalty**: 10% on the last 5 juz, 3% on the others, cap ±5% (analysis,
+  section 4). Requiring all of the last 5 needs a ±6.5% cap. Raising the others to 4% opens more
+  juz on surahs at a cost in balance.
 - **Phrase review**: the balance limit is phrase granularity near the worst juz. Each review round
   changes the phrases, and re-running the solver gives the new exact optimum.

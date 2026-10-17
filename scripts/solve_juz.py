@@ -29,6 +29,10 @@ def main() -> None:
                     choices=["penalized", "minimax+lsq", "minimax", "lsq", "each"])
     ap.add_argument("--break-penalty", type=float, default=juz.BREAK_PENALTY,
                     help="penalized objective: a juz starting mid-surah costs like a juz this far off (fraction)")
+    ap.add_argument("--late-parts", type=int, default=juz.LATE_PARTS,
+                    help="penalized objective: number of final juz with priority to open a surah")
+    ap.add_argument("--late-penalty", type=float, default=juz.LATE_PENALTY,
+                    help="penalty for those juz (fraction; 'inf' makes it a hard requirement)")
     ap.add_argument("--cap", type=float, default=juz.CAP,
                     help="penalized objective: every juz within this fraction of the target")
     ap.add_argument("--header-weight", type=float, default=juz.HEADER_WEIGHT,
@@ -38,7 +42,8 @@ def main() -> None:
 
     us = juz.units(header_weight=args.header_weight)
     if args.objective == "penalized":
-        sol = juz.solve(us, args.weight, break_penalty=args.break_penalty, cap=args.cap)
+        sol = juz.solve(us, args.weight, break_penalty=args.break_penalty, cap=args.cap,
+                        late_penalty=args.late_penalty, late_parts=args.late_parts)
     else:
         sol = juz.solve(us, args.weight, objective=args.objective)
     R = sum(u.recitation for u in us) / juz.PARTS
@@ -63,6 +68,8 @@ def main() -> None:
     meta = dict(weight=args.weight, objective=args.objective, header_weight=args.header_weight, parts=juz.PARTS,
                 break_penalty=args.break_penalty if args.objective == "penalized" else 0.0,
                 cap=args.cap if args.objective == "penalized" else None, surah_breaks=sol.surah_breaks,
+                late_parts=args.late_parts if args.objective == "penalized" else 0,
+                late_penalty=args.late_penalty if args.objective == "penalized" else None,
                 max_combined_dev_pct=sol.max_dev * juz.PARTS * 100,
                 starts=[r[1] for r in rows])
     (out.parent / "solution.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1) + "\n")

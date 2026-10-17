@@ -62,7 +62,9 @@ PARTS = 30
 LINE_EM = 15.4376  # 1441H Madina line width, the line Quran-Nazm sets
 INF = float("inf")
 HEADER_WEIGHT = 0.0  # printed surah header lines in the typesetting size (0 = text only)
-BREAK_PENALTY = 0.04  # a juz starting mid-surah costs like a juz 4% off target (the knee, see analysis)
+BREAK_PENALTY = 0.03  # juz 1-25: starting mid-surah costs like a juz 3% off target
+LATE_PARTS = 5        # the last 5 juz have priority to open a surah ...
+LATE_PENALTY = 0.10   # ... starting one of them mid-surah costs like a juz 10% off target
 CAP = 0.05            # hard limit: every juz within 5% of the target on the mix
 
 
@@ -120,7 +122,8 @@ def _dp(pre, parts, target, step, bound=INF, window=300, dev=None, pen=None):
 
     bound prunes parts whose deviation exceeds it; the deviation is |S - T| unless
     dev(j, i) is given, in which case dev is used for minimax and for pruning.
-    pen[j] is added (least squares only) when a part starts at phrase j > 0.
+    pen[j] is added (least squares only) when a part starts at phrase j > 0; pen may also
+    be a list indexed by part number k (1-based), each entry such an array.
     """
     n = len(pre) - 1
     cost = [[INF] * (n + 1) for _ in range(parts + 1)]
@@ -128,6 +131,7 @@ def _dp(pre, parts, target, step, bound=INF, window=300, dev=None, pen=None):
     cost[0][0] = 0.0
     for k in range(1, parts + 1):
         prev, cur, bk = cost[k - 1], cost[k], back[k]
+        pk = pen[k] if (pen is not None and isinstance(pen[0], list)) else pen
         last_i = n - (parts - k)  # leave at least one phrase for each later part
         for i in range(k, last_i + 1):
             best, arg = INF, -1
@@ -144,8 +148,8 @@ def _dp(pre, parts, target, step, bound=INF, window=300, dev=None, pen=None):
                     c = f if f > e else e
                 else:
                     c = f + d * d
-                    if pen is not None and j > 0:
-                        c += pen[j]
+                    if pk is not None and j > 0:
+                        c += pk[j]
                 if c < best:
                     best, arg = c, j
             cur[i], bk[i] = best, arg
@@ -173,7 +177,8 @@ class Solution:
 
 
 def solve(us: list[Unit], weight: float = 0.5, parts: int = PARTS, objective: str = "minimax+lsq",
-          window: int = 300, break_penalty: float = 0.0, cap: float | None = None) -> Solution:
+          window: int = 300, break_penalty: float = 0.0, cap: float | None = None,
+          late_penalty: float | None = None, late_parts: int = 0) -> Solution:
     """Optimal division of `us` into `parts` consecutive groups.
 
     objective: 'minimax+lsq' (lexicographic), 'minimax', 'lsq', or 'each' (worst deviation
@@ -181,12 +186,22 @@ def solve(us: list[Unit], weight: float = 0.5, parts: int = PARTS, objective: st
     break_penalty=BREAK_PENALTY, cap=CAP (see scripts/solve_juz.py).
     break_penalty p > 0 switches to the 'penalized' objective: relative least squares
     plus p^2 per juz starting mid-surah, with every juz within `cap` (fraction) if given.
+    late_penalty (with late_parts = N) replaces p for the last N juz: a priority on those
+    juz opening a surah; float('inf') makes it a hard requirement.
     """
     c = combined(us, weight)
     pre = _prefix(c)
     target = pre[-1] / parts
-    if break_penalty > 0 or objective == "penalized":
-        pen = [0.0] + [0.0 if u.first == 1 else (break_penalty * target) ** 2 for u in us[1:]]
+    if break_penalty > 0 or objective == "penalized" or (late_penalty and late_parts):
+        def arr(p):
+            cost = INF if p == INF else (p * target) ** 2
+            return [0.0] + [0.0 if u.first == 1 else cost for u in us[1:]]
+        early = arr(break_penalty)
+        if late_penalty is not None and late_parts:
+            late = arr(late_penalty)
+            pen = [early] + [late if k > parts - late_parts else early for k in range(1, parts + 1)]
+        else:
+            pen = early
         bound = cap * target if cap is not None else INF
         cuts, _ = _dp(pre, parts, target, "lsq", bound=bound, window=window, pen=pen)
     elif objective == "each":
