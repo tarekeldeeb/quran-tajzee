@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: validate test review scores check clean
+.PHONY: validate test review scores juz check clean
 
 validate:            ## check phrases.tsv covers every aya once, 1..10 ayat each
 	$(PY) scripts/validate_phrases.py
@@ -14,6 +14,10 @@ review:              ## build build/review.html from phrases.tsv
 scores:              ## phrase scores and analysis from the committed per-aya scores
 	$(PY) scripts/score_phrases.py
 	$(PY) scripts/analyze_scores.py
+
+juz:                 ## solve the 30 balanced juz and write the analysis
+	$(PY) scripts/solve_juz.py
+	$(PY) scripts/analyze_juz.py
 
 check: validate test review
 

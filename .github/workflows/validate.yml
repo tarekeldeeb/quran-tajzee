@@ -21,5 +21,10 @@ jobs:
           python scripts/score_phrases.py
           python scripts/analyze_scores.py
           git diff --exit-code data/scores docs/tasks/02-scores-analysis.md
+      - name: Juz division is up to date
+        run: |
+          python scripts/solve_juz.py
+          python scripts/analyze_juz.py
+          git diff --exit-code data/juz docs/tasks/03-juz-analysis.md
       - name: Build review page
         run: python scripts/build_review.py

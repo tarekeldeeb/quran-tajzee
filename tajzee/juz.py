@@ -1,0 +1,184 @@
+"""Balanced Juz (Task 3): cut the phrase sequence into 30 consecutive parts.
+
+Model
+-----
+Every phrase i has a recitation size r_i (harakat) and a typesetting size p_i (px).
+Surah openings are fixed costs added to the phrase that opens the surah:
+
+* recitation: the basmala (19 harakat) for every surah except Al-Fatiha (where it is
+  aya 1) and At-Tawba (none);
+* typesetting: by default none, matching the Task 2 definition (the text's own width).
+  With header_weight h > 0, h times the header lines Quran-Nazm prints, each a full
+  line of the 1441H Madina width (15.4376 em): two lines (title + basmala) for most
+  surahs, one for Al-Fatiha and At-Tawba. Juz ʿAmma's 37 headers make it long in print
+  and short in recitation, so h trades print fidelity against balance in the last juz.
+
+The two sizes are put on one scale as shares of their totals and mixed with weight w
+(w = 0.5: half recitation, half typesetting):
+
+    c_i = w * r_i / R  +  (1 - w) * p_i / P,      sum_i c_i = 1,  target per part T = 1/30.
+
+A juz is a run of consecutive phrases, so a division is a set of 29 cut points
+0 < k_1 < ... < k_29 < n in the phrase sequence; part j holds phrases k_{j-1} .. k_j - 1
+and its size is S_j = C[k_j] - C[k_{j-1}] with C the prefix sums of c.
+
+Objective (solved exactly, lexicographically):
+
+1. minimise the worst deviation   D* = min max_j |S_j - T|          (minimax)
+2. among divisions with max_j |S_j - T| <= D*, minimise   sum_j (S_j - T)^2   (least squares)
+
+An alternative objective, 'each', treats the two scores separately instead of mixing them:
+it minimises the worst relative deviation of either score in any juz,
+max_j max(|R_j/T_R - 1|, |P_j/T_P - 1|), then breaks ties by least squares on the mix.
+
+Both steps are dynamic programs over (parts used, phrases consumed). Contiguous
+partitioning has optimal substructure, so the DP is exact, not a heuristic:
+
+    F_k(i) = min_{j < i} [ F_{k-1}(j)  (+)  g(C[i] - C[j]) ]
+
+with (+) = max and g = |x - T| for step 1, (+) = + and g = (x - T)^2 for step 2 (with
+transitions whose |x - T| > D* removed). Runtime O(K n W) for K = 30 parts, n phrases
+and a window of W phrases per part (default 300, far above any feasible part).
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+from . import phrases as phrases_mod
+from . import scores
+
+PARTS = 30
+LINE_EM = 15.4376  # 1441H Madina line width, the line Quran-Nazm sets
+INF = float("inf")
+HEADER_WEIGHT = 0.0  # printed surah header lines in the typesetting size (0 = text only)
+
+
+def header_lines(sura: int) -> int:
+    """Lines a surah header takes in Quran-Nazm: title + basmala, or title only."""
+    return 1 if sura in (1, 9) else 2
+
+
+@dataclass(frozen=True)
+class Unit:
+    """One phrase with its sizes, surah-opening costs included."""
+    sura: int
+    first: int
+    last: int
+    topic: str
+    ayat: int
+    words: int
+    recitation: float
+    typeset_px: float
+
+
+def units(phrase_list=None, header_weight: float = HEADER_WEIGHT) -> list[Unit]:
+    """Phrases with surah-opening costs; header_weight scales the printed header lines
+    (0 = text only, the default; 1 = full lines as Quran-Nazm prints them)."""
+    ps = phrase_list if phrase_list is not None else phrases_mod.load()
+    k = scores.constants()
+    line_px = LINE_EM * k.font_px * header_weight
+    out = []
+    for p in ps:
+        s = scores.score_phrase(p)
+        rec, px = float(s.recitation), float(s.typeset_px)
+        if p.first == 1:
+            if scores.opens_with_basmala(p.sura):
+                rec += k.basmala_recitation  # recited when the surah is opened
+            px += header_lines(p.sura) * line_px
+        out.append(Unit(p.sura, p.first, p.last, p.topic, s.ayat, s.words, rec, px))
+    return out
+
+
+def combined(us: list[Unit], w: float) -> list[float]:
+    R = sum(u.recitation for u in us)
+    P = sum(u.typeset_px for u in us)
+    return [w * u.recitation / R + (1 - w) * u.typeset_px / P for u in us]
+
+
+def _prefix(values):
+    pre = [0.0]
+    for v in values:
+        pre.append(pre[-1] + v)
+    return pre
+
+
+def _dp(pre, parts, target, step, bound=INF, window=300, dev=None):
+    """Exact DP. step 'minimax' or 'lsq' on the part size pre[i]-pre[j] against target.
+
+    bound prunes parts whose deviation exceeds it; the deviation is |S - T| unless
+    dev(j, i) is given, in which case dev is used for minimax and for pruning.
+    """
+    n = len(pre) - 1
+    cost = [[INF] * (n + 1) for _ in range(parts + 1)]
+    back = [[-1] * (n + 1) for _ in range(parts + 1)]
+    cost[0][0] = 0.0
+    for k in range(1, parts + 1):
+        prev, cur, bk = cost[k - 1], cost[k], back[k]
+        last_i = n - (parts - k)  # leave at least one phrase for each later part
+        for i in range(k, last_i + 1):
+            best, arg = INF, -1
+            ci = pre[i]
+            for j in range(max(k - 1, i - window), i):
+                f = prev[j]
+                if f == INF:
+                    continue
+                d = abs(ci - pre[j] - target)
+                e = dev(j, i) if dev is not None else d
+                if e > bound:
+                    continue
+                c = (f if f > e else e) if step == "minimax" else f + d * d
+                if c < best:
+                    best, arg = c, j
+            cur[i], bk[i] = best, arg
+    if cost[parts][n] == INF:
+        raise ValueError("no feasible division")
+    cuts, i = [], n
+    for k in range(parts, 0, -1):
+        cuts.append(i)
+        i = back[k][i]
+    return sorted(cuts)[:-1], cost[parts][n]
+
+
+@dataclass
+class Solution:
+    weight: float
+    cuts: list[int]                      # index of the first phrase of parts 2..30
+    max_dev: float                       # D*, in units of the combined score
+    sum_sq: float
+    parts: list[list[Unit]] = field(default_factory=list)
+
+
+def solve(us: list[Unit], weight: float = 0.5, parts: int = PARTS, objective: str = "minimax+lsq",
+          window: int = 300) -> Solution:
+    """Optimal division of `us` into `parts` consecutive groups.
+
+    objective: 'minimax+lsq' (default, lexicographic), 'minimax', 'lsq', or 'each'
+    (worst deviation of either score, then least squares on the mix).
+    """
+    c = combined(us, weight)
+    pre = _prefix(c)
+    target = pre[-1] / parts
+    if objective == "each":
+        pr = _prefix([u.recitation for u in us])
+        pp = _prefix([u.typeset_px for u in us])
+        tr, tp = pr[-1] / parts, pp[-1] / parts
+
+        def dev(j, i):
+            a = abs((pr[i] - pr[j]) / tr - 1)
+            b = abs((pp[i] - pp[j]) / tp - 1)
+            return a if a > b else b
+
+        _, estar = _dp(pre, parts, target, "minimax", window=window, dev=dev)
+        cuts, _ = _dp(pre, parts, target, "lsq", bound=estar * (1 + 1e-12) + 1e-15, window=window, dev=dev)
+    elif objective == "lsq":
+        cuts, _ = _dp(pre, parts, target, "lsq", window=window)
+    else:
+        cuts, dstar = _dp(pre, parts, target, "minimax", window=window)
+        if objective == "minimax+lsq":
+            cuts, _ = _dp(pre, parts, target, "lsq", bound=dstar * (1 + 1e-12) + 1e-15, window=window)
+    bounds = [0] + cuts + [len(us)]
+    sums = [pre[b] - pre[a] for a, b in zip(bounds, bounds[1:])]
+    return Solution(weight, cuts, max(abs(s - target) for s in sums),
+                    sum((s - target) ** 2 for s in sums),
+                    [us[a:b] for a, b in zip(bounds, bounds[1:])])
