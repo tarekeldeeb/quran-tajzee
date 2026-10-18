@@ -34,10 +34,20 @@ cuts only at phrase starts
 
 | | traditional | new |
 |---|---|---|
-| hizb, worst (of ½ juz) | ±13.9% | ±3.7% |
+| hizb, worst (of ½ juz) | ±13.9% | ±3.6% |
+| hizb, CV | 6.9% | 1.4% |
 | rubʿ, worst (of ¼ hizb) | ±38% | ±24% |
 | longest/shortest rubʿ, whole Quran | 2.19× | 1.65× |
 | hizb and rubʿ starting inside a phrase | 79 of 210 | **0** |
+
+## Review round 1: hizb (2026-10-18)
+
+Every hizb was checked on its own. Where the point that best halves the juz fell inside a
+phrase, the text was read and the phrase was split only at a complete stop that opens a new
+subject. That gave 7 splits. The 11 phrases cut by traditional juz starts were split too. The
+decisions, juz by juz, are in [reviews/2026-10-18-hizb-splits](../../reviews/2026-10-18-hizb-splits/README.md).
+Where meaning ruled out a closer point, the hizb is kept less even: juz 6 +3.6%, juz 12 +3.5%,
+juz 22 +2.9%, and juz 29 keeps the opening of Sūrat al-Jinn.
 
 ## Balance through review
 

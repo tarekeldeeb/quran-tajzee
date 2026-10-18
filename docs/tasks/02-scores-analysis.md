@@ -27,8 +27,8 @@ The line count leaves out surah header lines; with them it matches the 604-page 
 |---|---|---|---|---|---|---|---|---|---|---|
 | aya | Recitation (harakat) | 63.6 | 46.6 | 0.73 | 2 | 15.0 | 53.0 | 149 | 655 | 328× |
 | aya | Typesetting (px @24) | 530.5 | 380.4 | 0.72 | 44.9 | 147.6 | 438.4 | 1,224.2 | 5,296.8 | 118× |
-| phrase | Recitation (harakat) | 362.5 | 179.9 | 0.50 | 45 | 123 | 331 | 701.7 | 1,145 | 25× |
-| phrase | Typesetting (px @24) | 3,035.0 | 1,462.6 | 0.48 | 509.4 | 1,100.6 | 2,772.2 | 5,770.9 | 9,362.6 | 18× |
+| phrase | Recitation (harakat) | 356.6 | 178.7 | 0.50 | 45 | 116.6 | 327 | 695.8 | 1,145 | 25× |
+| phrase | Typesetting (px @24) | 2,985.8 | 1,454.0 | 0.49 | 509.4 | 1,057.7 | 2,714.2 | 5,693.3 | 9,362.6 | 18× |
 
 Phrases are far more even than ayat (CV about half), because the phrase rules group short ayat together. They still span a wide range, from one short aya to ten long ones.
 
@@ -39,9 +39,9 @@ Shortest and longest phrases by recitation:
 | 108:1–3 | الكوثر | 45 | 509.4 |
 | 112:1–4 | الإخلاص | 45 | 542.6 |
 | 89:1–5 | القسم بالفجر وليال عشر | 54 | 676.5 |
+| 55:24–25 | الجواري المنشآت في البحر | 62 | 527.7 |
 | 70:15–18 | لظى نزاعة للشوى | 63 | 523.4 |
-| 92:1–4 | القسم بالليل والنهار، إن سعيكم لشتى | 65 | 602.5 |
-| 2:196–203 | أحكام الحج والعمرة وذكر الله في المناسك | 992 | 8,544.1 |
+| 3:149–155 | التحذير من طاعة الكافرين، والفشل يوم أحد ونعاس الأمنة | 975 | 8,000.3 |
 | 2:233–237 | الرضاع وعدة الوفاة وخطبة النساء والمهر | 995 | 8,408.9 |
 | 2:226–232 | الإيلاء والطلاق والرجعة | 1065 | 8,984.9 |
 | 5:1–5 | الوفاء بالعقود، وشعائر الله، والحلال والحرام من الطعام والنكاح | 1071 | 9,235.9 |
@@ -54,9 +54,9 @@ Shortest and longest phrases by recitation:
 | Pearson, per aya | 0.9899 |
 | Spearman, per aya | 0.9875 |
 | Pearson, per phrase | 0.9941 |
-| Spearman, per phrase | 0.9940 |
+| Spearman, per phrase | 0.9942 |
 | Harakat per em of print (whole Quran) | 2.863 |
-| Harakat per em, phrase CV | 0.067 |
+| Harakat per em, phrase CV | 0.068 |
 | Harakat per written letter | 1.173 |
 
 The two scores rise and fall together, but not in fixed proportion. Density, in harakat per em of print, varies by region: it rises with long madd on the reciter's side, and falls where short ayat bring many ayah markers and spaces into the print. Juz ʿAmma is about 12% lighter per em than the long Madani surahs, and that difference accumulates over a juz (section 5).
@@ -88,7 +88,7 @@ Lowest and highest density surahs (≥ 10 ayat), harakat per em:
 | Rub' (240) | Typesetting (px @24) | 13,924.3 | 8,762.1 | 19,360.1 | 0.139 | 2.21× |
 
 Longest traditional juz by recitation: juz 7; shortest: juz 10.
-19 of the 30 traditional juz start at a phrase start. The others begin inside a phrase: 3:93, 4:24, 6:111, 7:88, 9:93, 11:6, 12:53, 18:75, 27:56, 29:46, 33:31.
+30 of the 30 traditional juz start at a phrase start. The others begin inside a phrase: none.
 
 ## 5. Feasibility: 30 parts cut between phrases
 
@@ -97,13 +97,13 @@ A quick check for Task 3, not a proposal. Phrases are grouped into 30 consecutiv
 | parts balanced | measured by | min | max | CV | max/min |
 |---|---|---|---|---|---|
 | by recitation | Recitation (harakat) | 12,955 | 13,481 | 0.0082 | 1.041× |
-| by recitation | Typesetting (px @24) | 106,840.1 | 122,773.1 | 0.0299 | 1.149× |
+| by recitation | Typesetting (px @24) | 106,837.7 | 122,773.1 | 0.0299 | 1.149× |
 | by typesetting | Recitation (harakat) | 11,971 | 13,966 | 0.0278 | 1.167× |
-| by typesetting | Typesetting (px @24) | 107,380.6 | 112,807.8 | 0.0105 | 1.051× |
+| by typesetting | Typesetting (px @24) | 107,380.6 | 112,805.4 | 0.0105 | 1.051× |
 | traditional juz | Recitation (harakat) | 12,515 | 14,052 | 0.0326 | 1.123× |
 | traditional juz | Typesetting (px @24) | 103,477.6 | 121,631.3 | 0.0394 | 1.175× |
 
-Parts hold 25–91 phrases (median 32); the parts in Juz ʿAmma hold the most, as its phrases are short. The largest phrase is 8.6% of a part by recitation (8.5% by typesetting), which limits how exactly a cut can land. Even so, every part ends within 2.5% of the target by recitation (3.5% when balancing by typesetting).
+Parts hold 26–91 phrases (median 33); the parts in Juz ʿAmma hold the most, as its phrases are short. The largest phrase is 8.6% of a part by recitation (8.5% by typesetting), which limits how exactly a cut can land. Even so, every part ends within 2.5% of the target by recitation (3.5% when balancing by typesetting).
 
 Cut points when balancing by recitation (first phrase of parts 2–30): 2:142, 2:255, 3:102, 4:34, 4:160, 5:94, 6:118, 7:94, 8:45, 9:107, 11:18, 12:63, 15:21, 17:18, 18:92, 21:21, 23:37, 25:45, 27:65, 29:56, 33:41, 36:51, 39:41, 42:7, 46:7, 51:38, 58:1, 66:10, 77:16
 

@@ -5,7 +5,7 @@ comparison: [03-juz-analysis.md](03-juz-analysis.md).
 
 ## Goal
 
-Distribute the 1,094 subject phrases into 30 consecutive juz that are as even as possible,
+Distribute the subject phrases (1,094 at the time; 1,112 now) into 30 consecutive juz that are as even as possible,
 weighing recitation and typesetting 50/50. A juz may start only where a phrase starts, so
 every juz opens on a subject.
 
@@ -73,7 +73,7 @@ g = (x − T)², with parts beyond D* excluded. The penalized objective is the s
 with g = ((x − T)/T)², plus p² whenever the part starting at phrase j opens mid-surah, and with
 parts beyond the cap excluded. A juz is a contiguous run of phrases, so the
 problem has optimal substructure and the DP returns the global optimum. It is not a
-heuristic. Runtime is O(30 · n · W): about 5 s in pure Python for n = 1,094 phrases and a
+heuristic. Runtime is O(30 · n · W): about 5 s in pure Python for n ≈ 1,100 phrases and a
 window of W = 300 phrases per juz. The tests check the result against exhaustive search on
 random small cases.
 

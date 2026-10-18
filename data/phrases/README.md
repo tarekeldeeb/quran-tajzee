@@ -25,8 +25,10 @@ The phrase id used everywhere else (review page, review marks) is `sura:from-to`
 
 ## Current state
 
-- 1,094 phrases, 5.7 ayat on average (sizes: 1:8, 2:19, 3:80, 4:194, 5:249, 6:208,
-  7:135, 8:106, 9:62, 10:33).
+- 1,112 phrases, 5.6 ayat on average (sizes: 1:16, 2:29, 3:89, 4:191, 5:247, 6:207,
+  7:136, 8:104, 9:60, 10:33).
+- Round 2026-10-18 (`reviews/2026-10-18-hizb-splits/`) split 18 phrases: 7 where a new hizb
+  starts, and 11 where a traditional juz starts.
 - Al-Fatiha and Al-Baqarah 1–77 were reviewed in the pilot round
   (`reviews/2026-10-17-pilot/`). The rest of the pilot (2:78–141, Juz ʿAmma) was then
   reworked to the larger phrase size that review asked for, and everything else is a first

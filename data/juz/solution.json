@@ -8,7 +8,7 @@
  "surah_breaks": 22,
  "late_parts": 5,
  "late_penalty": 0.1,
- "max_combined_dev_pct": 4.947110169443977,
+ "max_combined_dev_pct": 4.94780722078015,
  "starts": [
   "1:1",
   "2:142",

@@ -52,14 +52,14 @@
  "new": {
   "recitation": {
    "hizb": {
-    "cv": 0.019019080393086613,
+    "cv": 0.016177671094851048,
     "worst": 0.04415850270507393,
     "min": -0.04415850270507382,
     "max": 0.04415850270507393,
     "ratio": 1.092397124063026
    },
    "rub": {
-    "cv": 0.09418113361407045,
+    "cv": 0.09338431193616362,
     "worst": 0.24261796042617956,
     "min": -0.2296650717703349,
     "max": 0.24261796042617956,
@@ -68,14 +68,14 @@
   },
   "typesetting": {
    "hizb": {
-    "cv": 0.01856324456140204,
+    "cv": 0.014681859076054406,
     "worst": 0.036439388306910736,
     "min": -0.036439388306910736,
     "max": 0.036439388306910736,
     "ratio": 1.0756348648226342
    },
    "rub": {
-    "cv": 0.09178576263373767,
+    "cv": 0.09136951380720529,
     "worst": 0.24399307160220607,
     "min": -0.2305292483311857,
     "max": 0.24399307160220607,
@@ -84,14 +84,14 @@
   },
   "combined": {
    "hizb": {
-    "cv": 0.01792432301528158,
-    "worst": 0.0374123923206211,
-    "min": -0.0374123923206211,
-    "max": 0.0374123923206211,
-    "ratio": 1.0777329606617636
+    "cv": 0.014350155982730466,
+    "worst": 0.036016607112318355,
+    "min": -0.036016607112318355,
+    "max": 0.036016607112318244,
+    "ratio": 1.0747245385720348
    },
    "rub": {
-    "cv": 0.09223027622840664,
+    "cv": 0.09160162650122672,
     "worst": 0.23835823687270108,
     "min": -0.22222514209907673,
     "max": 0.23835823687270108,
@@ -102,7 +102,7 @@
  "variants": [
   {
    "name": "**default**: nested, phrase starts only, minimax + least squares",
-   "hizb_worst": 0.0374123923206211,
+   "hizb_worst": 0.036016607112318355,
    "rub_worst": 0.23835823687270108,
    "inside": 0
   },
@@ -114,56 +114,44 @@
   },
   {
    "name": "nested, phrase starts only, least squares",
-   "hizb_worst": 0.0374123923206211,
+   "hizb_worst": 0.036016607112318355,
    "rub_worst": 0.2733141107324737,
    "inside": 0
   },
   {
    "name": "penalized: mid-phrase rubʿ at m 15%",
-   "hizb_worst": 0.0374123923206211,
+   "hizb_worst": 0.036016607112318355,
    "rub_worst": 0.14610298224969676,
-   "inside": 29
+   "inside": 28
   },
   {
    "name": "penalized: m 10%, cap ±10%",
-   "hizb_worst": 0.0374123923206211,
-   "rub_worst": 0.09381027113405893,
-   "inside": 60
+   "hizb_worst": 0.036016607112318355,
+   "rub_worst": 0.09586103912431332,
+   "inside": 58
   },
   {
    "name": "penalized: m 5%",
-   "hizb_worst": 0.0374123923206211,
-   "rub_worst": 0.07539180261714495,
-   "inside": 112
+   "hizb_worst": 0.036016607112318355,
+   "rub_worst": 0.08228964133803962,
+   "inside": 113
   },
   {
    "name": "any aya end, hizb too (m 0)",
    "hizb_worst": 0.010031423998453137,
    "rub_worst": 0.07471766965470228,
-   "inside": 156
+   "inside": 153
   }
  ],
- "same_rub_starts": 89,
- "same_hizb_starts": 38,
- "median_shift_ayat": 2.0,
- "juz_start_inside_phrase": [
-  "3:93",
-  "4:24",
-  "6:111",
-  "7:88",
-  "9:93",
-  "11:6",
-  "12:53",
-  "18:75",
-  "27:56",
-  "29:46",
-  "33:31"
- ],
+ "same_rub_starts": 83,
+ "same_hizb_starts": 36,
+ "median_shift_ayat": 3.0,
+ "juz_start_inside_phrase": [],
  "rub_inside_phrase": 0,
- "traditional_inside_phrase": 79,
+ "traditional_inside_phrase": 78,
  "traditional_phrase_cuts": {
-  "juz": 11,
-  "hizb": 12,
+  "juz": 0,
+  "hizb": 11,
   "rub": 67
  },
  "new_phrase_cuts": 0
