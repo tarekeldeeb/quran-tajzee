@@ -100,13 +100,13 @@ A boundary cuts into a phrase when it starts a unit in the middle of a Task 1 su
 
 | boundary | traditional: inside a phrase | median depth into the phrase | new |
 |---|---|---|---|
-| juz starts | 0 of 30 (0%) | – | kept (traditional) |
-| second-hizb starts | 11 of 30 (37%) | 60% | 0 |
+| juz starts | 11 of 30 (37%) | 38% | kept (traditional) |
+| second-hizb starts | 12 of 30 (40%) | 60% | 0 |
 | other rubʿ starts | 67 of 180 (37%) | 50% | 0 |
-| all 240 | 78 of 240 (32%) | 50% | 0 beyond the 0 juz |
+| all 240 | 90 of 240 (38%) | 50% | 0 beyond the 11 juz |
 
 
-The traditional hizb and rubʿ cut into a phrase 78 times out of 210. **The new hizb and rubʿ never do:** every one of them opens a phrase. The only phrases cut are by the 0 traditional juz starts that are kept as they are. Splitting those phrases in review (next section) removes even those. Depth is how far into the phrase the boundary falls, as a share of the phrase's ayat. Every case is listed in `data/rub/traditional-phrase-cuts.tsv`.
+The traditional hizb and rubʿ cut into a phrase 79 times out of 210. **The new hizb and rubʿ never do:** every one of them opens a phrase. The only phrases cut are by the 11 traditional juz starts that are kept as they are. Splitting those phrases in review (next section) removes even those. Depth is how far into the phrase the boundary falls, as a share of the phrase's ayat. Every case is listed in `data/rub/traditional-phrase-cuts.tsv`.
 
 
 ## 6. Phrases to review

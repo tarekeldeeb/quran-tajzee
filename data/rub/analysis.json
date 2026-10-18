@@ -150,8 +150,8 @@
  "rub_inside_phrase": 0,
  "traditional_inside_phrase": 78,
  "traditional_phrase_cuts": {
-  "juz": 0,
-  "hizb": 11,
+  "juz": 11,
+  "hizb": 12,
   "rub": 67
  },
  "new_phrase_cuts": 0

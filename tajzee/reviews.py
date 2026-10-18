@@ -90,3 +90,35 @@ def _join(topics: list[str]) -> str:
         if t not in seen:
             seen.append(t)
     return "، ".join(seen)
+
+
+DIVISION_REASONS = ("juz", "hizb", "rub", "balance")
+
+
+def reading(phrases: list[Phrase] | None = None, rounds_dir=None) -> list[Phrase]:
+    """The phrase list as a reading of the text alone.
+
+    Splits made to fit a division (rows of reviews/*/splits.tsv whose reason is juz, hizb,
+    rub or balance) are merged back, keeping the topic of the first half. Use this when
+    judging whether a traditional boundary falls inside a subject phrase. Otherwise the
+    splits made to follow those very boundaries would hide the cuts.
+    """
+    import csv
+    from pathlib import Path
+
+    from . import ROOT
+    from . import phrases as phrases_mod
+
+    ps = list(phrases if phrases is not None else phrases_mod.load())
+    joins = set()  # (sura, first aya of the second half)
+    for path in sorted(Path(rounds_dir or ROOT / "reviews").glob("*/splits.tsv")):
+        for r in csv.DictReader(open(path, encoding="utf-8"), delimiter="\t"):
+            if r["reason"] in DIVISION_REASONS:
+                joins.add((int(r["sura"]), int(r["split_after"]) + 1))
+    out: list[Phrase] = []
+    for p in ps:
+        if out and (p.sura, p.first) in joins and out[-1].sura == p.sura and out[-1].last + 1 == p.first:
+            out[-1] = replace(out[-1], last=p.last)
+        else:
+            out.append(p)
+    return out

@@ -23,6 +23,7 @@ rub:                 ## hizb and rub' inside the traditional juz, and the analys
 	$(PY) scripts/solve_rub.py
 	$(PY) scripts/analyze_rub.py
 	$(PY) scripts/final_analysis.py
+	$(PY) scripts/analyze_traditional.py
 
 check: validate test review
 

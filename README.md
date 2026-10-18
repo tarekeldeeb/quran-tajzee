@@ -5,6 +5,40 @@ New Juz definitions for the Quran that are **balanced** for reciters and typeset
 the Quran is first divided into short subject phrases. Juz boundaries are then chosen only
 between phrases, so that each part has a similar length and opens at the start of a subject.
 
+## Why: how the traditional quarters were drawn
+
+The Madina Mushaf takes its juz, hizb and rubʿ from al-Ṣafāqusī's *Ghayth al-Nafʿ*
+(d. 1118 AH). He states his method in the terminology section of the introduction (printed p. 25):
+
+- **He does not compute the boundaries.** He follows only the agreed or the well-known positions:
+  «وقد وقع للناس في تعيين أوائل الأحزاب خلاف ولا أمشي إلا على المتفق عليه أو المشهور».
+- **Each quarter is a unit:** «وأذكر حكم كل ربع بانفراده».
+- **Each quarter ends at a proper stop.** He names its last word, the kind of stop it allows and whether it
+  ends an aya: «وأشير إلى انتهائه بذكر آخر كلمة منه مع ذكر حكم الوقف عليها وبيان هل هي من الفواصل أم لا».
+  For example, at Al-Baqara 2:25 (printed p. 60) he writes «خالِدُونَ تام في أعلى درجاته وفاصلة ومنتهى الربع بإجماع»:
+  a complete stop of the highest degree, an aya end, and the end of the quarter by consensus.
+
+The measurements agree with this ([analysis](docs/research/traditional-divisions-analysis.md)):
+
+- **The juz are close to equal.** Each starts on average 2.4% of a juz from an equal-letter position.
+- **The quarters are not equal.** Inside their juz they lie 15% of a rubʿ from equal positions. That is 10× further than
+  aya ends alone would force. Their lengths vary by 2.2×. They were drawn at the ends of thoughts, not by count.
+
+**The issue.** The rule is sound, but the transmitted quarters keep it only partly. 90 of the
+239 traditional boundaries fall inside a subject phrase, typically halfway through it, and some
+open mid-story or mid-dialogue:
+
+- juz 16 opens at «قال ألم أقل لك», in the dialogue of Mūsā and al-Khaḍir;
+- juz 27 opens at «قال فما خطبكم أيها المرسلون», in the story of Ibrāhīm's guests;
+- a hizb opens at «فنبذناه بالعراء», in the story of Yūnus.
+
+So the quarters pay the price of uneven length without fully getting the meaningful boundaries
+they were drawn for.
+
+**This project fixes that.** It applies al-Ṣafāqusī's rule (a unit ends at the end of a thought)
+to every boundary, and then chooses among the stops that satisfy it by measured length:
+recitation and print width.
+
 ## Status
 
 - **Task 1 — subject phrases**: drafted for the whole Quran, 6,236 ayat in 1,112 phrases of
@@ -60,6 +94,8 @@ scripts/                      command-line entry points, one per job
   solve_rub.py                solve the hizb and rubʿ (Task 4)
   analyze_rub.py              hizb and rubʿ analysis report
   final_analysis.py           final analysis of the complete division
+  analyze_traditional.py      the traditional rubʿ measured: letter counts, stops, phrases
+  apply_splits.py             apply a round of phrase splits with new topics
 review/template.html          the review page (marks stored by the hosting artifact)
 reviews/                      one folder per review round: marks and the list reviewed
 docs/                         roadmap, one document per task, research notes

@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from tajzee import DATA, rub, scores  # noqa: E402
+from tajzee import DATA, reviews, rub, scores  # noqa: E402
 
 INF = float("inf")
 W = 0.5
@@ -147,22 +147,24 @@ def main() -> None:
     w(table(worst(rel, d.starts, 8), ["rubʿ", "juz", "ayat", "combined"]))
 
     # how often each traditional level starts inside a phrase, and how deep
+    # against the phrases as a reading of the text: splits made to fit divisions merged back
+    ur = rub.ayat(reviews.reading())
     pstart = {}
-    for x in us:
+    for x in ur:
         if x.phrase_start:
             cur = x.index
         pstart[x.index] = cur
     plen = {}
-    for i, x in enumerate(us):
+    for i, x in enumerate(ur):
         plen[pstart[i]] = plen.get(pstart[i], 0) + 1
     cuts_rows, levels = [], {"juz": [], "hizb": [], "rub": []}
     for k, i in enumerate(trad):
         level = "juz" if k % 8 == 0 else ("hizb" if k % 4 == 0 else "rub")
-        if not us[i].phrase_start:
+        if k > 0 and not ur[i].phrase_start:
             into, length = i - pstart[i], plen[pstart[i]]
             levels[level].append(into / length)
-            first = us[pstart[i]]
-            cuts_rows.append([k + 1, level, us[i].ref, f"{first.ref}–{us[pstart[i] + length - 1].ref}", into,
+            first = ur[pstart[i]]
+            cuts_rows.append([k + 1, level, ur[i].ref, f"{first.ref}–{ur[pstart[i] + length - 1].ref}", into,
                               length, first.topic])
     with open(DATA / "rub" / "traditional-phrase-cuts.tsv", "w", encoding="utf-8") as fh:
         fh.write("rub\tlevel\tstart\tphrase\tayat_into_phrase\tphrase_ayat\ttopic\n")
