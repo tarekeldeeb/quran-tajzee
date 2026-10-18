@@ -72,12 +72,12 @@ Rule 1 is about size. Rules 2 to 4 are about meaning.
 |---|---|
 | size by letter count | size by recitation (harakat with madd) and print width (DigitalKhatt), mixed 50/50 |
 | an agreed aya end | every boundary is an aya end (Kufan count, Tanzil). Agreement across the counting schools is not yet checked. |
-| a complete pause | a phrase start: a new subject (Task 1). A rubʿ that starts inside a phrase is at an aya end only, so it needs review. |
+| a complete pause | a phrase start: a new subject (Task 1). Every new hizb and rubʿ opens a phrase; the traditional ones start inside one 79 times out of 210. |
 | the well-known view among alternatives | the traditional juz are kept as they are (Task 4). Inside them, the exact solver chooses. |
 
 The juz are kept because their balance is already close to the limit that phrase granularity
 allows (Task 3: ±6.2% traditional against ±5.0% optimised). The hizb and rubʿ are where the
-traditional division is uneven: ±14% and ±35% of their share of the juz. See
+traditional division is uneven: ±14% of half a juz and ±38% of a quarter-hizb. See
 [Task 4](../tasks/04-hizb-rub.md).
 
 ## Open points

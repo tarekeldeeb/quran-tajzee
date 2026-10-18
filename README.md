@@ -18,9 +18,11 @@ between phrases, so that each part has a similar length and opens at the start o
   See the [analysis](docs/tasks/03-juz-analysis.md). The gain over the traditional juz is small,
   so the project keeps the traditional juz.
 - **Task 4 — hizb and rubʿ**: inside the traditional juz (Madina Mushaf, whose divisions come
-  from [Ghayth al-Nafʿ](docs/research/ghayth-al-naf.md)), the 2 hizb and 8 rubʿ are re-cut
-  exactly. Hizb go from ±14% to ±3.7% of half a juz, rubʿ from ±35% to ±10% of an eighth,
-  and every hizb opens a subject. See the [analysis](docs/tasks/04-hizb-rub-analysis.md).
+  from [Ghayth al-Nafʿ](docs/research/ghayth-al-naf.md)), the hizb and then their quarters are
+  re-cut exactly, only at phrase starts. Hizb go from ±14% to ±3.7% of half a juz, and the
+  longest rubʿ from 2.19× the shortest to 1.65×. The traditional hizb and rubʿ start inside a
+  subject phrase 79 times out of 210; the new ones never do. See the
+  [final analysis](docs/final-analysis.md).
 
 See the [roadmap](docs/roadmap.md) for what comes next.
 
@@ -33,7 +35,8 @@ data/
   phrases/phrases.tsv         Task 1 output, the source of truth: sura, from, to, topic
   scores/                     Task 2 output: per-aya and per-phrase recitation and typesetting scores
   juz/juz.tsv                 Task 3 output: the 30 balanced juz (alternative)
-  rub/rub.tsv                 Task 4 output: 240 rubʿ / 60 hizb inside the traditional juz
+  rub/hizb.tsv, rub/rub.tsv   Task 4 output: 60 hizb and 240 rubʿ inside the traditional juz
+  rub/traditional-phrase-cuts.tsv   traditional boundaries that start inside a phrase
   rub/phrase-splits.tsv       phrases a juz or rubʿ start falls inside (for review)
 tajzee/                       shared Python library (no dependencies)
   quran.py                    load the text, surah names, diacritic-free view
@@ -55,6 +58,7 @@ scripts/                      command-line entry points, one per job
   analyze_juz.py              juz analysis report
   solve_rub.py                solve the hizb and rubʿ (Task 4)
   analyze_rub.py              hizb and rubʿ analysis report
+  final_analysis.py           final analysis of the complete division
 review/template.html          the review page (marks stored by the hosting artifact)
 reviews/                      one folder per review round: marks and the list reviewed
 docs/                         roadmap, one document per task, research notes
@@ -71,7 +75,7 @@ make test       # unit tests
 make review     # build build/review.html
 make scores     # phrase scores + analysis report from the committed per-aya scores
 make juz        # solve the 30 juz + analysis report
-make rub        # hizb and rubʿ inside the traditional juz + analysis report
+make rub        # hizb and rubʿ inside the traditional juz + analysis + final analysis
 python scripts/dump_text.py 18 --words 8      # read Al-Kahf compactly
 ```
 

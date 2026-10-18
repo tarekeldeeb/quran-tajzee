@@ -22,6 +22,7 @@ juz:                 ## solve the 30 balanced juz and write the analysis
 rub:                 ## hizb and rub' inside the traditional juz, and the analysis
 	$(PY) scripts/solve_rub.py
 	$(PY) scripts/analyze_rub.py
+	$(PY) scripts/final_analysis.py
 
 check: validate test review
 

@@ -30,6 +30,7 @@ jobs:
         run: |
           python scripts/solve_rub.py
           python scripts/analyze_rub.py
-          git diff --exit-code data/rub docs/tasks/04-hizb-rub-analysis.md
+          python scripts/final_analysis.py
+          git diff --exit-code data/rub docs/tasks/04-hizb-rub-analysis.md docs/final-analysis.md
       - name: Build review page
         run: python scripts/build_review.py
