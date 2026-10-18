@@ -20,4 +20,6 @@ of the 240 traditional rub' (quarter-hizb) of the Hafs Mushaf starts, with a lea
 and a closing `6237`. Every 4th rub' starts a hizb and every 8th a juz. Copied from
 [quran-nazm](https://github.com/tarekeldeeb/quran-nazm), which takes it from
 `HizbQuarterList` in the [quran-meta](https://www.npmjs.com/package/quran-meta) package
-(MIT). Used only as the baseline the new divisions are compared against.
+(MIT). The juz starts (every 8th rub') are used as the fixed juz of Task 4; the hizb and
+rub' are the baseline the new ones are compared against. The Madina Mushaf takes these
+divisions from al-Ṣafāqusī's *Ghayth al-Nafʿ* (see `docs/research/ghayth-al-naf.md`).

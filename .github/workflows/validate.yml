@@ -26,5 +26,10 @@ jobs:
           python scripts/solve_juz.py
           python scripts/analyze_juz.py
           git diff --exit-code data/juz docs/tasks/03-juz-analysis.md
+      - name: Hizb and rub' division is up to date
+        run: |
+          python scripts/solve_rub.py
+          python scripts/analyze_rub.py
+          git diff --exit-code data/rub docs/tasks/04-hizb-rub-analysis.md
       - name: Build review page
         run: python scripts/build_review.py
