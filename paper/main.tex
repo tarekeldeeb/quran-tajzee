@@ -1,0 +1,229 @@
+% Quran-Tajzee: IEEE conference paper (4 pages max). Build: make paper (XeLaTeX).
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{fontspec}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{url}
+\usepackage{polyglossia}
+\setmainlanguage{english}
+\setotherlanguage{arabic}
+\newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
+\newcommand{\ar}[1]{\mbox{\textarabic{#1}}}
+\input{numbers}
+
+\begin{document}
+
+\title{Quran-Tajzee: Balanced Quran Divisions\\ that End Where a Thought Ends}
+
+\author{\IEEEauthorblockN{Tarek Eldeeb}
+\IEEEauthorblockA{Giza, Egypt\\
+tarekeldeeb@gmail.com}}
+
+\maketitle
+
+\begin{abstract}
+The Madina Mushaf divides the Quran into 30 juz, 60 hizb and 240 quarters (rub\textsuperscript{c}),
+taken from al-Ṣafāqusī's \emph{Ghayth al-Naf\textsuperscript{c}}. His stated rule is that each
+quarter ends at a complete stop, at a position that is agreed or well known; the quarters are
+not computed. We measure the transmitted divisions on the Tanzil text with two length models,
+Hafs recitation in harakat with madd lengths and DigitalKhatt print width, which correlate at
+$r=\PearsonAya$ per aya. The juz lie within \JuzOff\% of equal-letter positions, but the quarters
+lie \RubExcess$\times$ further from equal positions than aya ends force and vary
+\RubLetterSpread$\times$ in length; and \TradCuts{} of 239 boundaries fall inside a subject
+phrase. Keeping the traditional juz, we re-cut hizb and quarters by an exact dynamic program
+restricted to the starts of \Phrases{} reviewed subject phrases of 1--10 ayat. The worst hizb
+drops from $\pm$\TradHizbWorst\% to $\pm$\NewHizbWorst\% of half a juz (CV \TradHizbCV\%
+$\rightarrow$ \NewHizbCV\%), and no new boundary falls inside a phrase. Quarter balance is
+limited by phrase granularity; we show that about a hundred targeted, text-checked phrase
+splits bring the quarter CV from \TradRubCV\% to near the aya-level floor of \CeilRubCV\%.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Quran, text segmentation, partitioning, dynamic programming, typesetting, recitation, tajweed
+\end{IEEEkeywords}
+
+\section{Introduction}
+Readers, teachers and printers organise the Quran by its divisions: a juz a day completes it in
+a month, a hizb or a quarter is a daily portion or a unit of revision, and printed Mushafs mark
+every quarter. Those divisions are of scholarly judgement (\emph{ijtihādī}), not revelation, which
+is why mushafs and regions differ on them~\cite{hamad}. The Madina Mushaf takes its 30 juz, 60
+hizb and their quarters from \emph{Ghayth al-Naf\textsuperscript{c}} by al-Ṣafāqusī (d.\ 1118\,AH)~\cite{ghayth,madina}.
+
+Two properties are wanted of a division: units of similar length, and units that are complete in
+meaning. The juz satisfy the first; the quarters satisfy neither fully (Section~\ref{sec:trad}).
+This paper (i) measures the traditional divisions against their own stated method,
+(ii) defines a length model for recitation and print, (iii) solves the hizb and quarters inside
+the traditional juz exactly, with every boundary at the start of a subject phrase, and (iv) shows
+how targeted phrase splits, each checked against the text, reach the balance that aya
+granularity allows. Data, code and every number in this paper are in the open repository~\cite{repo}.
+
+\section{The traditional method and its outcome}\label{sec:trad}
+In the terminology section of his introduction al-Ṣafāqusī states his method~\cite{ghayth}: he
+does not compute boundaries but follows only the agreed or well-known ones,
+``\ar{ولا أمشي إلا على المتفق عليه أو المشهور}''; he treats each quarter as a unit,
+``\ar{وأذكر حكم كل ربع بانفراده}''; and he closes each on a proper stop, naming its last word, the
+kind of stop it allows and whether it is an aya end. At 2:25 he writes
+``\ar{خالدون تام في أعلى درجاته وفاصلة ومنتهى الربع بإجماع}'': a complete stop of the highest degree,
+an aya end, the end of the quarter by consensus. Where traditions differ he lists the positions
+of the Maghāriba and the Mashāriqa and states a preference; the two cases we checked both
+match the Madina Mushaf (45:12, 82:1).
+
+\textbf{Drawn at stops, not by count.} The early divisions were made by counting letters~\cite{masahif,bayan}.
+Counting the \Letters{} written letters of the text (basmala excluded), the traditional juz start on
+average \JuzOff\% of a juz from equal-letter positions. Inside each juz, however, the quarters
+start \RubOff\% of a quarter from equal positions, while the nearest aya end is only \RubFloor\%
+away: \RubExcess$\times$ further than aya granularity forces. Quarter lengths vary
+\RubLetterSpread$\times$ in letters. The quarters were placed at the ends of thoughts, as the method
+says, not by count.
+
+\textbf{But not always at the ends of thoughts.} We segmented the text into subject phrases
+(Section~\ref{sec:data}). Against that reading, \TradCuts{} of the 239 traditional boundaries,
+\TradInnerCuts{} of the 210 hizb and quarter boundaries inside the juz, fall inside a phrase,
+at a median \CutDepth\% of the way through it. Some open mid-dialogue or mid-story: juz~16 at
+``\ar{قال ألم أقل لك}'' (18:75), juz~27 at ``\ar{قال فما خطبكم أيها المرسلون}'' (51:31), a hizb at
+``\ar{فنبذناه بالعراء}'' (37:145). The quarters thus pay the price of uneven length without
+fully keeping the rule they were drawn by. This is the problem we address.
+
+\section{Data and length model}\label{sec:data}
+\textbf{Text.} Tanzil Uthmani 1.1, \Ayat{} ayat in the Kufan count~\cite{tanzil}.
+
+\textbf{Subject phrases.} The text was divided into runs of 1--10 consecutive ayat on one subject,
+drafted by reading the text and reviewed by hand: \PhrasesReading{} phrases as a reading of the
+text, \Phrases{} after the review round of Section~\ref{sec:review}. A phrase start is our proxy
+for a complete stop: the next aya does not continue the previous subject.
+
+\textbf{Recitation size.} Per aya, the phonemes of the Hafs recitation from
+\emph{tajweed-embeddings}~\cite{tajemb}: a madd letter counts its length in harakat (2, 4 or 6,
+with \emph{tawassuṭ} for the optional lengths), a silent letter 0, every other letter 1. Each aya
+is recited continuously and stopped at its end. A surah opening adds the basmala (19 harakat),
+except At-Tawba. The whole text is \RecitationTotal{} harakat.
+
+\textbf{Print size.} Per aya, the width of the aya set as a single line in the DigitalKhatt
+Madina font~\cite{digitalkhatt}, shaped with HarfBuzz by Quran-Nazm~\cite{nazm}, with its aya
+marker and one space.
+
+The two sizes correlate at $r=\PearsonAya$ per aya and $r=\PearsonPhrase$ per phrase. We mix them
+50/50 as shares of their totals, $c_a = \tfrac12 r_a/R + \tfrac12 p_a/P$.
+
+\section{Method}
+\textbf{Keep the juz.} An exact solver over the phrases (penalising mid-surah starts) can make the
+30 juz more even, but only from $\pm$\TradJuzWorst\% to $\pm$\OptJuzWorst\%. The traditional juz are
+kept; the imbalance is in the finer divisions.
+
+\textbf{Nested exact cuts.} Each juz is cut into two hizb, then each hizb into four quarters, the
+way the divisions nest. A container $G$ of ayat cut into $k$ parts has target $T=|G|/k$ and the
+admissible cuts are phrase starts $\mathcal{S}$. Lexicographically we
+\begin{equation}
+\min_{\text{cuts}\subset\mathcal{S}}\ \max_q \frac{|S_q - T|}{T},\quad\text{then}\quad
+\min \sum_q (S_q-T)^2 ,
+\end{equation}
+both by the dynamic program $F_k(i)=\min_{j<i}\,[F_{k-1}(j)\oplus g(C_i-C_j)]$ over prefix sums $C$,
+with $\oplus=\max$ or $+$~\cite{bellman}. Contiguous partitioning has optimal substructure, so the
+solution is the global optimum; tests check it against exhaustive search. A \emph{penalized}
+variant also admits any aya end at a cost $m^2$ per mid-phrase start; we use it only to
+\emph{propose} phrase splits.
+
+\textbf{Review loop.}\label{sec:review} Balance is limited by how fine the phrases are. For each
+container, the aya end that best balances it is computed; if it lies inside a phrase, the text at
+it and at the other candidates closer to balance is read, and the phrase is split only at a
+complete stop opening a new ruling, scene or subject; otherwise the current start is kept. The
+split becomes a phrase boundary, so the rule ``every boundary opens a phrase'' is never relaxed.
+
+\section{Results}
+\textbf{Hizb.} One review round checked all 30 second-hizb starts: 10 were already at the best
+point, \HizbSplits{} phrases were split at complete stops (e.g.\ 9:30 ``\ar{وقالت اليهود}'',
+10:28 ``\ar{ويوم نحشرهم}''), and 13 were kept because every closer point lies inside a story or
+dialogue (e.g.\ juz~6, +3.6\%, inside the dialogue of Mūsā and his people). The \JuzSplits{}
+phrases cut by traditional juz starts were split too. Table~\ref{tab:bal} gives the balance.
+
+\begin{table}[t]
+\caption{Traditional and new divisions (50/50 size mix). Hizb against \(\tfrac12\) of their juz,
+quarters against \(\tfrac14\) of their hizb; ratios over the whole Quran.}
+\label{tab:bal}
+\centering
+\begin{tabular}{@{}lrr@{}}
+\toprule
+& Traditional & Quran-Tajzee\\
+\midrule
+Worst hizb & $\pm$\TradHizbWorst\% & $\pm$\NewHizbWorst\% \\
+Hizb CV & \TradHizbCV\% & \NewHizbCV\% \\
+Longest/shortest hizb & \TradHizbRatio$\times$ & \NewHizbRatio$\times$ \\
+Worst quarter & $\pm$\TradRubWorst\% & $\pm$\NewRubWorst\% \\
+Quarter CV & \TradRubCV\% & \NewRubCV\% \\
+Longest/shortest quarter & \TradRubRatio$\times$ & \NewRubRatio$\times$ \\
+Starts inside a phrase (of 210) & \TradInnerCuts & \NewInnerCuts \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Quarters.} With phrase starts only, a hizb holds about 18 phrases, 4.6 per quarter, and
+one long phrase can be a fifth of a quarter; the worst quarter improves only to
+$\pm$\NewRubWorst\%. Fig.~\ref{fig:curve} shows what targeted splits buy: the penalized solver
+proposes the splits, the phrase-only solver is re-run with them accepted. About a hundred splits
+bring the quarter CV close to the floor of \CeilRubCV\% reached when every aya end is allowed;
+the remaining worst case, $\pm$\CeilRubWorst\%, is set by single long ayat (2:282 alone is 40\% of
+a quarter), and going lower would require cutting inside an aya, which no traditional division
+does. Uniform re-segmentation is far less efficient: splitting every phrase to $\le$3 ayat adds
+about 1,350 boundaries for a CV of 4.5\%.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth, height=4.2cm, xlabel={phrase splits accepted},
+  ylabel={quarter deviation (\%)}, ymin=0, ymax=26, xmin=0, xmax=150, grid=major,
+  legend style={font=\footnotesize, at={(0.98,0.97)}, anchor=north east},
+  tick label style={font=\footnotesize}, label style={font=\footnotesize}]
+\addplot+[mark=*, thick] coordinates {\CurveWorst};
+\addplot+[mark=square*, thick] coordinates {\CurveCV};
+\addplot[dashed, domain=0:150] {\CeilRubCV};
+\legend{worst quarter, CV, CV floor (any aya end)}
+\end{axis}
+\end{tikzpicture}
+\caption{Quarter balance against the number of targeted phrase splits.}
+\label{fig:curve}
+\end{figure}
+
+\section{Discussion and limitations}
+\textbf{The phrase test is ours.} That no new boundary falls inside a phrase holds by
+construction; the phrases are one reading of the text, under review. A wording check independent
+of it, a first word that leans on the previous aya (a reply such as ``\ar{قال}'' or a linking
+``\ar{ف}'', ``\ar{ثم}''), flags \TradLeaning{} traditional starts and a similar number of new ones,
+most of them a resumptive ``\ar{ف}'' at a new subject (``\ar{فاصدع بما تؤمر}''), but a few real: the
+10-aya phrase limit splits long stories at turns of dialogue. An independent judge is the pause
+grades of the classical \emph{waqf} works, al-Dānī's \emph{al-Muktafā} and al-Ushmūnī's
+\emph{Manār al-Hudā}~\cite{muktafa,manar}, at every candidate aya end.
+
+\textbf{Counting schools.} Boundaries are Kufan aya ends; al-Ṣafāqusī also requires an aya end
+agreed by all counts (\ar{فاصلة بلا خلاف}), not yet checked. \textbf{Weights.} Recitation and
+print agree so closely that the 50/50 mix is not sensitive; header lines of surahs, if counted in
+print, lengthen juz~30.
+
+\section{Conclusion}
+Al-Ṣafāqusī's rule, that a quarter ends where a thought ends, is sound, but the transmitted
+quarters keep it only partly and vary more than twofold in length. Applying the rule to every
+boundary and choosing among the admissible stops by measured length gives hizb within
+$\pm$\NewHizbWorst\% of half their juz, none inside a phrase. For the quarters, the next review round
+will split about a hundred phrases at checked stops, which brings their spread close to what
+aya granularity allows.
+
+\begin{thebibliography}{99}
+\bibitem{ghayth} ʿA. al-Nūrī al-Ṣafāqusī, \emph{Ghayth al-Naf\textsuperscript{c} fī al-Qirāʾāt al-Sab\textsuperscript{c}}, introduction and passim.
+\bibitem{madina} King Fahd Complex for the Printing of the Holy Quran, \emph{Muṣḥaf al-Madīna} (Ḥafṣ), closing note on its sources.
+\bibitem{hamad} Gh. Q. al-Ḥamad, \emph{Taḥzīb al-Qurʾān fī al-Maṣādir wa-l-Maṣāḥif}.
+\bibitem{masahif} Ibn Abī Dāwūd, \emph{Kitāb al-Maṣāḥif}.
+\bibitem{bayan} Abū ʿAmr al-Dānī, \emph{al-Bayān fī ʿAdd Āy al-Qurʾān}.
+\bibitem{muktafa} Abū ʿAmr al-Dānī, \emph{al-Muktafā fī al-Waqf wa-l-Ibtidāʾ}.
+\bibitem{manar} A. al-Ushmūnī, \emph{Manār al-Hudā fī Bayān al-Waqf wa-l-Ibtidāʾ}.
+\bibitem{tanzil} Tanzil Project, ``Quran text, Uthmani, version 1.1,'' \url{https://tanzil.net}.
+\bibitem{digitalkhatt} A. Anane, ``DigitalKhatt,'' \url{https://digitalkhatt.org}.
+\bibitem{tajemb} T. Eldeeb, ``tajweed-embeddings,'' \url{https://github.com/tarekeldeeb/tajweed-embeddings}.
+\bibitem{nazm} T. Eldeeb, ``Quran-Nazm,'' \url{https://github.com/tarekeldeeb/quran-nazm}.
+\bibitem{bellman} R. Bellman, ``On the approximation of curves by line segments using dynamic programming,'' \emph{Commun. ACM}, vol.~4, no.~6, p.~284, 1961.
+\bibitem{repo} T. Eldeeb, ``Quran-Tajzee,'' \url{https://github.com/tarekeldeeb/quran-tajzee}.
+\end{thebibliography}
+
+\end{document}

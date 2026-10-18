@@ -96,9 +96,11 @@ scripts/                      command-line entry points, one per job
   final_analysis.py           final analysis of the complete division
   analyze_traditional.py      the traditional rubʿ measured: letter counts, stops, phrases
   apply_splits.py             apply a round of phrase splits with new topics
+  paper_numbers.py            paper/numbers.tex: every number the paper quotes
 review/template.html          the review page (marks stored by the hosting artifact)
 reviews/                      one folder per review round: marks and the list reviewed
 docs/                         roadmap, one document per task, research notes
+paper/                        IEEE paper (4 pages max); numbers generated from the data
 tests/                        unit tests (python -m unittest)
 ```
 

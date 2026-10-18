@@ -3,3 +3,13 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# paper build
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.xdv
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.bbl
+paper/*.blg

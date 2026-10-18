@@ -32,6 +32,7 @@ jobs:
           python scripts/analyze_rub.py
           python scripts/final_analysis.py
           python scripts/analyze_traditional.py
-          git diff --exit-code data/rub docs/tasks/04-hizb-rub-analysis.md docs/final-analysis.md docs/research
+          python scripts/paper_numbers.py
+          git diff --exit-code data/rub docs/tasks/04-hizb-rub-analysis.md docs/final-analysis.md docs/research paper/numbers.tex
       - name: Build review page
         run: python scripts/build_review.py

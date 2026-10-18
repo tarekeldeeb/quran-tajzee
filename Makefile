@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: validate test review scores juz rub check clean
+.PHONY: validate test review scores juz rub paper check clean
 
 validate:            ## check phrases.tsv covers every aya once, 1..10 ayat each
 	$(PY) scripts/validate_phrases.py
@@ -24,6 +24,10 @@ rub:                 ## hizb and rub' inside the traditional juz, and the analys
 	$(PY) scripts/analyze_rub.py
 	$(PY) scripts/final_analysis.py
 	$(PY) scripts/analyze_traditional.py
+
+paper:               ## paper/numbers.tex from the data, then paper/main.pdf (XeLaTeX)
+	$(PY) scripts/paper_numbers.py
+	cd paper && latexmk -xelatex -interaction=nonstopmode main.tex
 
 check: validate test review
 
