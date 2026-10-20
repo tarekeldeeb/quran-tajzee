@@ -40,7 +40,7 @@ cuts only at phrase starts
 | longest/shortest rubʿ, whole Quran | 2.19× | 1.65× |
 | hizb and rubʿ starting inside a phrase | 79 of 210 | **0** |
 
-## Review round 1: hizb (2026-10-18)
+## Review round 1: hizb (2026-10-18, approved 2026-10-21)
 
 Every hizb was checked on its own. Where the point that best halves the juz fell inside a
 phrase, the text was read and the phrase was split only at a complete stop that opens a new

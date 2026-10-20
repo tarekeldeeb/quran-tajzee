@@ -41,5 +41,5 @@ python scripts/review_hizb.py             # refresh the round's README
 
 | round | scope | outcome |
 |-------|-------|---------|
-| `2026-10-18-hizb-splits` | The second hizb of every juz, and the 11 traditional juz starts inside a phrase | 61 candidates read: 7 hizb splits accepted, 54 rejected with reasons; 11 juz splits. Worst hizb ±3.6%. See its README. |
+| `2026-10-18-hizb-splits` | The second hizb of every juz, and the 11 traditional juz starts inside a phrase | 61 candidates read: 7 hizb splits accepted, 54 rejected with reasons; 11 juz splits. Worst hizb ±3.6%. Approved 2026-10-21. See its README. |
 | `2026-10-17-pilot` | Al-Fatiha, Al-Baqarah 1–77 (of a pilot covering 1, 2:1–141, Juz ʿAmma) | Merges preferred: 1:1–7, 2:8–16, 2:17–20, 2:34–37, 2:49–57. Prompted larger phrases across the whole list. |
