@@ -14,6 +14,7 @@
 \newfontfamily\arabicfont[Script=Arabic,Scale=1.05]{Amiri}
 \newcommand{\ar}[1]{\mbox{\textarabic{#1}}}
 \input{numbers}
+\emergencystretch=1.5em
 
 \begin{document}
 
@@ -37,9 +38,11 @@ lie \RubExcess$\times$ further from equal positions than aya ends force and vary
 phrase. Keeping the traditional juz, we re-cut hizb and quarters by an exact dynamic program
 restricted to the starts of \Phrases{} reviewed subject phrases of 1--10 ayat. The worst hizb
 drops from $\pm$\TradHizbWorst\% to $\pm$\NewHizbWorst\% of half a juz (CV \TradHizbCV\%
-$\rightarrow$ \NewHizbCV\%), and no new boundary falls inside a phrase. Quarter balance is
-limited by phrase granularity; we show that about a hundred targeted, text-checked phrase
-splits bring the quarter CV from \TradRubCV\% to near the aya-level floor of \CeilRubCV\%.
+$\rightarrow$ \NewHizbCV\%), and no new boundary falls inside a phrase. For the quarters, a
+text-checked review of \RubRoundBoundaries{} boundaries accepts \RubRoundSplits{} phrase splits at
+complete stops and halves the spread: CV \TradRubCV\% $\rightarrow$ \NewRubCV\%, longest/shortest
+\TradRubRatio$\times$ $\rightarrow$ \NewRubRatio$\times$; what remains uneven lies inside long
+narratives, where no closer stop exists.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -177,30 +180,35 @@ Starts inside a phrase (of 210) & \TradInnerCuts & \NewInnerCuts \\
 \end{tabular}
 \end{table}
 
-\textbf{Quarters.} With phrase starts only, a hizb holds about 18 phrases, 4.6 per quarter, and
-one long phrase can be a fifth of a quarter; the worst quarter improves only to
-$\pm$\NewRubWorst\%. Fig.~\ref{fig:curve} shows what targeted splits buy: the penalized solver
-proposes the splits, the phrase-only solver is re-run with them accepted. About a hundred splits
-bring the quarter CV close to the floor of \CeilRubCV\% reached when every aya end is allowed;
-the remaining worst case, $\pm$\CeilRubWorst\%, is set by single long ayat (2:282 alone is 40\% of
-a quarter), and going lower would require cutting inside an aya, which no traditional division
-does. Uniform re-segmentation is far less efficient: splitting every phrase to $\le$3 ayat adds
-about 1,350 boundaries for a CV of 4.5\%.
+\textbf{Quarters.} With the hizb fixed and phrase starts only, a hizb holds about 18 phrases, 4.6
+per quarter, and one long phrase can be a fifth of a quarter: the quarter CV is 9.2\%, the worst
+quarter $\pm$23.8\%. Fig.~\ref{fig:curve} shows what splits could buy if every one proposed by
+the penalized solver were accepted: about a hundred bring the CV near the floor of \CeilRubCV\%
+reached when every aya end is allowed (going lower would require cutting inside an aya). The
+review applies the meaning test to each: of \RubRoundBoundaries{} boundaries more than 3\% off,
+with \RubRoundCandidates{} candidates read, \RubRoundSplits{} were split at complete stops (e.g.\
+4:12, the share of spouses, which turns a $-23\%$ boundary into $-3.6\%$) and \RubRoundKept{} kept,
+because every closer point is a turn of a dialogue or story: Mūsā at the fire (28:29--35), Hūd
+(7:65--72), the messengers and their peoples (14:9--12). The result, CV \NewRubCV\% and worst
+$\pm$\NewRubWorst\%, lies above the curve by exactly the stops that meaning forbids.
 
 \begin{figure}[t]
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=\columnwidth, height=4.2cm, xlabel={phrase splits accepted},
   ylabel={quarter deviation (\%)}, ymin=0, ymax=26, xmin=0, xmax=150, grid=major,
-  legend style={font=\footnotesize, at={(0.98,0.97)}, anchor=north east},
+  legend style={font=\scriptsize, at={(0.5,-0.32)}, anchor=north, legend columns=2},
   tick label style={font=\footnotesize}, label style={font=\footnotesize}]
 \addplot+[mark=*, thick] coordinates {\CurveWorst};
 \addplot+[mark=square*, thick] coordinates {\CurveCV};
 \addplot[dashed, domain=0:150] {\CeilRubCV};
-\legend{worst quarter, CV, CV floor (any aya end)}
+\addplot[only marks, mark=triangle*, mark size=3pt, black] coordinates {\ReviewedRub};
+\addplot[only marks, mark=triangle, mark size=3pt, black] coordinates {\ReviewedRubWorst};
+\legend{worst quarter, CV, CV floor (any aya end), reviewed: CV, reviewed: worst}
 \end{axis}
 \end{tikzpicture}
-\caption{Quarter balance against the number of targeted phrase splits.}
+\caption{Quarter balance against the number of phrase splits accepted, if every split the
+solver proposes were accepted (lines), and after the text-checked review (triangles).}
 \label{fig:curve}
 \end{figure}
 
@@ -223,9 +231,10 @@ print, lengthen juz~30.
 Al-Ṣafāqusī's rule, that a quarter ends where a thought ends, is sound, but the transmitted
 quarters keep it only partly and vary more than twofold in length. Applying the rule to every
 boundary and choosing among the admissible stops by measured length gives hizb within
-$\pm$\NewHizbWorst\% of half their juz, none inside a phrase. For the quarters, the next review round
-will split about a hundred phrases at checked stops, which brings their spread close to what
-aya granularity allows.
+$\pm$\NewHizbWorst\% of half their juz, and quarters whose spread is half the traditional one
+(CV \NewRubCV\% against \TradRubCV\%), with no boundary inside a phrase. The remaining unevenness
+is the price of not cutting a story or a dialogue, a choice the review tables make explicit
+for a human reviewer to keep or overturn.
 
 \begin{thebibliography}{99}
 \bibitem{ghayth} ʿA. al-Nūrī al-Ṣafāqusī, \emph{Ghayth al-Naf\textsuperscript{c} fī al-Qirāʾāt al-Sab\textsuperscript{c}}, introduction and passim.

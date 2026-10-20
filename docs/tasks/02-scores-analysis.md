@@ -27,8 +27,8 @@ The line count leaves out surah header lines; with them it matches the 604-page 
 |---|---|---|---|---|---|---|---|---|---|---|
 | aya | Recitation (harakat) | 63.6 | 46.6 | 0.73 | 2 | 15.0 | 53.0 | 149 | 655 | 328× |
 | aya | Typesetting (px @24) | 530.5 | 380.4 | 0.72 | 44.9 | 147.6 | 438.4 | 1,224.2 | 5,296.8 | 118× |
-| phrase | Recitation (harakat) | 356.6 | 178.7 | 0.50 | 45 | 116.6 | 327 | 695.8 | 1,145 | 25× |
-| phrase | Typesetting (px @24) | 2,985.8 | 1,454.0 | 0.49 | 509.4 | 1,057.7 | 2,714.2 | 5,693.3 | 9,362.6 | 18× |
+| phrase | Recitation (harakat) | 338.1 | 170.3 | 0.50 | 41 | 105 | 312 | 668.4 | 1,145 | 28× |
+| phrase | Typesetting (px @24) | 2,830.4 | 1,384.7 | 0.49 | 348 | 975.0 | 2,611.3 | 5,471.7 | 9,362.6 | 27× |
 
 Phrases are far more even than ayat (CV about half), because the phrase rules group short ayat together. They still span a wide range, from one short aya to ten long ones.
 
@@ -36,15 +36,15 @@ Shortest and longest phrases by recitation:
 
 | phrase | topic | harakat | px |
 |---|---|---|---|
+| 17:22–22 | لا تجعل مع الله إلهًا آخر | 41 | 363.8 |
 | 108:1–3 | الكوثر | 45 | 509.4 |
 | 112:1–4 | الإخلاص | 45 | 542.6 |
+| 8:59–59 | لا يحسبن الذين كفروا سبقوا | 46 | 348 |
 | 89:1–5 | القسم بالفجر وليال عشر | 54 | 676.5 |
-| 55:24–25 | الجواري المنشآت في البحر | 62 | 527.7 |
-| 70:15–18 | لظى نزاعة للشوى | 63 | 523.4 |
-| 3:149–155 | التحذير من طاعة الكافرين، والفشل يوم أحد ونعاس الأمنة | 975 | 8,000.3 |
+| 2:196–202 | أحكام الحج والعمرة وذكر الله في المناسك | 868 | 7,566.8 |
+| 9:17–24 | عمارة المساجد، وسقاية الحاج، والنهي عن موالاة الآباء والإخوان | 878 | 6,982.4 |
+| 4:77–83 | كفوا أيديكم، والموت يدرككم، والتبييت، وتدبر القرآن | 893 | 7,437.8 |
 | 2:233–237 | الرضاع وعدة الوفاة وخطبة النساء والمهر | 995 | 8,408.9 |
-| 2:226–232 | الإيلاء والطلاق والرجعة | 1065 | 8,984.9 |
-| 5:1–5 | الوفاء بالعقود، وشعائر الله، والحلال والحرام من الطعام والنكاح | 1071 | 9,235.9 |
 | 2:246–252 | طالوت وجالوت | 1145 | 9,362.6 |
 
 ## 3. How the two scores relate
@@ -53,8 +53,8 @@ Shortest and longest phrases by recitation:
 |---|---|
 | Pearson, per aya | 0.9899 |
 | Spearman, per aya | 0.9875 |
-| Pearson, per phrase | 0.9941 |
-| Spearman, per phrase | 0.9942 |
+| Pearson, per phrase | 0.9939 |
+| Spearman, per phrase | 0.9940 |
 | Harakat per em of print (whole Quran) | 2.863 |
 | Harakat per em, phrase CV | 0.068 |
 | Harakat per written letter | 1.173 |
@@ -96,19 +96,19 @@ A quick check for Task 3, not a proposal. Phrases are grouped into 30 consecutiv
 
 | parts balanced | measured by | min | max | CV | max/min |
 |---|---|---|---|---|---|
-| by recitation | Recitation (harakat) | 12,955 | 13,481 | 0.0082 | 1.041× |
-| by recitation | Typesetting (px @24) | 106,837.7 | 122,773.1 | 0.0299 | 1.149× |
-| by typesetting | Recitation (harakat) | 11,971 | 13,966 | 0.0278 | 1.167× |
-| by typesetting | Typesetting (px @24) | 107,380.6 | 112,805.4 | 0.0105 | 1.051× |
+| by recitation | Recitation (harakat) | 12,942 | 13,481 | 0.0080 | 1.042× |
+| by recitation | Typesetting (px @24) | 105,117.3 | 122,773.1 | 0.0305 | 1.168× |
+| by typesetting | Recitation (harakat) | 12,196 | 13,966 | 0.0249 | 1.145× |
+| by typesetting | Typesetting (px @24) | 107,378.2 | 112,798.2 | 0.0097 | 1.050× |
 | traditional juz | Recitation (harakat) | 12,515 | 14,052 | 0.0326 | 1.123× |
 | traditional juz | Typesetting (px @24) | 103,477.6 | 121,631.3 | 0.0394 | 1.175× |
 
-Parts hold 26–91 phrases (median 33); the parts in Juz ʿAmma hold the most, as its phrases are short. The largest phrase is 8.6% of a part by recitation (8.5% by typesetting), which limits how exactly a cut can land. Even so, every part ends within 2.5% of the target by recitation (3.5% when balancing by typesetting).
+Parts hold 28–91 phrases (median 36); the parts in Juz ʿAmma hold the most, as its phrases are short. The largest phrase is 8.6% of a part by recitation (8.4% by typesetting), which limits how exactly a cut can land. Even so, every part ends within 2.6% of the target by recitation (3.5% when balancing by typesetting).
 
-Cut points when balancing by recitation (first phrase of parts 2–30): 2:142, 2:255, 3:102, 4:34, 4:160, 5:94, 6:118, 7:94, 8:45, 9:107, 11:18, 12:63, 15:21, 17:18, 18:92, 21:21, 23:37, 25:45, 27:65, 29:56, 33:41, 36:51, 39:41, 42:7, 46:7, 51:38, 58:1, 66:10, 77:16
+Cut points when balancing by recitation (first phrase of parts 2–30): 2:142, 2:255, 3:102, 4:34, 4:163, 5:97, 6:122, 7:94, 8:45, 9:107, 11:18, 12:63, 15:21, 17:18, 18:92, 21:21, 23:37, 25:45, 27:65, 29:56, 33:41, 36:51, 39:41, 42:7, 46:7, 51:38, 58:1, 66:10, 77:16
 
 ## 6. Takeaways
 
-- The traditional juz vary by CV 0.033 in recitation (longest/shortest 1.12×). Cutting only at phrase boundaries brings that to CV 0.0082 (1.041×), so meaningful boundaries cost almost nothing in balance.
-- Recitation and typesetting correlate strongly (phrase Pearson 0.994), but balancing only one leaves the other at CV about 0.03: parts balanced for the page range 1.17× in recitation, wider than the traditional juz. Serving reciters and typesetters together needs a weighted mix of the two scores, which is a decision for Task 3.
+- The traditional juz vary by CV 0.033 in recitation (longest/shortest 1.12×). Cutting only at phrase boundaries brings that to CV 0.0080 (1.042×), so meaningful boundaries cost almost nothing in balance.
+- Recitation and typesetting correlate strongly (phrase Pearson 0.994), but balancing only one leaves the other at CV about 0.03: parts balanced for the page range 1.15× in recitation, wider than the traditional juz. Serving reciters and typesetters together needs a weighted mix of the two scores, which is a decision for Task 3.
 - Surah openings (title and basmala) add fixed costs that the per-aya scores leave out; Task 3 must count them, as done here for the juz totals.

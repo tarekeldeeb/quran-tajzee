@@ -108,13 +108,25 @@ def main() -> None:
     m["JuzSplits"] = str(sum(1 for r in rr if r["kind"] == "juz" and r["decision"] == "accept"))
 
     # granularity: targeted splits accepted, then phrase-only re-solve; and the aya-end ceiling
-    base = {u.index for u in us if u.phrase_start}
+    # review round 2 (quarters)
+    r2 = reviews.load_splits(ROOT / "reviews" / "2026-10-21-rub-splits" / "splits.tsv")
+    m["RubRoundBoundaries"] = str(len({(r["hizb"], r["boundary"]) for r in r2}))
+    m["RubRoundCandidates"] = str(len(r2))
+    m["RubRoundSplits"] = str(sum(1 for r in r2 if r["decision"] == "accept"))
+    m["RubRoundKept"] = str(int(m["RubRoundBoundaries"]) - int(m["RubRoundSplits"]))
+    m["ReviewedRub"] = f"({m['RubRoundSplits']},{float(m['NewRubCV']):.2f})"
+    m["ReviewedRubWorst"] = f"({m['RubRoundSplits']},{float(m['NewRubWorst']):.2f})"
+    # the curve starts from the phrases before the quarter round (its accepted splits removed)
+    idx_ = {(u.sura, u.aya): u.index for u in us}
+    round2 = {idx_[tuple(map(int, r["proposed_start"].split(":")))] for r in r2 if r["decision"] == "accept"}
+    base = {u.index for u in us if u.phrase_start} - round2
 
     def with_starts(st_):
         return [dataclasses.replace(u, phrase_start=(u.index in st_)) for u in us]
+    u0 = with_starts(base)  # the state before the quarter round
     curve = []
     for pen in (INF, 0.15, 0.10, 0.08, 0.05, 0.04, 0.0):
-        add = set() if pen == INF else set(rub.solve(us, mid_phrase=pen, cap=None, objective="penalized").mid_phrase)
+        add = set() if pen == INF else set(rub.solve(u0, mid_phrase=pen, cap=None, objective="penalized").mid_phrase)
         u2 = with_starts(base | add)
         d = rub.solve(u2)
         r = rub.relative(u2, d.starts, c, 4)

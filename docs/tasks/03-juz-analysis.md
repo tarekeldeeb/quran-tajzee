@@ -9,48 +9,48 @@ Division: `data/juz/juz.tsv`, solved by `scripts/solve_juz.py` with a 50/50 mix 
 | score | division | CV | longest/shortest | worst deviation |
 |---|---|---|---|---|
 | Recitation | traditional | 0.0326 | 1.123× | ±5.8% |
-| Recitation | new | 0.0179 | 1.076× | ±3.8% |
+| Recitation | new | 0.0194 | 1.103× | ±5.9% |
 | Typesetting | traditional | 0.0366 | 1.157× | ±8.1% |
-| Typesetting | new | 0.0217 | 1.109× | ±7.2% |
+| Typesetting | new | 0.0196 | 1.106× | ±7.2% |
 | Combined 50/50 | traditional | 0.0335 | 1.132× | ±6.2% |
-| Combined 50/50 | new | 0.0176 | 1.080× | ±5.0% |
+| Combined 50/50 | new | 0.0170 | 1.094× | ±5.0% |
 
-On the combined score the spread (CV) falls from 0.0335 to 0.0176, 1.9× more even, and the longest juz is 1.080× the shortest instead of 1.132×.
-Recitation alone improves on every measure: CV 0.0326 → 0.0179, worst ±5.8% → ±3.8%.
-Typesetting alone improves on every measure: CV 0.0366 → 0.0217, worst ±8.1% → ±7.2%.
+On the combined score the spread (CV) falls from 0.0335 to 0.0170, 2.0× more even, and the longest juz is 1.094× the shortest instead of 1.132×.
+Recitation alone has a lower spread but a larger worst case: CV 0.0326 → 0.0194, worst ±5.8% → ±5.9%.
+Typesetting alone improves on every measure: CV 0.0366 → 0.0196, worst ±8.1% → ±7.2%.
 
 ## 2. The 30 juz
 
 | juz | starts | surah | ends | phrases | ayat | recitation | typesetting | opens with |
 |---|---|---|---|---|---|---|---|---|
-| 1 | 1:1 | الفاتحة | 2:141 | 38 | 148 | -0.9% | -3.1% | الفاتحة: الحمد والثناء، وإفراد الله بالعبادة، وسؤال الهداية |
-| 2 | 2:142 | البقرة | 2:254 | 27 | 113 | -0.0% | +1.3% | تحويل القبلة: اعتراض السفهاء والأمة الوسط |
-| 3 | 2:255 | البقرة | 3:101 | 30 | 133 | +0.3% | +0.4% | آية الكرسي، ولا إكراه في الدين، وولاية الله |
-| 4 | 3:102 | آل عمران | 4:33 | 27 | 132 | -0.3% | -0.2% | تقوى الله والاعتصام بحبله، والأمر بالمعروف |
-| 5 | 4:34 | النساء | 4:162 | 28 | 129 | -0.2% | +0.1% | قوامة الرجال، وعلاج الشقاق |
-| 6 | 4:163 | النساء | 5:99 | 27 | 113 | +1.3% | -0.1% | الوحي إلى النبي كما أوحي إلى النبيين |
-| 7 | 5:100 | المائدة | 6:127 | 30 | 148 | +2.4% | +1.8% | الخبيث والطيب، والسؤال عن الأشياء، والبحيرة والسائبة |
-| 8 | 6:128 | الأنعام | 7:112 | 26 | 150 | +2.0% | -1.1% | حشر الجن والإنس، واعملوا على مكانتكم |
-| 9 | 7:113 | الأعراف | 8:59 | 29 | 153 | -0.7% | -2.5% | السحرة وغلبة موسى وإيمانهم |
-| 10 | 8:60 | الأنفال | 9:116 | 26 | 132 | -0.2% | -0.3% | إعداد القوة، والجنوح للسلم، وتأليف القلوب، والتحريض |
-| 11 | 9:117 | التوبة | 11:31 | 31 | 153 | -0.1% | -2.0% | التوبة على النبي والمهاجرين والأنصار والثلاثة |
-| 12 | 11:32 | هود | 12:76 | 30 | 168 | -0.5% | -3.3% | استعجال قوم نوح العذاب |
-| 13 | 12:77 | يوسف | 15:56 | 36 | 186 | +0.4% | +0.6% | قولهم إن يسرق فقد سرق أخ له، ورجوع كبيرهم |
-| 14 | 15:57 | الحجر | 17:35 | 41 | 206 | -0.3% | +0.5% | المرسلون إلى قوم لوط ونجاة آله |
-| 15 | 17:36 | الإسراء | 18:110 | 35 | 186 | -0.3% | +0.7% | لا تقف ما ليس لك به علم، ولا تمش في الأرض مرحًا |
-| 16 | 19:1 | مريم | 21:33 | 44 | 266 | -1.8% | +1.1% | دعاء زكريا الخفي |
-| 17 | 21:34 | الأنبياء | 23:50 | 35 | 207 | -0.5% | -1.0% | كل نفس ذائقة الموت، واستهزاء الكافرين واستعجالهم |
-| 18 | 23:51 | المؤمنون | 25:55 | 35 | 187 | -0.4% | -0.6% | يا أيها الرسل كلوا من الطيبات، وتقطع الأمة زبرًا |
-| 19 | 25:56 | الفرقان | 27:75 | 49 | 324 | -0.7% | -0.9% | الرسول مبشر ونذير، والتوكل على الحي، واسجدوا للرحمن |
-| 20 | 27:76 | النمل | 29:69 | 32 | 175 | +2.4% | +0.2% | القرآن يقص على بني إسرائيل، والتوكل، ولا تسمع الموتى |
-| 21 | 30:1 | الروم | 33:48 | 31 | 172 | -3.6% | -2.1% | غلبة الروم ووعد الله |
-| 22 | 33:49 | الأحزاب | 36:50 | 32 | 174 | -2.0% | -2.7% | الطلاق قبل الدخول، وما أحل للنبي من الأزواج |
-| 23 | 36:51 | يس | 39:35 | 48 | 338 | -2.2% | -0.8% | النفخ في الصور والبعث، وأصحاب الجنة |
-| 24 | 39:36 | الزمر | 41:54 | 32 | 179 | +0.0% | -0.5% | أليس الله بكاف عبده |
-| 25 | 42:1 | الشورى | 45:37 | 39 | 238 | -1.4% | -1.4% | الوحي، وتسبيح الملائكة، والذين اتخذوا من دونه أولياء |
-| 26 | 46:1 | الأحقاف | 51:37 | 34 | 202 | +3.8% | +3.7% | تنزيل الكتاب، وضلال من يدعو من دون الله |
-| 27 | 51:38 | الذاريات | 57:29 | 55 | 392 | +0.6% | +4.3% | موسى وعاد وثمود وقوم نوح |
-| 28 | 58:1 | المجادلة | 66:12 | 34 | 137 | +3.8% | +1.0% | المجادلة، وحكم الظهار وكفارته |
+| 1 | 1:1 | الفاتحة | 2:141 | 39 | 148 | -0.9% | -3.1% | الفاتحة: الحمد والثناء، وإفراد الله بالعبادة، وسؤال الهداية |
+| 2 | 2:142 | البقرة | 2:254 | 29 | 113 | -0.0% | +1.3% | تحويل القبلة: اعتراض السفهاء والأمة الوسط |
+| 3 | 2:255 | البقرة | 3:101 | 33 | 133 | +0.3% | +0.4% | آية الكرسي، ولا إكراه في الدين، وولاية الله |
+| 4 | 3:102 | آل عمران | 4:33 | 30 | 132 | -0.3% | -0.2% | تقوى الله والاعتصام بحبله، والأمر بالمعروف |
+| 5 | 4:34 | النساء | 4:162 | 31 | 129 | -0.2% | +0.1% | قوامة الرجال، وعلاج الشقاق |
+| 6 | 4:163 | النساء | 5:96 | 28 | 110 | -0.3% | -1.8% | الوحي إلى النبي كما أوحي إلى النبيين |
+| 7 | 5:97 | المائدة | 6:121 | 33 | 145 | -0.2% | -0.9% | الكعبة قيام للناس، وما على الرسول إلا البلاغ |
+| 8 | 6:122 | الأنعام | 7:102 | 29 | 146 | +2.7% | -0.2% | من كان ميتًا فأحييناه، وأكابر المجرمين، وشرح الصدر للإسلام |
+| 9 | 7:103 | الأعراف | 8:58 | 32 | 162 | +2.6% | +0.7% | موسى وفرعون: العصا واليد، ومشورة الملأ |
+| 10 | 8:59 | الأنفال | 9:116 | 28 | 133 | +0.1% | +0.0% | لا يحسبن الذين كفروا سبقوا |
+| 11 | 9:117 | التوبة | 11:35 | 33 | 157 | +1.9% | -0.1% | التوبة على النبي والمهاجرين والأنصار والثلاثة |
+| 12 | 11:36 | هود | 12:82 | 31 | 170 | +1.9% | -1.2% | صنع الفلك وسخرية القوم |
+| 13 | 12:83 | يوسف | 15:72 | 39 | 196 | +0.3% | +0.6% | حزن يعقوب، وولا تيأسوا من روح الله |
+| 14 | 15:73 | الحجر | 17:44 | 44 | 199 | -0.4% | +0.9% | أخذهم بالصيحة وقلب المدينة |
+| 15 | 17:45 | الإسراء | 19:15 | 38 | 192 | +0.5% | +1.4% | الحجاب بين القرآن والمكذبين |
+| 16 | 19:16 | مريم | 21:47 | 44 | 265 | +0.1% | +2.9% | انتباذ مريم والبشارة بعيسى |
+| 17 | 21:48 | الأنبياء | 23:74 | 38 | 217 | +0.7% | +0.2% | الفرقان لموسى وهارون، وهذا ذكر مبارك |
+| 18 | 23:75 | المؤمنون | 25:77 | 37 | 185 | +0.9% | +0.7% | لجاجهم في الطغيان، ونعم السمع والأبصار والإحياء |
+| 19 | 26:1 | الشعراء | 27:93 | 50 | 320 | -1.8% | -1.9% | آيات الكتاب المبين، وإعراض المكذبين |
+| 20 | 28:1 | القصص | 30:16 | 35 | 173 | +1.3% | -1.3% | علو فرعون، وإرادة الله المن على المستضعفين |
+| 21 | 30:17 | الروم | 33:58 | 36 | 166 | +0.6% | +1.9% | التسبيح والحمد، ومن آياته خلق الإنسان والأزواج |
+| 22 | 33:59 | الأحزاب | 36:83 | 38 | 197 | -2.0% | -2.2% | الحجاب، ووعيد المنافقين والمرجفين |
+| 23 | 37:1 | الصافات | 39:59 | 48 | 329 | +0.2% | +1.7% | القسم بالصافات، وإن إلهكم لواحد، وحفظ السماء من الشياطين |
+| 24 | 39:60 | الزمر | 42:20 | 35 | 175 | -0.9% | -1.6% | المكذبون على الله ونجاة المتقين، والله خالق كل شيء |
+| 25 | 42:21 | الشورى | 46:19 | 39 | 237 | -1.1% | -1.6% | الشركاء المشرعون، والمودة في القربى، وقبول التوبة |
+| 26 | 46:20 | الأحقاف | 51:60 | 37 | 206 | -2.7% | -2.2% | عرض الكافرين على النار |
+| 27 | 52:1 | الطور | 57:29 | 53 | 369 | -5.9% | -2.2% | القسم بالطور، وإن عذاب ربك لواقع |
+| 28 | 58:1 | المجادلة | 66:12 | 35 | 137 | +3.8% | +1.0% | المجادلة، وحكم الظهار وكفارته |
 | 29 | 67:1 | الملك | 76:31 | 58 | 381 | -3.6% | -0.3% | تبارك الذي بيده الملك، وخلق الموت والحياة، والسماوات الطباق |
 | 30 | 77:1 | المرسلات | 114:6 | 93 | 614 | +2.7% | +7.2% | القسم بالمرسلات، إنما توعدون لواقع |
 
@@ -62,13 +62,13 @@ The same solver at other weights; every row is measured on both scores and on th
 
 | weight (recitation) | recitation CV | recitation worst | typesetting CV | typesetting worst | 50/50 worst |
 |---|---|---|---|---|---|
-| 0.00 | 0.0264 | ±7.8% | 0.0182 | ±4.6% | ±6.2% |
-| 0.25 | 0.0239 | ±6.7% | 0.0172 | ±4.3% | ±4.7% |
-| 0.50 | 0.0179 | ±3.8% | 0.0217 | ±7.2% | ±5.0% |
-| 0.75 | 0.0171 | ±3.8% | 0.0227 | ±7.2% | ±5.0% |
-| 1.00 | 0.0166 | ±3.8% | 0.0260 | ±7.2% | ±5.0% |
+| 0.00 | 0.0263 | ±7.8% | 0.0181 | ±4.6% | ±6.2% |
+| 0.25 | 0.0237 | ±6.7% | 0.0172 | ±4.3% | ±4.7% |
+| 0.50 | 0.0194 | ±5.9% | 0.0196 | ±7.2% | ±5.0% |
+| 0.75 | 0.0166 | ±3.8% | 0.0226 | ±7.2% | ±5.0% |
+| 1.00 | 0.0145 | ±3.8% | 0.0252 | ±7.2% | ±5.0% |
 
-Balancing one score alone leaves the other at CV 0.026 (recitation, weight 0) or 0.026 (typesetting, weight 1). The 50/50 mix keeps both near the middle of that range.
+Balancing one score alone leaves the other at CV 0.026 (recitation, weight 0) or 0.025 (typesetting, weight 1). The 50/50 mix keeps both near the middle of that range.
 
 ## 4. Surah breaks
 
@@ -76,23 +76,23 @@ A juz that starts in the middle of a surah is penalised: it costs as much as a j
 
 | penalty p | cap | juz starting mid-surah | juz opening a surah | combined CV | combined worst |
 |---|---|---|---|---|---|
-| 0% | none | 28 | 2 | 0.0090 | ±2.1% |
-| 2% | ±5% | 28 | 2 | 0.0090 | ±2.1% |
-| 2% | none | 28 | 2 | 0.0090 | ±2.1% |
-| 3% | ±5% | 24 | 6 | 0.0127 | ±3.6% |
-| 3% | none | 24 | 6 | 0.0127 | ±3.6% |
-| 3.5% | ±5% | 20 | 10 | 0.0174 | ±3.8% |
-| 3.5% | none | 20 | 10 | 0.0174 | ±3.8% |
-| 4% | ±5% | 20 | 10 | 0.0174 | ±3.8% |
-| 4% | none | 20 | 10 | 0.0174 | ±3.8% |
-| 4.5% | ±5% | 20 | 10 | 0.0174 | ±3.8% |
-| 4.5% | none | 20 | 10 | 0.0174 | ±3.8% |
-| 5% | ±5% | 18 | 12 | 0.0212 | ±5.0% |
-| 5% | none | 17 | 13 | 0.0226 | ±6.2% |
-| 7% | ±5% | 18 | 12 | 0.0212 | ±5.0% |
-| 7% | none | 16 | 14 | 0.0244 | ±6.2% |
-| 10% | ±5% | 18 | 12 | 0.0212 | ±5.0% |
-| 10% | none | 14 | 16 | 0.0321 | ±7.6% |
+| 0% | none | 29 | 1 | 0.0082 | ±2.0% |
+| 2% | ±5% | 28 | 2 | 0.0087 | ±2.0% |
+| 2% | none | 28 | 2 | 0.0087 | ±2.0% |
+| 3% | ±5% | 24 | 6 | 0.0118 | ±2.5% |
+| 3% | none | 24 | 6 | 0.0118 | ±2.5% |
+| 3.5% | ±5% | 20 | 10 | 0.0169 | ±3.8% |
+| 3.5% | none | 20 | 10 | 0.0169 | ±3.8% |
+| 4% | ±5% | 20 | 10 | 0.0169 | ±3.8% |
+| 4% | none | 20 | 10 | 0.0169 | ±3.8% |
+| 4.5% | ±5% | 20 | 10 | 0.0169 | ±3.8% |
+| 4.5% | none | 20 | 10 | 0.0169 | ±3.8% |
+| 5% | ±5% | 18 | 12 | 0.0208 | ±5.0% |
+| 5% | none | 16 | 14 | 0.0241 | ±6.2% |
+| 7% | ±5% | 17 | 13 | 0.0238 | ±4.7% |
+| 7% | none | 16 | 14 | 0.0241 | ±6.2% |
+| 10% | ±5% | 17 | 13 | 0.0238 | ±4.7% |
+| 10% | none | 14 | 16 | 0.0319 | ±7.6% |
 
 The traditional juz: 21 start mid-surah. Up to p = 2% the penalty changes nothing: no surah start lies close enough to a balanced cut to be worth it. At 3% the first cuts move to surah starts, and at 3.5% four more follow for only +0.2% in the worst juz. That result then holds through 4.5%, and the default p = 4% sits in the middle of it. At 5% two more juz open a surah, but the worst juz jumps to the ±5% cap, or to ±6.2% without it. Beyond that only the cap holds the balance.
 
@@ -102,12 +102,12 @@ The penalty can differ by juz: a high one where a surah opening matters most (th
 
 | setting | cap | juz opening a surah | last 5 opening a surah | last 5 start at | combined CV | combined worst | recitation worst | typesetting worst |
 |---|---|---|---|---|---|---|---|---|
-| uniform p = 4%, no priority | ±5% | 10 | 2/5 | 46:21 52:1 58:5 67:1 77:25 | 0.0174 | ±3.80% | ±4.9% | ±4.1% |
-| last 3 required, others 4% | ±5% | 12 | 4/5 | 46:21 52:1 58:1 67:1 77:1 | 0.0212 | ±4.97% | ±5.9% | ±7.2% |
-| last 4 required, others 3% | ±5% | 8 | 4/5 | 46:21 52:1 58:1 67:1 77:1 | 0.0176 | ±4.97% | ±5.9% | ±7.2% |
-| last 5 priority 10%, others 3% (default) | ±5% | 8 | 4/5 | 46:1 51:38 58:1 67:1 77:1 | 0.0176 | ±4.97% | ±3.8% | ±7.2% |
-| last 5 priority 10%, others 4% | ±5% | 12 | 4/5 | 46:21 52:1 58:1 67:1 77:1 | 0.0212 | ±4.97% | ±5.9% | ±7.2% |
-| last 5 required, others 3%, cap ±6.5% | ±6.5% | 10 | 5/5 | 47:1 53:1 59:1 68:1 78:1 | 0.0189 | ±6.20% | ±7.8% | ±4.6% |
+| uniform p = 4%, no priority | ±5% | 10 | 2/5 | 46:20 52:1 58:5 67:1 77:25 | 0.0169 | ±3.80% | ±4.9% | ±4.1% |
+| last 3 required, others 4% | ±5% | 12 | 4/5 | 46:20 52:1 58:1 67:1 77:1 | 0.0208 | ±4.97% | ±5.9% | ±7.2% |
+| last 4 required, others 3% | ±5% | 8 | 4/5 | 46:20 52:1 58:1 67:1 77:1 | 0.0170 | ±4.97% | ±5.9% | ±7.2% |
+| last 5 priority 10%, others 3% (default) | ±5% | 8 | 4/5 | 46:20 52:1 58:1 67:1 77:1 | 0.0170 | ±4.97% | ±5.9% | ±7.2% |
+| last 5 priority 10%, others 4% | ±5% | 12 | 4/5 | 46:20 52:1 58:1 67:1 77:1 | 0.0208 | ±4.97% | ±5.9% | ±7.2% |
+| last 5 required, others 3%, cap ±6.5% | ±6.5% | 10 | 5/5 | 47:1 53:1 59:1 68:1 78:1 | 0.0188 | ±6.20% | ±7.8% | ±4.6% |
 
 Within ±5%, at most the last 4 juz can all open a surah (Aṭ-Ṭūr, Al-Mujādila, Al-Mulk, Al-Mursalāt). Requiring all 5 needs ±6.2%: the last five then start at Muḥammad, An-Najm, Al-Ḥashr, Al-Qalam and An-Nabaʾ (juz 30 as in the traditional division), and juz 29 is the one that pays. The default keeps ±5% and gives the last 5 a strong but soft priority.
 
@@ -117,11 +117,11 @@ With the other juz at 3%, the solver spends its freedom on balance: 8 juz open a
 
 | objective | mid-surah starts | combined CV | combined worst | recitation worst | typesetting worst |
 |---|---|---|---|---|---|
-| penalized (default) | 22 | 0.0176 | ±4.97% | ±3.8% | ±7.2% |
-| minimax+lsq | 28 | 0.0090 | ±2.10% | ±3.3% | ±3.1% |
-| lsq | 28 | 0.0090 | ±2.10% | ±3.3% | ±3.1% |
-| minimax | 29 | 0.0115 | ±2.10% | ±2.8% | ±3.7% |
-| each | 28 | 0.0091 | ±2.10% | ±2.4% | ±3.1% |
+| penalized (default) | 22 | 0.0170 | ±4.97% | ±5.9% | ±7.2% |
+| minimax+lsq | 29 | 0.0082 | ±2.00% | ±3.3% | ±3.1% |
+| lsq | 29 | 0.0082 | ±2.00% | ±3.3% | ±3.1% |
+| minimax | 28 | 0.0122 | ±2.00% | ±2.7% | ±3.7% |
+| each | 29 | 0.0083 | ±2.00% | ±2.7% | ±3.1% |
 
 - `penalized` (default): least squares plus the surah-break penalty (10% on the last 5 juz, 3% on the others), cap ±5%.
 - `minimax`: the smallest possible worst juz on the mix; the other juz are left loose.
@@ -135,7 +135,7 @@ Task 2 measures the text's own width. A printed Mushaf also gives each surah a h
 
 | header weight | recitation worst | typesetting worst | 50/50 worst | juz 30 starts | juz 30 recitation / print |
 |---|---|---|---|---|---|
-| 0.0 | ±3.8% | ±7.1% | ±4.9% | 77:1 | +2.7% / +7.1% |
+| 0.0 | ±5.9% | ±7.2% | ±5.0% | 77:1 | +2.7% / +7.2% |
 | 0.5 | ±8.2% | ±6.3% | ±2.6% | 78:21 | -8.2% / +6.3% |
 | 1.0 | ±12.6% | ±12.5% | ±3.6% | 79:1 | -12.6% / +12.5% |
 
@@ -143,7 +143,7 @@ Juz ʿAmma holds 37 of the 114 headers. Counted in full, they make the last juz 
 
 ## 7. Where the new juz start
 
-5 of the 29 inner boundaries coincide with a traditional juz start; 8 new juz open a surah (traditional: 9).
+4 of the 29 inner boundaries coincide with a traditional juz start; 8 new juz open a surah (traditional: 9).
 
 | juz | traditional start | new start | shift (ayat) | shift (% of a juz) |
 |---|---|---|---|---|
@@ -152,42 +152,42 @@ Juz ʿAmma holds 37 of the 114 headers. Counted in full, they make the last juz 
 | 4 | 3:93 | 3:102 | +9 | +5% |
 | 5 | 4:24 | 4:34 | +10 | +9% |
 | 6 | 4:148 | 4:163 | +15 | +10% |
-| 7 | 5:82 | 5:100 | +18 | +15% |
-| 8 | 6:111 | 6:128 | +17 | +12% |
-| 9 | 7:88 | 7:113 | +25 | +13% |
-| 10 | 8:41 | 8:60 | +19 | +13% |
+| 7 | 5:82 | 5:97 | +15 | +13% |
+| 8 | 6:111 | 6:122 | +11 | +7% |
+| 9 | 7:88 | 7:103 | +15 | +9% |
+| 10 | 8:41 | 8:59 | +18 | +12% |
 | 11 | 9:93 | 9:117 | +24 | +19% |
-| 12 | 11:6 | 11:32 | +26 | +17% |
-| 13 | 12:53 | 12:77 | +24 | +14% |
-| 14 | 15:1 | 15:57 | +56 | +16% |
-| 15 | 17:1 | 17:36 | +35 | +19% |
-| 16 | 18:75 | 19:1 | +36 | +17% |
-| 17 | 21:1 | 21:34 | +33 | +14% |
-| 18 | 23:1 | 23:51 | +50 | +19% |
-| 19 | 25:21 | 25:56 | +35 | +15% |
-| 20 | 27:56 | 27:76 | +20 | +10% |
-| 21 | 29:46 | 30:1 | +24 | +13% |
-| 22 | 33:31 | 33:49 | +18 | +11% |
-| 23 | 36:28 | 36:51 | +23 | +9% |
-| 24 | 39:32 | 39:36 | +4 | +2% |
-| 25 | 41:47 | 42:1 | +8 | +5% |
-| 26 | 46:1 | 46:1 | +0 | +0% |
-| 27 | 51:31 | 51:38 | +7 | +2% |
+| 12 | 11:6 | 11:36 | +30 | +19% |
+| 13 | 12:53 | 12:83 | +30 | +18% |
+| 14 | 15:1 | 15:73 | +72 | +20% |
+| 15 | 17:1 | 17:45 | +44 | +23% |
+| 16 | 18:75 | 19:16 | +51 | +22% |
+| 17 | 21:1 | 21:48 | +47 | +21% |
+| 18 | 23:1 | 23:75 | +74 | +27% |
+| 19 | 25:21 | 26:1 | +57 | +24% |
+| 20 | 27:56 | 28:1 | +38 | +18% |
+| 21 | 29:46 | 30:17 | +40 | +20% |
+| 22 | 33:31 | 33:59 | +28 | +22% |
+| 23 | 36:28 | 37:1 | +56 | +20% |
+| 24 | 39:32 | 39:60 | +28 | +15% |
+| 25 | 41:47 | 42:21 | +28 | +18% |
+| 26 | 46:1 | 46:20 | +19 | +13% |
+| 27 | 51:31 | 52:1 | +30 | +8% |
 | 28 | 58:1 | 58:1 | +0 | +0% |
 | 29 | 67:1 | 67:1 | +0 | +0% |
 | 30 | 78:1 | 77:1 | -50 | -8% |
 
-24 new starts fall after the traditional one and 1 before; the median shift is 11% of a juz, the largest 19% (juz 15). Shifts accumulate: whenever traditional juz run shorter than average, every later boundary moves the same way until longer ones give the difference back.
+25 new starts fall after the traditional one and 1 before; the median shift is 15% of a juz, the largest 27% (juz 18). Shifts accumulate: whenever traditional juz run shorter than average, every later boundary moves the same way until longer ones give the difference back.
 
 ## 8. The worst juz
 
-Juz 30 deviates most (+4.97% on the mix), the price of opening 8 juz on a surah. Without the penalty the exact limit is ±2.11%, set by phrase granularity: cuts fall only between phrases, and the largest phrase is 8.5% of a juz.
+Juz 30 deviates most (+4.97% on the mix), the price of opening 8 juz on a surah. Without the penalty the exact limit is ±2.00%, set by phrase granularity: cuts fall only between phrases, and the largest phrase is 8.5% of a juz.
 
 ## 9. Takeaways
 
-- At 50/50 the new juz are 1.9× more even than the traditional ones on the combined score (worst ±5.0% against ±6.2%).
+- At 50/50 the new juz are 2.0× more even than the traditional ones on the combined score (worst ±5.0% against ±6.2%).
 - Every juz opens at the start of a subject phrase; 8 open a surah, against 9 traditionally.
 - The result is exactly optimal for the current phrase list and objective, and stays so after each review round by re-running the solver.
-- 4 of the last 5 juz open a surah: 46:1 الأحقاف, 51:38 الذاريات, 58:1 المجادلة, 67:1 الملك, 77:1 المرسلات.
+- 4 of the last 5 juz open a surah: 46:20 الأحقاف, 52:1 الطور, 58:1 المجادلة, 67:1 الملك, 77:1 المرسلات.
 - Open decisions: how far to push the last-juz priority (section 4) and whether printed surah headers count (section 6).
 - Next (Task 4): hizb and quarters inside each juz with the same solver, and a review page for the juz boundaries.

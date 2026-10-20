@@ -26,7 +26,7 @@ def main() -> None:
     un = rub.ayat()                    # now
     c = rub.mix(ur)
     js = scores.traditional_starts(8) + [len(ur)]
-    before = rub.solve(ur).starts
+    before = rub.solve(ur, pin_hizb=False).starts
     after = rub.solve(un).starts
     idx = {(u.sura, u.aya): u.index for u in ur}
 

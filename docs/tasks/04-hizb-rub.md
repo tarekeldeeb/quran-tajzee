@@ -36,8 +36,9 @@ cuts only at phrase starts
 |---|---|---|
 | hizb, worst (of ½ juz) | ±13.9% | ±3.6% |
 | hizb, CV | 6.9% | 1.4% |
-| rubʿ, worst (of ¼ hizb) | ±38% | ±24% |
-| longest/shortest rubʿ, whole Quran | 2.19× | 1.65× |
+| rubʿ, worst (of ¼ hizb) | ±38% | ±19.4% |
+| rubʿ, CV | 11.7% | 5.9% |
+| longest/shortest rubʿ, whole Quran | 2.19× | 1.51× |
 | hizb and rubʿ starting inside a phrase | 79 of 210 | **0** |
 
 ## Review round 1: hizb (2026-10-18, approved 2026-10-21)
@@ -48,6 +49,14 @@ subject. That gave 7 splits. The 11 phrases cut by traditional juz starts were s
 decisions, juz by juz, are in [reviews/2026-10-18-hizb-splits](../../reviews/2026-10-18-hizb-splits/README.md).
 Where meaning ruled out a closer point, the hizb is kept less even: juz 6 +3.6%, juz 12 +3.5%,
 juz 22 +2.9%, and juz 29 keeps the opening of Sūrat al-Jinn.
+
+## Review round 2: rubʿ (2026-10-21, proposed)
+
+With the approved hizb fixed (`data/rub/hizb-approved.tsv`), every quarter boundary more than 3% of a
+quarter from its even position was checked the same way. That was 132 boundaries and 422 candidates
+read. 61 phrases were split at complete stops, and 71 boundaries were kept because every closer point is
+a turn of a story or dialogue. Quarter CV went from 9.2% to 5.9% and the worst quarter from ±23.8% to
+±19.4%. Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
 
 ## Balance through review
 
