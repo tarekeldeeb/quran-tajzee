@@ -92,29 +92,58 @@ def _join(topics: list[str]) -> str:
     return "، ".join(seen)
 
 
-DIVISION_REASONS = ("juz", "hizb", "rub", "balance")
+DIVISION_KINDS = ("juz", "hizb", "rub", "balance")
+
+
+def load_splits(path) -> list[dict]:
+    """Rows of a split round (reviews/*/splits.tsv), normalised.
+
+    File columns, base first, then the proposal:
+      juz               the juz the row is about
+      kind              hizb: an optional start for the juz's second hizb;
+                        juz: the traditional juz start (fixed, so the split is required)
+      base_start        where the second hizb started before this round (hizb rows)
+      base_balance      its balance: first hizb against half the juz
+      proposed_start    the aya proposed as a new phrase start (and hizb start)
+      proposed_balance  the balance if the second hizb started there
+      inside_phrase     the existing phrase (sura:from-to) that the proposed start splits
+      decision          accept or reject
+      why               the reason for the decision
+      topic_part1/2     topics of the two phrases the split would make
+    Returned keys add sura, split_after, from, to (ints) for the code.
+    """
+    import csv
+
+    out = []
+    for r in csv.DictReader(open(path, encoding="utf-8"), delimiter="\t"):
+        s, a = map(int, r["proposed_start"].split(":"))
+        ps, rng = r["inside_phrase"].split(":")
+        f, t = map(int, rng.split("-"))
+        r = dict(r, sura=s, split_after=a - 1, **{"from": f, "to": t})
+        r["decision"] = (r.get("decision") or "accept").strip()
+        out.append(r)
+    return out
+
+
+def split_files(root=None):
+    from pathlib import Path
+
+    from . import ROOT
+    return sorted(Path(root or ROOT / "reviews").glob("*/splits.tsv"))
 
 
 def reading(phrases: list[Phrase] | None = None, rounds_dir=None) -> list[Phrase]:
     """The phrase list as a reading of the text alone.
 
-    Splits made to fit a division (rows of reviews/*/splits.tsv whose reason is juz, hizb,
-    rub or balance) are merged back, keeping the topic of the first half. Use this when
-    judging whether a traditional boundary falls inside a subject phrase. Otherwise the
-    splits made to follow those very boundaries would hide the cuts.
+    Every split listed in a reviews/*/splits.tsv (accepted or not) is merged back, keeping the
+    topic of the first half. Use this when judging whether a traditional boundary falls inside
+    a subject phrase. Otherwise the splits made to follow those very boundaries would hide the cuts.
     """
-    import csv
-    from pathlib import Path
-
-    from . import ROOT
     from . import phrases as phrases_mod
 
     ps = list(phrases if phrases is not None else phrases_mod.load())
-    joins = set()  # (sura, first aya of the second half)
-    for path in sorted(Path(rounds_dir or ROOT / "reviews").glob("*/splits.tsv")):
-        for r in csv.DictReader(open(path, encoding="utf-8"), delimiter="\t"):
-            if r["reason"] in DIVISION_REASONS:
-                joins.add((int(r["sura"]), int(r["split_after"]) + 1))
+    joins = {(r["sura"], r["split_after"] + 1) for path in split_files(rounds_dir)
+             for r in load_splits(path) if r["kind"] in DIVISION_KINDS}
     out: list[Phrase] = []
     for p in ps:
         if out and (p.sura, p.first) in joins and out[-1].sura == p.sura and out[-1].last + 1 == p.first:

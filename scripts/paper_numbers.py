@@ -102,10 +102,10 @@ def main() -> None:
     m["NewInnerCuts"] = str(len(final.mid_phrase))
 
     # review round 1 (hizb)
-    rr = list(csv.DictReader(open(ROOT / "reviews" / "2026-10-18-hizb-splits" / "splits.tsv", encoding="utf-8"),
-                             delimiter="\t"))
-    m["HizbSplits"] = str(sum(1 for r in rr if r["reason"] == "hizb"))
-    m["JuzSplits"] = str(sum(1 for r in rr if r["reason"] == "juz"))
+    rr = reviews.load_splits(ROOT / "reviews" / "2026-10-18-hizb-splits" / "splits.tsv")
+    m["HizbCandidates"] = str(sum(1 for r in rr if r["kind"] == "hizb"))
+    m["HizbSplits"] = str(sum(1 for r in rr if r["kind"] == "hizb" and r["decision"] == "accept"))
+    m["JuzSplits"] = str(sum(1 for r in rr if r["kind"] == "juz" and r["decision"] == "accept"))
 
     # granularity: targeted splits accepted, then phrase-only re-solve; and the aya-end ceiling
     base = {u.index for u in us if u.phrase_start}

@@ -23,8 +23,9 @@ Marks on phrases whose boundaries have since changed are reported as stale and s
 
 A round that splits phrases to serve the divisions keeps a `splits.tsv` instead of marks: one
 row per candidate split, accepted or rejected, with its reason and the topics of both halves.
-Columns: `juz sura from to split_after new_start hizb_dev_pct reason decision topic_first
-topic_second note`.
+Columns, the base first and then the proposal: `juz kind base_start base_balance
+proposed_start proposed_balance inside_phrase decision why topic_part1 topic_part2`. Each
+round's README explains them with an example.
 
 `data/phrases/phrases.tsv` is rebuilt from the reading of the text (every listed split merged
 back) plus every accepted row, so a decision can be flipped either way:
@@ -40,5 +41,5 @@ python scripts/review_hizb.py             # refresh the round's README
 
 | round | scope | outcome |
 |-------|-------|---------|
-| `2026-10-18-hizb-splits` | The second hizb of every juz, and the 11 traditional juz starts inside a phrase | 57 candidates read: 7 hizb splits accepted, 50 rejected with reasons; 11 juz splits. Worst hizb ±3.6%. See its README. |
+| `2026-10-18-hizb-splits` | The second hizb of every juz, and the 11 traditional juz starts inside a phrase | 61 candidates read: 7 hizb splits accepted, 54 rejected with reasons; 11 juz splits. Worst hizb ±3.6%. See its README. |
 | `2026-10-17-pilot` | Al-Fatiha, Al-Baqarah 1–77 (of a pilot covering 1, 2:1–141, Juz ʿAmma) | Merges preferred: 1:1–7, 2:8–16, 2:17–20, 2:34–37, 2:49–57. Prompted larger phrases across the whole list. |

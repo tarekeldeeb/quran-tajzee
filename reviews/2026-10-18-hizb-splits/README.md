@@ -14,10 +14,38 @@ The juz are the traditional 30. Each juz is cut into two hizb, and every boundar
 
 An accepted split becomes a phrase boundary with a topic for each half. The solver then picks the best phrase start, which is the accepted candidate.
 
+## Reading `splits.tsv`
+
+One row is one proposal: *start a new phrase (and so possibly the second hizb) at this aya*. The columns read from the base, what exists now, to the proposal:
+
+| column | meaning |
+|---|---|
+| `juz` | the juz the row is about |
+| `kind` | `hizb`: an optional new start for this juz's second hizb. `juz`: the traditional juz start, which is fixed, so its split is required and only its topics are open |
+| `base_start` | **base**: where the second hizb started before this round, the best phrase start of the original reading |
+| `base_balance` | **base**: its balance, the first hizb against half the juz (−1.5% = the first hizb 1.5% short, the second 1.5% long) |
+| `proposed_start` | **proposal**: the aya that would open a new phrase and the second hizb |
+| `proposed_balance` | **proposal**: the balance if the second hizb started there |
+| `inside_phrase` | the existing phrase (sura:from-to) that the proposal splits into two |
+| `decision` | `accept` (the split is made) or `reject` (the phrase stays whole) |
+| `why` | the reason, from reading the text |
+| `topic_part1`, `topic_part2` | the topics of the two phrases the split makes: `inside_phrase.from` to the aya before `proposed_start`, and `proposed_start` to `inside_phrase.to` |
+
+Example (juz 10):
+
+| juz | kind | base_start | base_balance | proposed_start | proposed_balance | inside_phrase | decision |
+|---|---|---|---|---|---|---|---|
+| 10 | hizb | 9:29 | −3.7% | 9:30 | −1.5% | 9:29-35 | accept |
+
+Before this round, the second hizb of juz 10 started at 9:29, which made the two hizb 3.7% uneven. Starting it at 9:30 makes them 1.5% uneven, but 9:30 is inside the phrase 9:29–35. The row proposes to split that phrase into 9:29 (*قتال أهل الكتاب حتى يعطوا الجزية*) and 9:30–35 (*دعاوى أهل الكتاب…*). It is accepted because 9:29 ends on a complete stop and 9:30 opens a new subject. In the same juz, 9:31 (+0.4%) is more even but rejected: «اتخذوا أحبارهم» continues 9:30.
+
+Several rows can share a juz and the same base. They are the alternatives for that juz. The solver then starts the second hizb at the most even phrase start among the base and the accepted proposals.
+
+
 ## How to change a decision
 
 1. In `splits.tsv`, set `decision` to `accept` or `reject` on the row of that candidate. Leave the other rows as they are.
-2. For a row you accept, fill in `topic_first` and `topic_second`: the topics of the phrase before and after the new start. If you leave them empty, both halves keep the old topic.
+2. For a row you accept, fill in `topic_part1` and `topic_part2`: the topics of the phrase before and after the new start. If you leave them empty, both halves keep the old topic.
 3. Rebuild and re-solve:
 
 ```sh

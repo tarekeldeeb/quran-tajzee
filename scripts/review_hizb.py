@@ -8,7 +8,6 @@ around it, the decision and the reason. It also shows the 11 juz-start splits wi
 topics. Re-run it after editing the decisions to keep the document in step.
 """
 
-import csv
 import sys
 from pathlib import Path
 
@@ -21,7 +20,7 @@ from tajzee import quran, reviews, rub, scores  # noqa: E402
 
 def main() -> None:
     folder = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "reviews" / "2026-10-18-hizb-splits"
-    rows = list(csv.DictReader(open(folder / "splits.tsv", encoding="utf-8"), delimiter="\t"))
+    rows = reviews.load_splits(folder / "splits.tsv")
     q = quran.load()
     ur = rub.ayat(reviews.reading())   # before the round
     un = rub.ayat()                    # now
@@ -39,10 +38,10 @@ def main() -> None:
 
     by_juz = {}
     for r in rows:
-        if r["reason"] == "hizb":
+        if r["kind"] == "hizb":
             by_juz.setdefault(int(r["juz"]), []).append(r)
-    juz_rows = [r for r in rows if r["reason"] == "juz"]
-    calls = [r for r in rows if r["reason"] == "hizb" and ("بديل" in r["note"])]
+    juz_rows = [r for r in rows if r["kind"] == "juz"]
+    calls = [r for r in rows if r["kind"] == "hizb" and ("بديل" in r["why"])]
 
     o = []
     w = o.append
@@ -69,10 +68,42 @@ def main() -> None:
       "An accepted split becomes a phrase boundary with a topic for each half. The solver then picks the "
       "best phrase start, which is the accepted candidate.\n")
 
+    w("## Reading `splits.tsv`\n")
+    w("One row is one proposal: *start a new phrase (and so possibly the second hizb) at this aya*. The "
+      "columns read from the base, what exists now, to the proposal:\n\n"
+      "| column | meaning |\n|---|---|\n"
+      "| `juz` | the juz the row is about |\n"
+      "| `kind` | `hizb`: an optional new start for this juz's second hizb. `juz`: the traditional juz "
+      "start, which is fixed, so its split is required and only its topics are open |\n"
+      "| `base_start` | **base**: where the second hizb started before this round, the best phrase start "
+      "of the original reading |\n"
+      "| `base_balance` | **base**: its balance, the first hizb against half the juz (−1.5% = the first hizb "
+      "1.5% short, the second 1.5% long) |\n"
+      "| `proposed_start` | **proposal**: the aya that would open a new phrase and the second hizb |\n"
+      "| `proposed_balance` | **proposal**: the balance if the second hizb started there |\n"
+      "| `inside_phrase` | the existing phrase (sura:from-to) that the proposal splits into two |\n"
+      "| `decision` | `accept` (the split is made) or `reject` (the phrase stays whole) |\n"
+      "| `why` | the reason, from reading the text |\n"
+      "| `topic_part1`, `topic_part2` | the topics of the two phrases the split makes: "
+      "`inside_phrase.from` to the aya before `proposed_start`, and `proposed_start` to "
+      "`inside_phrase.to` |\n\n"
+      "Example (juz 10):\n\n"
+      "| juz | kind | base_start | base_balance | proposed_start | proposed_balance | inside_phrase | decision |\n"
+      "|---|---|---|---|---|---|---|---|\n"
+      "| 10 | hizb | 9:29 | −3.7% | 9:30 | −1.5% | 9:29-35 | accept |\n\n"
+      "Before this round, the second hizb of juz 10 started at 9:29, which made the two hizb 3.7% "
+      "uneven. Starting it at 9:30 makes them 1.5% uneven, but 9:30 is inside the phrase 9:29–35. The "
+      "row proposes to split that phrase into 9:29 (*قتال أهل الكتاب حتى يعطوا الجزية*) and 9:30–35 "
+      "(*دعاوى أهل الكتاب…*). It is accepted because 9:29 ends on a complete stop and 9:30 opens a new "
+      "subject. In the same juz, 9:31 (+0.4%) is more even but rejected: «اتخذوا أحبارهم» continues "
+      "9:30.\n\n"
+      "Several rows can share a juz and the same base. They are the alternatives for that juz. The "
+      "solver then starts the second hizb at the most even phrase start among the base and the accepted "
+      "proposals.\n\n")
     w("## How to change a decision\n")
     w("1. In `splits.tsv`, set `decision` to `accept` or `reject` on the row of that candidate. Leave the "
       "other rows as they are.\n"
-      "2. For a row you accept, fill in `topic_first` and `topic_second`: the topics of the phrase before "
+      "2. For a row you accept, fill in `topic_part1` and `topic_part2`: the topics of the phrase before "
       "and after the new start. If you leave them empty, both halves keep the old topic.\n"
       "3. Rebuild and re-solve:\n\n"
       "```sh\npython scripts/apply_splits.py            # shows what will change\n"
@@ -93,7 +124,7 @@ def main() -> None:
         if not rs:
             d = "already the best point"
         elif acc:
-            d = "**split** at " + ", ".join(r["new_start"] for r in acc)
+            d = "**split** at " + ", ".join(r["proposed_start"] for r in acc)
         else:
             d = f"kept: {len(rs)} candidate{'s' if len(rs) > 1 else ''} rejected"
         sm.append([j + 1, f"{ur[b0].ref} ({dev(b0):+.1f}%)", f"{un[a0].ref} ({dev(a0):+.1f}%)", d])
@@ -104,7 +135,7 @@ def main() -> None:
     w("The rejected candidates below are not clear-cut: they could open a hizb and were turned down for a "
       "stronger or more even alternative. These are the ones most worth a second look.\n\n")
     w("| juz | candidate | balance | note |\n|---|---|---|---|")
-    w("\n".join(f"| {r['juz']} | {r['new_start']} | {r['hizb_dev_pct']}% | {r['note']} |" for r in calls) + "\n")
+    w("\n".join(f"| {r['juz']} | {r['proposed_start']} | {r['proposed_balance']} | {r['why']} |" for r in calls) + "\n")
 
     w("\n## Juz by juz\n")
     w("In the text: ¶ marks a phrase start of the original reading, with its topic. ▶ is the "
@@ -116,7 +147,7 @@ def main() -> None:
             continue
         dev = dev_fn(j)
         b0, a0 = before[8 * j + 4], after[8 * j + 4]
-        cand = {idx[tuple(map(int, r["new_start"].split(":")))]: r for r in rs}
+        cand = {idx[tuple(map(int, r["proposed_start"].split(":")))]: r for r in rs}
         lo, hi = min(list(cand) + [b0]), max(list(cand) + [b0])
         while lo > js[j] and not ur[lo].phrase_start:  # back to the start of the phrase
             lo -= 1
@@ -131,25 +162,25 @@ def main() -> None:
             lines.append(f"{mark} **{u.ref}** ({dev(i):+.1f}%) {q.ayat[i].text}")
         w("\n" + "  \n".join(lines) + "\n")
         w("\n| candidate | balance | decision | reason |\n|---|---|---|---|")
-        w("\n".join(f"| {r['new_start']} | {r['hizb_dev_pct']}% | {'**accept**' if r['decision'] == 'accept' else 'reject'} "
-                    f"| {r['note']} |" for r in rs) + "\n")
+        w("\n".join(f"| {r['proposed_start']} | {r['proposed_balance']} | {'**accept**' if r['decision'] == 'accept' else 'reject'} "
+                    f"| {r['why']} |" for r in rs) + "\n")
         for r in rs:
             if r["decision"] == "accept":
-                w(f"\nNew phrases: {r['sura']}:{r['from']}–{r['split_after']} *{r['topic_first']}* · "
-                  f"{r['new_start']}–{r['to']} *{r['topic_second']}*\n")
+                w(f"\nNew phrases: {r['sura']}:{r['from']}–{r['split_after']} *{r['topic_part1']}* · "
+                  f"{r['proposed_start']}–{r['to']} *{r['topic_part2']}*\n")
 
     w("\n## Juz starts that split a phrase\n")
     w("These follow the traditional juz, which are kept; only the topics are open to change.\n")
     for r in juz_rows:
-        s, sa = int(r["sura"]), int(r["split_after"])
+        s, sa = r["sura"], r["split_after"]
         w(f"\n### Juz {r['juz']} starts at {s}:{sa + 1}\n")
         lines = []
-        for a in range(int(r["from"]), int(r["to"]) + 1):
+        for a in range(r["from"], r["to"] + 1):
             i = idx[(s, a)]
             if a == sa + 1:
-                lines.append(f"¶ *{r['topic_second']}*")
-            elif a == int(r["from"]):
-                lines.append(f"¶ *{r['topic_first']}*")
+                lines.append(f"¶ *{r['topic_part2']}*")
+            elif a == r["from"]:
+                lines.append(f"¶ *{r['topic_part1']}*")
             lines.append(f"{'★' if a == sa + 1 else '·'} **{s}:{a}** {q.ayat[i].text}")
         w("\n" + "  \n".join(lines) + "\n")
 
