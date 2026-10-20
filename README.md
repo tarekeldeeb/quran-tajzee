@@ -41,7 +41,7 @@ recitation and print width.
 
 ## Status
 
-- **Task 1 — subject phrases**: drafted for the whole Quran, 6,236 ayat in 1,173 phrases of
+- **Task 1 — subject phrases**: drafted for the whole Quran, 6,236 ayat in 1,171 phrases of
   1–10 ayat, under review.
 - **Task 2 — length scores**: every aya and phrase scored for recitation (Hafs madd-weighted
   phonemes, via tajweed-embeddings) and typesetting (DigitalKhatt width, via quran-nazm).
@@ -55,8 +55,8 @@ recitation and print width.
   from [Ghayth al-Nafʿ](docs/research/ghayth-al-naf.md)), the hizb and then their quarters are
   re-cut exactly, only at phrase starts. Hizb go from ±14% to ±3.6% of half a juz (CV 6.9% → 1.4%), after a
   hizb-by-hizb review that split 7 phrases at complete stops, and the
-  longest rubʿ from 2.19× the shortest to 1.51× (CV 11.7% → 5.9%) after a quarter review that
-  split 61 phrases at complete stops. The traditional hizb and rubʿ start inside a
+  longest rubʿ from 2.19× the shortest to 1.81× (CV 11.7% → 7.6%) after a quarter review that
+  split 59 phrases at complete stops; no hizb or rubʿ starts at aya 2–10 of a surah. The traditional hizb and rubʿ start inside a
   subject phrase 79 times out of 210; the new ones never do. See the
   [final analysis](docs/final-analysis.md).
 

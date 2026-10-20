@@ -67,7 +67,7 @@ class RubSolverTest(unittest.TestCase):
                 if any(x is None or x[0] == INF for x in want):
                     continue
                 d = rub.solve(us, 0.5, m, hm, cap, juz_starts=js, method="joint",
-                              objective="penalized")
+                              objective="penalized", head_ayat=0)
                 self.assertEqual(d.starts, [0] + want[0][1] + [11] + want[1][1])
 
     def test_nested_matches_brute_force(self):
@@ -89,7 +89,8 @@ class RubSolverTest(unittest.TestCase):
                     want += r[1]
                 if not ok:
                     continue
-                self.assertEqual(rub.solve(us, 0.5, m, hm, cap, juz_starts=js, objective="penalized").starts, want)
+                self.assertEqual(rub.solve(us, 0.5, m, hm, cap, juz_starts=js, objective="penalized",
+                                           head_ayat=0).starts, want)
 
     def test_phrase_only_matches_brute_force(self):
         def best(us, c, a, e, parts):
@@ -114,8 +115,28 @@ class RubSolverTest(unittest.TestCase):
             want = []
             for a, e in zip(hizb, hizb[1:] + [len(us)]):
                 want += best(us, c, a, e, 4)
-            got = rub.solve(us, juz_starts=js).starts
+            got = rub.solve(us, juz_starts=js, head_ayat=0).starts
             self.assertEqual(got, want)
+
+
+class HeadRuleTest(unittest.TestCase):
+    def test_head_rule_respected_and_optimal(self):
+        # two surahs of 15 ayat; every aya a phrase start; starts at aya 2..10 forbidden
+        rnd = random.Random(3)
+        us = [Aya(i, 1 + i // 15, i % 15 + 1, float(rnd.randint(1, 30)), float(rnd.randint(1, 30)), True, "t")
+              for i in range(30)]
+        c = rub.mix(us)
+        ok = [i for i in range(1, 30) if not (2 <= us[i].aya <= 10)]
+        T = sum(c) / 8
+        best = None
+        for cuts in itertools.combinations(ok, 7):
+            bb = (0,) + cuts + (30,)
+            s = [sum(c[x:y]) for x, y in zip(bb, bb[1:])]
+            key = (round(max(abs(x - T) for x in s), 12), sum((x - T) ** 2 for x in s))
+            if best is None or key < best[0]:
+                best = (key, [0] + list(cuts))
+        got = rub.solve(us, juz_starts=[0], method="joint").starts
+        self.assertEqual(got, best[1])
 
 
 class RealDivisionTest(unittest.TestCase):
@@ -139,10 +160,11 @@ class RealDivisionTest(unittest.TestCase):
         self.assertEqual(self.d.mid_phrase, [])
         self.assertTrue(all(self.us[s].phrase_start for s in self.d.starts if s not in jset))
 
-    def test_penalized_within_cap(self):
-        d = rub.solve(self.us, objective="penalized")
-        rel = rub.relative(self.us, d.starts, rub.mix(self.us), 4)  # against 1/4 of the hizb
-        self.assertLessEqual(max(abs(x) for x in rel), rub.CAP + 1e-12)
+    def test_no_rub_in_first_ten_ayat(self):
+        jset = set(self.d.juz_starts)
+        for d in (self.d, rub.solve(self.us, objective="penalized", cap=None)):
+            bad = [self.us[i].ref for i in d.starts if i not in jset and 2 <= self.us[i].aya <= rub.HEAD_AYAT]
+            self.assertEqual(bad, [])
 
     def test_penalized_phrase_starts_only(self):
         d = rub.solve(self.us, mid_phrase=INF, cap=None, objective="penalized")

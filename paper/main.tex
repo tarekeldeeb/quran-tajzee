@@ -40,7 +40,7 @@ restricted to the starts of \Phrases{} reviewed subject phrases of 1--10 ayat. T
 drops from $\pm$\TradHizbWorst\% to $\pm$\NewHizbWorst\% of half a juz (CV \TradHizbCV\%
 $\rightarrow$ \NewHizbCV\%), and no new boundary falls inside a phrase. For the quarters, a
 text-checked review of \RubRoundBoundaries{} boundaries accepts \RubRoundSplits{} phrase splits at
-complete stops and halves the spread: CV \TradRubCV\% $\rightarrow$ \NewRubCV\%, longest/shortest
+complete stops and narrows the spread: CV \TradRubCV\% $\rightarrow$ \NewRubCV\%, longest/shortest
 \TradRubRatio$\times$ $\rightarrow$ \NewRubRatio$\times$; what remains uneven lies inside long
 narratives, where no closer stop exists.
 \end{abstract}
@@ -119,7 +119,7 @@ kept; the imbalance is in the finer divisions.
 
 \textbf{Nested exact cuts.} Each juz is cut into two hizb, then each hizb into four quarters, the
 way the divisions nest. A container $G$ of ayat cut into $k$ parts has target $T=|G|/k$ and the
-admissible cuts are phrase starts $\mathcal{S}$. Lexicographically we
+admissible cuts $\mathcal{S}$ are phrase starts outside ayat 2--10 of a surah. Lexicographically we
 \begin{equation}
 \min_{\text{cuts}\subset\mathcal{S}}\ \max_q \frac{|S_q - T|}{T},\quad\text{then}\quad
 \min \sum_q (S_q-T)^2 ,
@@ -183,14 +183,19 @@ Starts inside a phrase (of 210) & \TradInnerCuts & \NewInnerCuts \\
 \textbf{Quarters.} With the hizb fixed and phrase starts only, a hizb holds about 18 phrases, 4.6
 per quarter, and one long phrase can be a fifth of a quarter: the quarter CV is 9.2\%, the worst
 quarter $\pm$23.8\%. Fig.~\ref{fig:curve} shows what splits could buy if every one proposed by
-the penalized solver were accepted: about a hundred bring the CV near the floor of \CeilRubCV\%
-reached when every aya end is allowed (going lower would require cutting inside an aya). The
+the penalized solver were accepted: about a hundred bring the CV to about 4.6\%, near the
+\CeilRubCV\% reached when every aya end is allowed (going lower would require cutting inside an
+aya). The worst quarter does not move at all ($\pm$\NewRubWorst\%): it lies in juz~28, whose
+surahs of 11--24 ayat leave few admissible starts under the opening-ayat rule below. The
 review applies the meaning test to each: of \RubRoundBoundaries{} boundaries more than 3\% off,
 with \RubRoundCandidates{} candidates read, \RubRoundSplits{} were split at complete stops (e.g.\
 4:12, the share of spouses, which turns a $-23\%$ boundary into $-3.6\%$) and \RubRoundKept{} kept,
 because every closer point is a turn of a dialogue or story: Mūsā at the fire (28:29--35), Hūd
 (7:65--72), the messengers and their peoples (14:9--12). The result, CV \NewRubCV\% and worst
-$\pm$\NewRubWorst\%, lies above the curve by exactly the stops that meaning forbids.
+$\pm$\NewRubWorst\%, lies above the curve by the stops that meaning forbids, and by one more
+rule set in review: no quarter starts at aya 2--10 of a surah; it opens the surah or starts at
+least ten ayat in (the traditional quarters break this 12 times). The rule moved two hizb to their
+surah openings and costs the quarters about 1.7 points of CV (5.9\% without it).
 
 \begin{figure}[t]
 \centering
@@ -204,7 +209,7 @@ $\pm$\NewRubWorst\%, lies above the curve by exactly the stops that meaning forb
 \addplot[dashed, domain=0:150] {\CeilRubCV};
 \addplot[only marks, mark=triangle*, mark size=3pt, black] coordinates {\ReviewedRub};
 \addplot[only marks, mark=triangle, mark size=3pt, black] coordinates {\ReviewedRubWorst};
-\legend{worst quarter, CV, CV floor (any aya end), reviewed: CV, reviewed: worst}
+\legend{worst quarter, CV, CV with any aya end, reviewed: CV, reviewed: worst}
 \end{axis}
 \end{tikzpicture}
 \caption{Quarter balance against the number of phrase splits accepted, if every split the
@@ -231,8 +236,8 @@ print, lengthen juz~30.
 Al-Ṣafāqusī's rule, that a quarter ends where a thought ends, is sound, but the transmitted
 quarters keep it only partly and vary more than twofold in length. Applying the rule to every
 boundary and choosing among the admissible stops by measured length gives hizb within
-$\pm$\NewHizbWorst\% of half their juz, and quarters whose spread is half the traditional one
-(CV \NewRubCV\% against \TradRubCV\%), with no boundary inside a phrase. The remaining unevenness
+$\pm$\NewHizbWorst\% of half their juz, and quarters with a CV of \NewRubCV\% against
+\TradRubCV\%, with no boundary inside a phrase or in the first ten ayat of a surah. The remaining unevenness
 is the price of not cutting a story or a dialogue, a choice the review tables make explicit
 for a human reviewer to keep or overturn.
 

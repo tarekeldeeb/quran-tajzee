@@ -35,8 +35,9 @@ T_G = (size of G) / k. Exactly, for each container independently:
 
 m is the mid-phrase penalty: starting a rub' inside a subject phrase (at an aya end, as
 the traditional rub' do) costs as much as a rub' m off its target. A hizb start uses its
-own penalty, by default infinite: a hizb always opens a phrase. The juz start itself is
-fixed; where it falls inside a phrase the phrase is split there.
+own penalty, by default infinite: a hizb always opens a phrase. No hizb or rub' starts at
+aya 2..10 of a surah (HEAD_AYAT): it starts at the surah itself or 10+ ayat in. The juz
+starts are fixed and exempt; where one falls inside a phrase the phrase is split there.
 
 The same exact dynamic program as Task 3 (tajzee.juz._dp) solves each container.
 """
@@ -56,6 +57,7 @@ METHOD = "nested"
 OBJECTIVE = "minimax+lsq"  # every boundary at a phrase start; 'penalized' allows mid-phrase rub'
 MID_PHRASE = 0.10      # a rub' starting inside a phrase costs like a rub' 10% off target
 HIZB_MID_PHRASE = INF  # a hizb must start at a phrase start
+HEAD_AYAT = 10         # no rub' starts at aya 2..10 of a surah: at the surah start, or 10+ ayat in
 CAP = 0.10             # every rub' within 10% of its target (1/4 of its hizb; joint: 1/8 of its juz)
 
 
@@ -129,20 +131,26 @@ def fixed_hizb(us: list[Aya]) -> list[int] | None:
     for line in path.read_text().splitlines()[1:]:
         s, a = map(int, line.split("\t")[1].split(":"))
         i = idx[(s, a)]
-        if not us[i].phrase_start and i not in set(traditional_juz()):
-            raise ValueError(f"approved hizb start {s}:{a} is not a phrase start")
+        if i not in set(traditional_juz()) and (not us[i].phrase_start or in_head(us[i])):
+            raise ValueError(f"approved hizb start {s}:{a} is not a phrase start or is in a surah's first ayat")
         out.append(i)
     return out
 
 
-def _cut_phrases(us, c, a, b, parts):
-    """Exact minimax-then-least-squares cut of ayat a..b-1 into `parts`, at phrase starts only."""
+def in_head(u: Aya, head: int = HEAD_AYAT) -> bool:
+    """The aya is one of a surah's first `head` ayat but not its first: no rub' may start there."""
+    return 2 <= u.aya <= head
+
+
+def _cut_phrases(us, c, a, b, parts, head=HEAD_AYAT):
+    """Exact minimax-then-least-squares cut of ayat a..b-1 into `parts`, at phrase starts only,
+    never at aya 2..head of a surah."""
     pre = juz_mod._prefix(c[a:b])
     T = pre[-1] / parts
-    BIG = 1e9  # deviation of a part starting inside a phrase: never chosen while any other is feasible
+    BIG = 1e9  # deviation of a part starting at an inadmissible aya: never chosen while any other is feasible
 
     def dev(j, i):
-        if j > 0 and not us[a + j].phrase_start:
+        if j > 0 and (not us[a + j].phrase_start or in_head(us[a + j], head)):
             return BIG
         return abs(pre[i] - pre[j] - T)
 
@@ -153,14 +161,16 @@ def _cut_phrases(us, c, a, b, parts):
     return [a] + [a + x for x in cuts]
 
 
-def _cut(us, c, a, b, parts, pen_for, cap):
-    """Exact cut of ayat a..b-1 into `parts`; pen_for(k) is the mid-phrase penalty of part k."""
+def _cut(us, c, a, b, parts, pen_for, cap, head=HEAD_AYAT):
+    """Exact cut of ayat a..b-1 into `parts`; pen_for(k) is the mid-phrase penalty of part k.
+    No part starts at aya 2..head of a surah."""
     pre = juz_mod._prefix(c[a:b])
     T = pre[-1] / parts
 
     def arr(p):
         cost = INF if p == INF else (p * T) ** 2
-        return [0.0] + [0.0 if us[i].phrase_start else cost for i in range(a + 1, b)]
+        return [0.0] + [INF if in_head(us[i], head) else (0.0 if us[i].phrase_start else cost)
+                        for i in range(a + 1, b)]
 
     cache = {}
     for k in range(1, parts + 1):
@@ -176,7 +186,8 @@ def _cut(us, c, a, b, parts, pen_for, cap):
 def solve(us: list[Aya] | None = None, weight: float = 0.5, mid_phrase: float = MID_PHRASE,
           hizb_mid_phrase: float = HIZB_MID_PHRASE, cap: float | None = CAP,
           juz_starts: list[int] | None = None, method: str = METHOD,
-          objective: str = OBJECTIVE, pin_hizb: bool = True) -> Division:
+          objective: str = OBJECTIVE, pin_hizb: bool = True,
+          head_ayat: int = HEAD_AYAT) -> Division:
     """Cut every juz into 2 hizb of 4 rub' (see the module docstring for the objective).
 
     With the default objective and the traditional juz, the hizb approved in review
@@ -198,24 +209,24 @@ def solve(us: list[Aya] | None = None, weight: float = 0.5, mid_phrase: float = 
             if hizb is None:
                 hizb = []
                 for a, b in zip(js, js[1:] + end):
-                    hizb += _cut_phrases(us, c, a, b, 2)
+                    hizb += _cut_phrases(us, c, a, b, 2, head_ayat)
             for a, b in zip(hizb, hizb[1:] + end):
-                starts += _cut_phrases(us, c, a, b, 4)
+                starts += _cut_phrases(us, c, a, b, 4, head_ayat)
         else:
             for a, b in zip(js, js[1:] + end):
-                starts += _cut_phrases(us, c, a, b, RUB_PER_JUZ)
+                starts += _cut_phrases(us, c, a, b, RUB_PER_JUZ, head_ayat)
     elif objective != "penalized":
         raise ValueError(f"unknown objective {objective!r}")
     elif method == "nested":
         hizb = []
         for a, b in zip(js, js[1:] + end):
-            hizb += _cut(us, c, a, b, 2, lambda k: hizb_mid_phrase, None)
+            hizb += _cut(us, c, a, b, 2, lambda k: hizb_mid_phrase, None, head_ayat)
         for a, b in zip(hizb, hizb[1:] + end):
-            starts += _cut(us, c, a, b, 4, lambda k: mid_phrase, cap)
+            starts += _cut(us, c, a, b, 4, lambda k: mid_phrase, cap, head_ayat)
     elif method == "joint":
         for a, b in zip(js, js[1:] + end):
             starts += _cut(us, c, a, b, RUB_PER_JUZ,
-                           lambda k: hizb_mid_phrase if k == HIZB_PART else mid_phrase, cap)
+                           lambda k: hizb_mid_phrase if k == HIZB_PART else mid_phrase, cap, head_ayat)
     else:
         raise ValueError(f"unknown method {method!r}")
     jset = set(js)

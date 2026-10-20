@@ -62,12 +62,20 @@ def main() -> None:
     w(f"| worst quarter | ±{max(map(abs, trel)) * 100:.1f}% | ±23.8% | **±{max(map(abs, rel)) * 100:.1f}%** |")
     w(f"| longest / shortest quarter | {max(at) / min(at):.2f}× | 1.65× | **{max(ab) / min(ab):.2f}×** |")
     w(f"| boundaries inside a phrase | 79 of 210 | 0 | **{len(now.mid_phrase)}** |\n")
-    w(f"{len(groups)} quarter boundaries were reviewed, with {len(rows)} candidates read. {len(acc)} splits were "
+    worst = sorted(range(len(rel)), key=lambda i: -abs(rel[i]))[:6]
+    w(f"{len(groups)} quarter boundaries were reviewed, with {len(rows)} candidates read. {len(acc)} splits are "
       f"accepted and {len(groups) - len(acc)} boundaries kept as they were. The hizb approved on 2026-10-21 "
-      "are fixed (`data/rub/hizb-approved.tsv`), so no split here moves a hizb. Where the quarters are still "
-      "uneven, every closer point is a turn inside a story or a dialogue, and the boundary was kept: "
-      "Mūsā at the fire (28:29–35), Hūd (7:65–72), the messengers and their peoples (14:9–12), the "
-      "dispute in hell (38:55–64).\n")
+      "are fixed (`data/rub/hizb-approved.tsv`), so no split here moves a hizb.\n\n"
+      "**First-ten-ayat rule (added 2026-10-21).** No quarter starts at aya 2–10 of a surah: it starts at "
+      "the surah itself or 10 or more ayat in. The traditional juz starts are fixed and exempt (11:6). "
+      "Applying it rejected 6 accepted splits (5:3, 13:4, 29:5, 35:2, 47:4, 64:7), moved two approved hizb "
+      "to their surah openings (61:5 → 61:1, 87:9 → 87:1), and moved the other quarters that started there; a "
+      "supplementary reading of the boundaries it made uneven (rows marked «بعد قاعدة العشر») accepted 4 "
+      "more splits. The rule costs balance: without it the quarter CV was 5.9% and the worst ±19.4%.\n\n"
+      "The most uneven quarters now:\n\n| quarter | starts | against ¼ hizb |\n|---|---|---|\n"
+      + "\n".join(f"| {i + 1} | {un[now.starts[i]].ref} | {rel[i] * 100:+.1f}% |" for i in worst)
+      + "\n\nIn each, every closer start is either inside the first ten ayat of a surah, or a turn inside a "
+      "story or dialogue.\n")
 
     w("## Review queue, largest impact first\n")
     w("Each boundary with what is at stake: the gain of its best candidate, in points of a quarter "
@@ -105,7 +113,8 @@ def main() -> None:
       "verse before it. A change of scene inside a story (a new time or place) is accepted only where "
       "it is marked as a judgment call. The last aya of a surah is not used to open a quarter on its own.\n"
       "5. **Choice.** The closest acceptable candidate is accepted. If none qualifies, the current start "
-      "is kept.\n")
+      "is kept.\n"
+      "6. **First ten ayat.** No candidate at aya 2–10 of a surah is admissible.\n")
 
     w("## Reading `splits.tsv`\n")
     w("Same columns as the hizb round, plus `hizb` and `boundary` (1, 2 or 3: the start of the 2nd, 3rd or "
