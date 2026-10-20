@@ -127,11 +127,28 @@ solution is the global optimum; tests check it against exhaustive search. A \emp
 variant also admits any aya end at a cost $m^2$ per mid-phrase start; we use it only to
 \emph{propose} phrase splits.
 
-\textbf{Review loop.}\label{sec:review} Balance is limited by how fine the phrases are. For each
-container, the aya end that best balances it is computed; if it lies inside a phrase, the text at
-it and at the other candidates closer to balance is read, and the phrase is split only at a
-complete stop opening a new ruling, scene or subject; otherwise the current start is kept. The
-split becomes a phrase boundary, so the rule ``every boundary opens a phrase'' is never relaxed.
+\textbf{Review process.}\label{sec:review} Balance is limited by how fine the phrases are, so
+phrases are refined where the divisions need it, one container at a time. (1)~For every aya end
+in the container, the balance is computed if the next unit started there. (2)~The candidates are
+the aya ends closer to balance than the current phrase-start solution; all lie inside a phrase.
+(3)~Each candidate is read in context and accepted only at a complete stop: the aya before it
+closes its sentence and subject, and the aya after it does not lean on it. A reply (\ar{قال}),
+a pointer back (\ar{أولئك}, \ar{الذين}), a \ar{ف}/\ar{ثم} continuation, or a description of what
+precedes it disqualifies a candidate. (4)~Among accepted candidates the most even wins; if none
+qualifies, the current start is kept, however uneven. (5)~An accepted candidate splits its phrase,
+with a topic for each part, so the rule ``every boundary opens a phrase'' is never relaxed.
+Every candidate, its balance, the decision and the reason are recorded in a table that a human
+reviewer approves or overturns; the phrase list is rebuilt from the reading and the accepted rows.
+
+\emph{Accepted (juz~10).} The second hizb started at 9:29, $-3.7\%$ off. Candidate 9:30, $-1.5\%$,
+lies inside the phrase 9:29--35. The aya before it ends ``\ar{وهم صاغرون}'', a complete stop
+closing the command to fight; 9:30 ``\ar{وقالت اليهود عزير ابن الله}'' opens a new subject, the
+claims of the People of the Book. The phrase is split into 9:29 and 9:30--35.
+
+\emph{Rejected (juz~6).} The second hizb starts at 5:27, $+3.6\%$. Candidate 5:24, $+0.2\%$, is
+almost exactly at the middle, but ``\ar{قالوا يا موسى إنا لن ندخلها}'' is the people's reply
+inside the dialogue of 5:20--26; every closer point is a turn of that dialogue. The start is kept
+at 5:27, the story of the two sons of Ādam, at the cost of 3.4 points of balance.
 
 \section{Results}
 \textbf{Hizb.} One review round checked all 30 second-hizb starts: 10 were already at the best

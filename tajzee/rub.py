@@ -115,6 +115,26 @@ class Division:
         return self.starts[::4]
 
 
+HIZB_APPROVED = "hizb-approved.tsv"
+
+
+def fixed_hizb(us: list[Aya]) -> list[int] | None:
+    """The 60 approved hizb starts (aya indices), or None if there is no approved list."""
+    from . import DATA
+    path = DATA / "rub" / HIZB_APPROVED
+    if not path.exists() or len(us) != len(quran.load().ayat):
+        return None
+    idx = {(u.sura, u.aya): u.index for u in us}
+    out = []
+    for line in path.read_text().splitlines()[1:]:
+        s, a = map(int, line.split("\t")[1].split(":"))
+        i = idx[(s, a)]
+        if not us[i].phrase_start and i not in set(traditional_juz()):
+            raise ValueError(f"approved hizb start {s}:{a} is not a phrase start")
+        out.append(i)
+    return out
+
+
 def _cut_phrases(us, c, a, b, parts):
     """Exact minimax-then-least-squares cut of ayat a..b-1 into `parts`, at phrase starts only."""
     pre = juz_mod._prefix(c[a:b])
@@ -156,8 +176,12 @@ def _cut(us, c, a, b, parts, pen_for, cap):
 def solve(us: list[Aya] | None = None, weight: float = 0.5, mid_phrase: float = MID_PHRASE,
           hizb_mid_phrase: float = HIZB_MID_PHRASE, cap: float | None = CAP,
           juz_starts: list[int] | None = None, method: str = METHOD,
-          objective: str = OBJECTIVE) -> Division:
+          objective: str = OBJECTIVE, pin_hizb: bool = True) -> Division:
     """Cut every juz into 2 hizb of 4 rub' (see the module docstring for the objective).
+
+    With the default objective and the traditional juz, the hizb approved in review
+    (data/rub/hizb-approved.tsv) are kept as they are, if that file exists; pin_hizb=False
+    re-solves them.
 
     mid_phrase, hizb_mid_phrase and cap apply to the 'penalized' objective only."""
     us = us if us is not None else ayat()
@@ -170,9 +194,11 @@ def solve(us: list[Aya] | None = None, weight: float = 0.5, mid_phrase: float = 
         if method not in parts_by:
             raise ValueError(f"unknown method {method!r}")
         if method == "nested":
-            hizb = []
-            for a, b in zip(js, js[1:] + end):
-                hizb += _cut_phrases(us, c, a, b, 2)
+            hizb = fixed_hizb(us) if (juz_starts is None and pin_hizb) else None
+            if hizb is None:
+                hizb = []
+                for a, b in zip(js, js[1:] + end):
+                    hizb += _cut_phrases(us, c, a, b, 2)
             for a, b in zip(hizb, hizb[1:] + end):
                 starts += _cut_phrases(us, c, a, b, 4)
         else:
