@@ -39,7 +39,12 @@ def main() -> None:
     for r in rows:
         groups.setdefault((int(r["hizb"]), int(r["boundary"])), []).append(r)
     acc = [r for r in rows if r["decision"] == "accept"]
-    calls = [r for r in rows if "بديل" in r["why"] or "اجتهاد" in r["why"]]
+    stake = {k: max(float(r["gain"]) for r in rs) for k, rs in groups.items()}
+    order = sorted(groups, key=lambda k: (-stake[k], k))
+    for k in groups:
+        groups[k].sort(key=lambda r: -float(r["gain"]))
+    calls = sorted((r for r in rows if "بديل" in r["why"] or "اجتهاد" in r["why"]),
+                   key=lambda r: -float(r["gain"]))
     rel = rub.relative(un, now.starts, c, 4)
     trel = rub.relative(un, trad, c, 4)
     ab, at = rub.sizes(un, now.starts, c), rub.sizes(un, trad, c)
@@ -64,6 +69,25 @@ def main() -> None:
       "Mūsā at the fire (28:29–35), Hūd (7:65–72), the messengers and their peoples (14:9–12), the "
       "dispute in hell (38:55–64).\n")
 
+    w("## Review queue, largest impact first\n")
+    w("Each boundary with what is at stake: the gain of its best candidate, in points of a quarter "
+      "(how much closer to even the boundary would move). The decisions with the largest effect on "
+      "evenness come first; the sections below follow the same order.\n")
+    w("| # | hizb.quarter | at stake | before → now | decision |\n|---|---|---|---|---|")
+    qrows = []
+    for n, k in enumerate(order, 1):
+        rs = groups[k]
+        a = [r for r in rs if r["decision"] == "accept"]
+        best = rs[0]
+        if a:
+            d = f"split at {a[0]['proposed_start']} (gain {a[0]['gain']})"
+        else:
+            d = f"kept (best rejected: {best['proposed_start']}, gain {best['gain']})"
+        now_i = now.starts[4 * (k[0] - 1) + k[1]]
+        qrows.append(f"| {n} | [{k[0]}.{k[1] + 1}](#h{k[0]}q{k[1] + 1}) | {stake[k]:.1f} | {rs[0]['base_start']} "
+                     f"({rs[0]['base_balance']}) → {un[now_i].ref} | {d} |")
+    w("\n".join(qrows) + "\n")
+
     w("## What was done\n")
     w("Each hizb is cut into four quarters, every boundary at a phrase start. For each of its three "
       "inner boundaries:\n\n"
@@ -86,23 +110,26 @@ def main() -> None:
     w("## Reading `splits.tsv`\n")
     w("Same columns as the hizb round, plus `hizb` and `boundary` (1, 2 or 3: the start of the 2nd, 3rd or "
       "4th quarter of that hizb). `base_start` is the quarter start before this round and `base_balance` its "
-      "offset. `proposed_start` and `proposed_balance` are the candidate and its offset. `inside_phrase` is "
+      "offset. `proposed_start` and `proposed_balance` are the candidate and its offset, and `gain` = "
+      "|base_balance| − |proposed_balance|, the points of a quarter it would remove. `inside_phrase` is "
       "the phrase the candidate splits. Rows of the same `hizb` and `boundary` are alternatives for one "
-      "boundary. To change a decision, edit `decision` (and the topics for a newly accepted row), then:\n\n"
+      "boundary. The file is sorted like the review queue: boundaries by their largest gain, then "
+      "candidates by gain. To change a decision, edit `decision` (and the topics for a newly accepted row), then:\n\n"
       "```sh\npython scripts/apply_splits.py --write\nmake scores juz rub paper\npython scripts/review_rub.py\n```\n")
 
     w("## Judgment calls\n")
     w("Decisions that could reasonably go the other way, either a rejected candidate that could open a "
       "quarter or an accepted one that gives up a surah opening or cuts a scene.\n")
-    w("| hizb.boundary | candidate | offset | decision | note |\n|---|---|---|---|---|")
-    w("\n".join(f"| {r['hizb']}.{r['boundary']} | {r['proposed_start']} | {r['proposed_balance']} | {r['decision']} "
-                f"| {r['why']} |" for r in calls) + "\n")
+    w("| hizb.quarter | candidate | offset | gain | decision | note |\n|---|---|---|---|---|---|")
+    w("\n".join(f"| {r['hizb']}.{int(r['boundary']) + 1} | {r['proposed_start']} | {r['proposed_balance']} | {r['gain']} "
+                f"| {r['decision']} | {r['why']} |" for r in calls) + "\n")
 
-    w("## Boundary by boundary\n")
+    w("## Boundary by boundary, largest impact first\n")
     w("¶ marks a phrase start before this round, with its topic; ▶ the quarter start before this round; "
       "★ an accepted new start; ✗ a rejected candidate. The percentage after each aya is the boundary "
       "offset if the quarter started there.\n")
-    for (h, k), rs in sorted(groups.items()):
+    for n, (h, k) in enumerate(order, 1):
+        rs = groups[(h, k)]
         off = off_fn(h, k)
         base = idx[tuple(map(int, rs[0]["base_start"].split(":")))]
         cand = {idx[tuple(map(int, r["proposed_start"].split(":")))]: r for r in rs}
@@ -111,7 +138,8 @@ def main() -> None:
         acc_set = {i for i, r in cand.items() if r["decision"] == "accept"}
         while lo > hz[h - 1] and not (un[lo].phrase_start and lo not in acc_set):
             lo -= 1
-        w(f"\n### Hizb {h}, quarter {k + 1}: {un[base].ref} ({off(base):+.1f}%) → {un[new].ref} ({off(new):+.1f}%)\n")
+        w(f"\n<a id=\"h{h}q{k + 1}\"></a>\n### {n}. Hizb {h}, quarter {k + 1}: {un[base].ref} ({off(base):+.1f}%) → "
+          f"{un[new].ref} ({off(new):+.1f}%), at stake {stake[(h, k)]:.1f}\n")
         lines = []
         for i in range(lo, hi + 1):
             u = un[i]
@@ -120,8 +148,8 @@ def main() -> None:
             mark = "▶" if i == base else ("★" if i in acc_set else ("✗" if i in cand else "·"))
             lines.append(f"{mark} **{u.ref}** ({off(i):+.1f}%) {q.ayat[i].text}")
         w("\n" + "  \n".join(lines) + "\n")
-        w("\n| candidate | offset | decision | reason |\n|---|---|---|---|")
-        w("\n".join(f"| {r['proposed_start']} | {r['proposed_balance']} | "
+        w("\n| candidate | offset | gain | decision | reason |\n|---|---|---|---|---|")
+        w("\n".join(f"| {r['proposed_start']} | {r['proposed_balance']} | {r['gain']} | "
                     f"{'**accept**' if r['decision'] == 'accept' else 'reject'} | {r['why']} |" for r in rs) + "\n")
         for r in rs:
             if r["decision"] == "accept":
