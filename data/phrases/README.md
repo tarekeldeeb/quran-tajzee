@@ -31,7 +31,7 @@ The phrase id used everywhere else (review page, review marks) is `sura:from-to`
   starts, and 11 where a traditional juz starts.
 - Round 2026-10-21 (`reviews/2026-10-21-rub-splits/`, proposed) split 61 phrases where a new
   rubʿ starts.
-- Al-Fatiha and Al-Baqarah 1–77 were reviewed in the pilot round
-  (`reviews/2026-10-17-pilot/`). The rest of the pilot (2:78–141, Juz ʿAmma) was then
+- Al-Fatiha and Al-Baqarah 1–77 were reviewed in an early pilot (its files have been removed;
+  the merges it asked for are in this list). The rest of the pilot (2:78–141, Juz ʿAmma) was then
   reworked to the larger phrase size that review asked for, and everything else is a first
   draft at that size. All of it is awaiting review.

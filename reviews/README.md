@@ -3,7 +3,7 @@
 Each review round gets a folder named `YYYY-MM-DD-<name>/` holding:
 
 - `phrases-*.tsv` – the phrase list exactly as it was when reviewed (only when it differs
-  from a commit of `data/phrases/phrases.tsv`, e.g. the pilot, which covered part of the Quran)
+  from a commit of `data/phrases/phrases.tsv`)
 - `marks.json` – the marks exported from the review page
 
 A mark is `{"seg": "sura:from-to", "status": "ok" | "merge" | "split" | "topic",
@@ -43,4 +43,3 @@ python scripts/review_hizb.py             # refresh the round's README
 |-------|-------|---------|
 | `2026-10-21-rub-splits` | Every quarter boundary more than 3% off, inside the approved hizb | 132 boundaries, 422 candidates read: 61 splits accepted, 71 boundaries kept. Quarter CV 9.2% → 5.9%. Awaiting review. See its README. |
 | `2026-10-18-hizb-splits` | The second hizb of every juz, and the 11 traditional juz starts inside a phrase | 61 candidates read: 7 hizb splits accepted, 54 rejected with reasons; 11 juz splits. Worst hizb ±3.6%. Approved 2026-10-21. See its README. |
-| `2026-10-17-pilot` | Al-Fatiha, Al-Baqarah 1–77 (of a pilot covering 1, 2:1–141, Juz ʿAmma) | Merges preferred: 1:1–7, 2:8–16, 2:17–20, 2:34–37, 2:49–57. Prompted larger phrases across the whole list. |

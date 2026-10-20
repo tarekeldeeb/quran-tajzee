@@ -1,12 +1,8 @@
-import json
 import unittest
 from pathlib import Path
 
 from tajzee import ROOT, phrases, quran, reviews
 from tajzee.phrases import Phrase
-
-PILOT = ROOT / "reviews" / "2026-10-17-pilot"
-
 
 class SourceTextTest(unittest.TestCase):
     def test_tanzil_shape(self):
@@ -38,13 +34,12 @@ class PhraseListTest(unittest.TestCase):
 
 
 class ReviewsTest(unittest.TestCase):
-    def test_pilot_marks_reproduce_merges(self):
-        ps = phrases.load(PILOT / "phrases-v1.tsv")
-        marks = {m["seg"]: m for m in json.loads((PILOT / "marks.json").read_text(encoding="utf-8"))}
+    def test_merge_marks_chain(self):
+        ps = [Phrase(1, 1, 1, "البسملة"), Phrase(1, 2, 4, "الحمد"), Phrase(1, 5, 5, "العبادة"),
+              Phrase(1, 6, 7, "الهداية")]
+        marks = {"1:1-1": {"status": "merge"}, "1:2-4": {"status": "merge"}, "1:5-5": {"status": "merge"}}
         res = reviews.apply(ps, marks)
-        ids = {p.id for p in res.phrases}
-        for expected in ["1:1-7", "2:8-16", "2:17-20", "2:34-37", "2:49-57", "2:1-5"]:
-            self.assertIn(expected, ids)
+        self.assertEqual([p.id for p in res.phrases], ["1:1-7"])
         self.assertFalse(res.stale)
         self.assertTrue(phrases.validate(res.phrases, quran.load(), full=False).ok)
 
