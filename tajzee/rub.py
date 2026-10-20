@@ -36,7 +36,8 @@ T_G = (size of G) / k. Exactly, for each container independently:
 m is the mid-phrase penalty: starting a rub' inside a subject phrase (at an aya end, as
 the traditional rub' do) costs as much as a rub' m off its target. A hizb start uses its
 own penalty, by default infinite: a hizb always opens a phrase. No hizb or rub' starts at
-aya 2..10 of a surah (HEAD_AYAT): it starts at the surah itself or 10+ ayat in. The juz
+aya 2..10 of a surah of 50+ ayat (HEAD_AYAT, HEAD_MIN_SURAH): it starts at the surah itself
+or 10+ ayat in. The juz
 starts are fixed and exempt; where one falls inside a phrase the phrase is split there.
 
 The same exact dynamic program as Task 3 (tajzee.juz._dp) solves each container.
@@ -57,7 +58,8 @@ METHOD = "nested"
 OBJECTIVE = "minimax+lsq"  # every boundary at a phrase start; 'penalized' allows mid-phrase rub'
 MID_PHRASE = 0.10      # a rub' starting inside a phrase costs like a rub' 10% off target
 HIZB_MID_PHRASE = INF  # a hizb must start at a phrase start
-HEAD_AYAT = 10         # no rub' starts at aya 2..10 of a surah: at the surah start, or 10+ ayat in
+HEAD_AYAT = 10         # no rub' starts at aya 2..10 of a long surah: at the surah start, or 10+ ayat in
+HEAD_MIN_SURAH = 50    # ... the rule applies to surahs of 50 ayat or more
 CAP = 0.10             # every rub' within 10% of its target (1/4 of its hizb; joint: 1/8 of its juz)
 
 
@@ -137,9 +139,18 @@ def fixed_hizb(us: list[Aya]) -> list[int] | None:
     return out
 
 
-def in_head(u: Aya, head: int = HEAD_AYAT) -> bool:
-    """The aya is one of a surah's first `head` ayat but not its first: no rub' may start there."""
-    return 2 <= u.aya <= head
+_COUNTS = None
+
+
+def in_head(u: Aya, head: int = HEAD_AYAT, min_surah: int = HEAD_MIN_SURAH) -> bool:
+    """The aya is one of the first `head` ayat of a surah of `min_surah`+ ayat, but not its
+    first: no rub' may start there."""
+    global _COUNTS
+    if not 2 <= u.aya <= head:
+        return False
+    if _COUNTS is None:
+        _COUNTS = quran.load().counts
+    return _COUNTS.get(u.sura, 0) >= min_surah
 
 
 def _cut_phrases(us, c, a, b, parts, head=HEAD_AYAT):

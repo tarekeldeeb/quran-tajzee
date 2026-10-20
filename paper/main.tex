@@ -119,7 +119,7 @@ kept; the imbalance is in the finer divisions.
 
 \textbf{Nested exact cuts.} Each juz is cut into two hizb, then each hizb into four quarters, the
 way the divisions nest. A container $G$ of ayat cut into $k$ parts has target $T=|G|/k$ and the
-admissible cuts $\mathcal{S}$ are phrase starts outside ayat 2--10 of a surah. Lexicographically we
+admissible cuts $\mathcal{S}$ are phrase starts, outside ayat 2--10 of a surah of 50+ ayat. Lexicographically we
 \begin{equation}
 \min_{\text{cuts}\subset\mathcal{S}}\ \max_q \frac{|S_q - T|}{T},\quad\text{then}\quad
 \min \sum_q (S_q-T)^2 ,
@@ -185,17 +185,16 @@ per quarter, and one long phrase can be a fifth of a quarter: the quarter CV is 
 quarter $\pm$23.8\%. Fig.~\ref{fig:curve} shows what splits could buy if every one proposed by
 the penalized solver were accepted: about a hundred bring the CV to about 4.6\%, near the
 \CeilRubCV\% reached when every aya end is allowed (going lower would require cutting inside an
-aya). The worst quarter does not move at all ($\pm$\NewRubWorst\%): it lies in juz~28, whose
-surahs of 11--24 ayat leave few admissible starts under the opening-ayat rule below. The
+aya), while the worst quarter stops at $\pm$\CeilRubWorst\%, held by the opening-ayat rule below. The
 review applies the meaning test to each: of \RubRoundBoundaries{} boundaries more than 3\% off,
 with \RubRoundCandidates{} candidates read, \RubRoundSplits{} were split at complete stops (e.g.\
 4:12, the share of spouses, which turns a $-23\%$ boundary into $-3.6\%$) and \RubRoundKept{} kept,
 because every closer point is a turn of a dialogue or story: Mūsā at the fire (28:29--35), Hūd
 (7:65--72), the messengers and their peoples (14:9--12). The result, CV \NewRubCV\% and worst
 $\pm$\NewRubWorst\%, lies above the curve by the stops that meaning forbids, and by one more
-rule set in review: no quarter starts at aya 2--10 of a surah; it opens the surah or starts at
-least ten ayat in (the traditional quarters break this 12 times). The rule moved two hizb to their
-surah openings and costs the quarters about 1.7 points of CV (5.9\% without it).
+rule set in review: in a surah of 50 ayat or more, no quarter starts at aya 2--10; it opens the
+surah or starts at least ten ayat in (the traditional quarters break this 7 times). The rule
+costs the quarters 0.7 points of CV (5.9\% without it).
 
 \begin{figure}[t]
 \centering
@@ -237,7 +236,7 @@ Al-Ṣafāqusī's rule, that a quarter ends where a thought ends, is sound, but 
 quarters keep it only partly and vary more than twofold in length. Applying the rule to every
 boundary and choosing among the admissible stops by measured length gives hizb within
 $\pm$\NewHizbWorst\% of half their juz, and quarters with a CV of \NewRubCV\% against
-\TradRubCV\%, with no boundary inside a phrase or in the first ten ayat of a surah. The remaining unevenness
+\TradRubCV\%, with no boundary inside a phrase or in the opening ayat of a long surah. The remaining unevenness
 is the price of not cutting a story or a dialogue, a choice the review tables make explicit
 for a human reviewer to keep or overturn.
 

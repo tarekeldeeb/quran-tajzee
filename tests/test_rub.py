@@ -121,9 +121,9 @@ class RubSolverTest(unittest.TestCase):
 
 class HeadRuleTest(unittest.TestCase):
     def test_head_rule_respected_and_optimal(self):
-        # two surahs of 15 ayat; every aya a phrase start; starts at aya 2..10 forbidden
+        # 15 ayat of surahs 2 and 3 (both long); every aya a phrase start; aya 2..10 forbidden
         rnd = random.Random(3)
-        us = [Aya(i, 1 + i // 15, i % 15 + 1, float(rnd.randint(1, 30)), float(rnd.randint(1, 30)), True, "t")
+        us = [Aya(i, 2 + i // 15, i % 15 + 1, float(rnd.randint(1, 30)), float(rnd.randint(1, 30)), True, "t")
               for i in range(30)]
         c = rub.mix(us)
         ok = [i for i in range(1, 30) if not (2 <= us[i].aya <= 10)]
@@ -160,10 +160,12 @@ class RealDivisionTest(unittest.TestCase):
         self.assertEqual(self.d.mid_phrase, [])
         self.assertTrue(all(self.us[s].phrase_start for s in self.d.starts if s not in jset))
 
-    def test_no_rub_in_first_ten_ayat(self):
+    def test_no_rub_in_first_ten_ayat_of_long_surahs(self):
+        short = next(u for u in self.us if u.sura == 61 and u.aya == 5)
+        self.assertFalse(rub.in_head(short))  # As-Saff has 14 ayat: exempt
         jset = set(self.d.juz_starts)
         for d in (self.d, rub.solve(self.us, objective="penalized", cap=None)):
-            bad = [self.us[i].ref for i in d.starts if i not in jset and 2 <= self.us[i].aya <= rub.HEAD_AYAT]
+            bad = [self.us[i].ref for i in d.starts if i not in jset and rub.in_head(self.us[i])]
             self.assertEqual(bad, [])
 
     def test_penalized_phrase_starts_only(self):
