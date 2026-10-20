@@ -1,56 +1,82 @@
 #!/usr/bin/env python3
-"""Apply a round of phrase splits (with a topic for each half) to data/phrases/phrases.tsv.
+"""Rebuild data/phrases/phrases.tsv from the reading and the accepted phrase splits.
 
-    python scripts/apply_splits.py reviews/2026-10-18-hizb-splits/splits.tsv [--write]
+    python scripts/apply_splits.py            # report what would change
+    python scripts/apply_splits.py --write    # write phrases.tsv
 
-The splits file has columns sura, from, to, split_after, reason, topic_first, topic_second,
-note. Each row must match an existing phrase exactly. Without --write, it only reports.
+The phrases are the reading of the text (tajzee.reviews.reading: every split listed in a
+reviews/*/splits.tsv merged back) plus every row of those files whose `decision` is
+`accept`. Rows without a decision column count as accepted. So to change a decision, edit the
+`decision` column, accept or reject, and run this. A newly accepted row should also get its
+`topic_first` and `topic_second`. When they are empty, both halves keep the topic of the phrase.
 """
 
 import argparse
 import csv
 import sys
+from collections import defaultdict
 from dataclasses import replace
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from tajzee import phrases, quran  # noqa: E402
+from tajzee import phrases, quran, reviews  # noqa: E402
+
+
+def accepted_rows():
+    for path in sorted((ROOT / "reviews").glob("*/splits.tsv")):
+        for r in csv.DictReader(open(path, encoding="utf-8"), delimiter="\t"):
+            if r.get("decision", "accept").strip() == "accept":
+                r["_file"] = path.relative_to(ROOT)
+                yield r
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("splits")
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args()
 
-    ps = phrases.load()
-    index = {(p.sura, p.first, p.last): i for i, p in enumerate(ps)}
-    out, done, errors = list(ps), 0, []
-    rows = list(csv.DictReader(open(args.splits, encoding="utf-8"), delimiter="\t"))
-    repl = {}
-    for r in rows:
-        key = (int(r["sura"]), int(r["from"]), int(r["to"]))
-        cut = int(r["split_after"])
-        if key not in index:
-            errors.append(f"{key}: no such phrase (already split?)")
+    base = reviews.reading()
+    cuts = defaultdict(list)  # base phrase index -> [(split_after, row)]
+    errors = []
+    for r in accepted_rows():
+        s, cut = int(r["sura"]), int(r["split_after"])
+        k = next((i for i, p in enumerate(base) if p.sura == s and p.first <= cut < p.last), None)
+        if k is None:
+            errors.append(f"{r['_file']}: {s}:{cut + 1} is not inside a phrase of the reading")
             continue
-        p = ps[index[key]]
-        if not p.first <= cut < p.last:
-            errors.append(f"{p.id}: split point {cut} not inside")
+        cuts[k].append((cut, r))
+    out = []
+    for i, p in enumerate(base):
+        if i not in cuts:
+            out.append(p)
             continue
-        repl[index[key]] = [replace(p, last=cut, topic=r["topic_first"]),
-                            replace(p, first=cut + 1, topic=r["topic_second"])]
-        done += 1
-    out = [q for i, p in enumerate(ps) for q in repl.get(i, [p])]
+        pts = sorted(cuts[i], key=lambda x: x[0])
+        first_topic = pts[0][1].get("topic_first", "").strip() or p.topic
+        start, topic = p.first, first_topic
+        for cut, r in pts:
+            out.append(replace(p, first=start, last=cut, topic=topic))
+            start, topic = cut + 1, r.get("topic_second", "").strip() or p.topic
+        out.append(replace(p, first=start, last=p.last, topic=topic))
+
     rep = phrases.validate(out, quran.load())
+    now = phrases.load()
+    a = {(p.sura, p.first) for p in now}
+    b = {(p.sura, p.first) for p in out}
+    added = sorted(b - a)
+    removed = sorted(a - b)
+    topics = sum(1 for p in out if (p.sura, p.first) in a and next(
+        (q.topic for q in now if (q.sura, q.first) == (p.sura, p.first)), None) != p.topic)
     for e in errors:
         print("error:", e)
-    print(f"{done} splits, {len(ps)} -> {len(out)} phrases; validation: {'ok' if rep.ok else rep.errors}")
+    print(f"reading {len(base)} phrases + {sum(len(v) for v in cuts.values())} accepted splits -> {len(out)} phrases; "
+          f"validation: {'ok' if rep.ok else rep.errors}")
+    print(f"against the current phrases.tsv: {len(added)} new phrase starts {[f'{s}:{x}' for s, x in added]}, "
+          f"{len(removed)} removed {[f'{s}:{x}' for s, x in removed]}, {topics} topics changed")
     if args.write and rep.ok and not errors:
         phrases.save(out)
-        print("wrote data/phrases/phrases.tsv")
+        print("wrote data/phrases/phrases.tsv; now run: make scores juz rub paper")
 
 
 if __name__ == "__main__":
