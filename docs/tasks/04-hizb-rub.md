@@ -25,6 +25,10 @@ stay as in the Madina Mushaf, and the hizb and rubʿ inside them are re-cut.
 - **Opening ayat:** no hizb or rubʿ starts at aya 2–7 of a surah. It starts at the surah itself or
   at aya 8 or later. Exempt: juz 28, whose surahs of 11–24 ayat leave too few admissible starts, and
   the traditional juz starts (juz 12 starts at 11:6).
+- **Agreed aya ends:** every boundary is an aya end in all six counting systems (فاصلة بلا خلاف),
+  checked against al-Dānī's *al-Bayān* (`data/source/counting/`). 134 Kūfī aya ends are disputed; the
+  traditional divisions never start after one, and two first solutions (20:42, 74:42) did, so the
+  solver excludes them.
 - **Objective:** for each container, solved exactly by the Task 3 dynamic program:
 
 ```
@@ -40,7 +44,7 @@ cuts only at phrase starts
 | hizb, worst (of ½ juz) | ±13.9% | ±3.6% |
 | hizb, CV | 6.9% | 1.4% |
 | rubʿ, worst (of ¼ hizb) | ±38% | ±20.8% |
-| rubʿ, CV | 11.7% | 6.4% |
+| rubʿ, CV | 11.7% | 6.5% |
 | longest/shortest rubʿ, whole Quran | 2.19× | 1.52× |
 | hizb and rubʿ at aya 2–7 of a surah (juz 28 and juz starts exempt) | 2 | **0** |
 | hizb and rubʿ starting inside a phrase | 79 of 210 | **0** |
@@ -61,7 +65,7 @@ quarter from its even position was checked the same way. That was 132 boundaries
 read. 61 phrases were split at complete stops, and 71 boundaries were kept because every closer point is
 a turn of a story or dialogue. Quarter CV went from 9.2% to 5.9% and the worst quarter from ±23.8% to
 ±19.4%. The opening-ayat rule (no start at aya 2–7 of a surah, juz 28 exempt), added the same day, then
-rejected 5 of those splits, and a supplementary reading added 4: quarter CV 6.4%, worst ±20.8%. Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
+rejected 5 of those splits, and a supplementary reading added 4: quarter CV 6.4%, worst ±20.8%; the counting rule then moved two quarters (20:42 → 20:49, 74:42 → 74:38): CV 6.5%. Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
 
 ## Balance through review
 
@@ -90,4 +94,3 @@ python scripts/solve_rub.py --objective penalized --out /tmp/rub.tsv   # mid-phr
 - **Surah openings.** The new hizb open fewer surahs than the traditional ones (2 against 7 of 30).
   A surah preference like the one in Task 3 could be added.
 - **Al-Ṣafāqusī's alternatives** (Maghāriba and Mashāriqa boundaries) could be preferred cut points.
-- **Agreement across the counting schools** (فاصلة بلا خلاف) is not checked yet.

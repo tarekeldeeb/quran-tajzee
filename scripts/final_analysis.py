@@ -185,7 +185,8 @@ def main() -> None:
       "2. **Surah preference for hizb** (section 4), if openings matter more than balance at that level.\n"
       "3. **Ghayth al-Nafʿ table.** Al-Ṣafāqusī's 240 boundaries, with the Maghāriba and Mashāriqa "
       "alternatives, as preferred cut points with traditional standing.\n"
-      "4. **Agreement across the counting schools** (فاصلة بلا خلاف), checked for every new boundary.\n")
+      "4. **Agreement across the counting schools** (فاصلة بلا خلاف): checked. Every boundary, traditional "
+      "and new, is an aya end in all six counting systems.\n")
 
     w("## 7. Reproduce\n")
     w("```sh\nmake rub                         # data/rub/*, docs/tasks/04-hizb-rub-analysis.md\n"

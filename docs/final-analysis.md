@@ -20,7 +20,7 @@ Each unit against its share of its parent (hizb against ½ juz, rubʿ against ¼
 | division | worst juz | worst hizb | hizb CV | worst rubʿ | rubʿ CV |
 |---|---|---|---|---|---|
 | traditional | ±6.2% | ±13.9% | 6.9% | ±38.3% | 11.7% |
-| final: traditional juz, new hizb and rubʿ | ±6.2% | ±3.6% | 1.4% | ±20.8% | 6.4% |
+| final: traditional juz, new hizb and rubʿ | ±6.2% | ±3.6% | 1.4% | ±20.8% | 6.5% |
 | alternative: Task 3 juz, new hizb and rubʿ | ±5.0% | ±4.5% | 1.8% | ±25.8% | 8.2% |
 
 
@@ -89,7 +89,7 @@ Hizb: the start of the second hizb and the larger deviation of the two from ½ j
 | 13 | 12:53 يوسف | -1.9% | 13:19 | 13:19 | ±1.5% | ±1.5% | ±18.9% | ±20.8% | 0 |
 | 14 | 15:1 الحجر | -2.7% | 16:51 | 16:43 | ±8.2% | ±0.7% | ±17.5% | ±10.7% | 0 |
 | 15 | 17:1 الإسراء | +2.4% | 17:99 | 17:97 | ±3.2% | ±0.0% | ±14.6% | ±4.7% | 0 |
-| 16 | 18:75 الكهف | +2.8% | 20:1 | 19:96 | ±2.3% | ±0.0% | ±21.3% | ±9.5% | 0 |
+| 16 | 18:75 الكهف | +2.8% | 20:1 | 19:96 | ±2.3% | ±0.0% | ±21.3% | ±11.8% | 0 |
 | 17 | 21:1 الأنبياء | -5.5% | 22:1 | 22:1 | ±0.4% | ±0.4% | ±12.2% | ±5.9% | 0 |
 | 18 | 23:1 المؤمنون | +3.3% | 24:21 | 24:19 | ±1.7% | ±0.3% | ±16.2% | ±10.6% | 0 |
 | 19 | 25:21 الفرقان | +4.5% | 26:111 | 26:116 | ±1.9% | ±0.2% | ±18.1% | ±7.5% | 0 |
@@ -111,7 +111,7 @@ Hizb: the start of the second hizb and the larger deviation of the two from ½ j
 1. **Phrase review, round 2.** `data/rub/phrase-splits.tsv` lists 23 proposed splits. 0 are where a traditional juz starts inside a phrase. 23 are splits that would let the rubʿ balance better: with all of them accepted, the worst rubʿ falls from ±21% to about ±21%, still with no boundary inside a phrase.
 2. **Surah preference for hizb** (section 4), if openings matter more than balance at that level.
 3. **Ghayth al-Nafʿ table.** Al-Ṣafāqusī's 240 boundaries, with the Maghāriba and Mashāriqa alternatives, as preferred cut points with traditional standing.
-4. **Agreement across the counting schools** (فاصلة بلا خلاف), checked for every new boundary.
+4. **Agreement across the counting schools** (فاصلة بلا خلاف): checked. Every boundary, traditional and new, is an aya end in all six counting systems.
 
 ## 7. Reproduce
 

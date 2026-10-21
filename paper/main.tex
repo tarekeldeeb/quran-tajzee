@@ -119,7 +119,7 @@ kept; the imbalance is in the finer divisions.
 
 \textbf{Nested exact cuts.} Each juz is cut into two hizb, then each hizb into four quarters, the
 way the divisions nest. A container $G$ of ayat cut into $k$ parts has target $T=|G|/k$ and the
-admissible cuts $\mathcal{S}$ are phrase starts, outside ayat 2--7 of a surah (juz~28 exempt). Lexicographically we
+admissible cuts $\mathcal{S}$ are phrase starts that follow an agreed aya end (below), outside ayat 2--7 of a surah (juz~28 exempt). Lexicographically we
 \begin{equation}
 \min_{\text{cuts}\subset\mathcal{S}}\ \max_q \frac{|S_q - T|}{T},\quad\text{then}\quad
 \min \sum_q (S_q-T)^2 ,
@@ -226,8 +226,14 @@ most of them a resumptive ``\ar{ف}'' at a new subject (``\ar{فاصدع بما 
 grades of the classical \emph{waqf} works, al-Dānī's \emph{al-Muktafā} and al-Ushmūnī's
 \emph{Manār al-Hudā}~\cite{muktafa,manar}, at every candidate aya end.
 
-\textbf{Counting schools.} Boundaries are Kufan aya ends; al-Ṣafāqusī also requires an aya end
-agreed by all counts (\ar{فاصلة بلا خلاف}), not yet checked. \textbf{Weights.} Recitation and
+\textbf{Counting schools.} The text is in the Kufan count, but al-Ṣafāqusī also asks whether a
+quarter's last word ends an aya in every count (\ar{فاصلة بلا خلاف}). We check each boundary
+against the six systems of al-Dānī's \emph{al-Bayān}~\cite{bayan,qiraatmap}: \DisputedEnds{} Kufan
+aya ends are not counted by some system. None of the \TradBoundaries{} traditional boundaries
+follows one, which confirms the rule in the transmitted divisions. Two of our first quarters did,
+so disputed ends were removed from $\mathcal{S}$; the quarters moved (\CountMovedList) at
+\CountFreeRubCV\% $\to$ \NewRubCV\% CV, and now \NewDisputed{} boundaries follow a disputed end.
+\textbf{Weights.} Recitation and
 print agree so closely that the 50/50 mix is not sensitive; header lines of surahs, if counted in
 print, lengthen juz~30.
 
@@ -236,7 +242,7 @@ Al-Ṣafāqusī's rule, that a quarter ends where a thought ends, is sound, but 
 quarters keep it only partly and vary more than twofold in length. Applying the rule to every
 boundary and choosing among the admissible stops by measured length gives hizb within
 $\pm$\NewHizbWorst\% of half their juz, and quarters with a CV of \NewRubCV\% against
-\TradRubCV\%, with no boundary inside a phrase or, outside juz~28, at ayat 2--7 of a surah. The remaining unevenness
+\TradRubCV\%, with no boundary inside a phrase, after a disputed aya end or, outside juz~28, at ayat 2--7 of a surah. The remaining unevenness
 is the price of not cutting a story or a dialogue, a choice the review tables make explicit
 for a human reviewer to keep or overturn.
 
@@ -248,6 +254,7 @@ for a human reviewer to keep or overturn.
 \bibitem{bayan} Abū ʿAmr al-Dānī, \emph{al-Bayān fī ʿAdd Āy al-Qurʾān}.
 \bibitem{muktafa} Abū ʿAmr al-Dānī, \emph{al-Muktafā fī al-Waqf wa-l-Ibtidāʾ}.
 \bibitem{manar} A. al-Ushmūnī, \emph{Manār al-Hudā fī Bayān al-Waqf wa-l-Ibtidāʾ}.
+\bibitem{qiraatmap} Quranpedia, ``qiraat-ayah-map: aya boundaries of the counting systems,'' \url{https://github.com/quranpedia/qiraat-ayah-map}.
 \bibitem{tanzil} Tanzil Project, ``Quran text, Uthmani, version 1.1,'' \url{https://tanzil.net}.
 \bibitem{digitalkhatt} A. Anane, ``DigitalKhatt,'' \url{https://digitalkhatt.org}.
 \bibitem{tajemb} T. Eldeeb, ``tajweed-embeddings,'' \url{https://github.com/tarekeldeeb/tajweed-embeddings}.

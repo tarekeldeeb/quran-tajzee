@@ -9,7 +9,8 @@ INF = float("inf")
 
 
 def toy(n, rnd, phrase_every=3):
-    return [Aya(i, 1, i + 1, float(rnd.randint(1, 30)), float(rnd.randint(1, 30)),
+    # surah 0: no real surah, so neither the opening-ayat rule nor the counting data apply
+    return [Aya(i, 0, i + 1, float(rnd.randint(1, 30)), float(rnd.randint(1, 30)),
                 i % phrase_every == 0, "t") for i in range(n)]
 
 
@@ -126,7 +127,7 @@ class HeadRuleTest(unittest.TestCase):
         us = [Aya(i, 2 + i // 15, i % 15 + 1, float(rnd.randint(1, 30)), float(rnd.randint(1, 30)), True, "t")
               for i in range(30)]
         c = rub.mix(us)
-        ok = [i for i in range(1, 30) if not (2 <= us[i].aya <= 7)]
+        ok = [i for i in range(1, 30) if not (2 <= us[i].aya <= 7) and not rub.disputed_end(us[i])]
         T = sum(c) / 8
         best = None
         for cuts in itertools.combinations(ok, 7):
@@ -169,6 +170,13 @@ class RealDivisionTest(unittest.TestCase):
         for d in (self.d, rub.solve(self.us, objective="penalized", cap=None)):
             bad = [self.us[i].ref for i in d.starts if i not in jset and rub.in_head(self.us[i])]
             self.assertEqual(bad, [])
+
+    def test_every_boundary_is_an_agreed_aya_end(self):
+        self.assertEqual(rub.disputed_end(next(u for u in self.us if u.ref == "20:42")),
+                         ["basri", "madani-first", "madani-last", "makki"])  # «لنفسي» 20:41: Kufi and Shami only
+        self.assertEqual([self.us[i].ref for i in self.d.starts if rub.disputed_end(self.us[i])], [])
+        trad = scores.traditional_starts(1)
+        self.assertEqual([self.us[i].ref for i in trad if rub.disputed_end(self.us[i])], [])
 
     def test_penalized_phrase_starts_only(self):
         d = rub.solve(self.us, mid_phrase=INF, cap=None, objective="penalized")

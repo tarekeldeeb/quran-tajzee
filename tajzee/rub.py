@@ -37,7 +37,8 @@ m is the mid-phrase penalty: starting a rub' inside a subject phrase (at an aya 
 the traditional rub' do) costs as much as a rub' m off its target. A hizb start uses its
 own penalty, by default infinite: a hizb always opens a phrase. No hizb or rub' starts at
 aya 2..7 of any surah (HEAD_AYAT): it starts at the surah itself or at aya 8 or later. Juz 28
-is exempt (HEAD_EXEMPT_JUZ): its short surahs leave too few admissible starts. The juz
+is exempt (HEAD_EXEMPT_JUZ): its short surahs leave too few admissible starts. Every boundary
+is also an aya end agreed by all six counting systems (disputed_end). The juz
 starts are fixed and exempt; where one falls inside a phrase the phrase is split there.
 
 The same exact dynamic program as Task 3 (tajzee.juz._dp) solves each container.
@@ -160,6 +161,33 @@ def in_head(u: Aya, head: int = HEAD_AYAT, min_surah: int = HEAD_MIN_SURAH) -> b
     return _COUNTS.get(u.sura, 0) >= min_surah
 
 
+COUNTING_SYSTEMS = {"kufi", "madani-first", "madani-last", "makki", "basri", "dimashqi"}
+_PRIMITIVES = None
+
+
+def disputed_end(u: Aya) -> list[str]:
+    """Counting systems that do NOT count the end of the aya before `u` as an aya end.
+
+    Empty when the boundary before `u` is agreed by all six systems (فاصلة بلا خلاف), as
+    al-Ṣafāqusī requires of every division end. Source: al-Dānī's al-Bayān via
+    quranpedia/qiraat-ayah-map (data/source/counting/)."""
+    global _PRIMITIVES
+    if u.aya == 1:
+        return []  # a surah end is agreed by all
+    if _PRIMITIVES is None:
+        import json
+        from . import DATA
+        _PRIMITIVES = json.loads((DATA / "source" / "counting" / "book-boundary-primitives.json")
+                                 .read_text(encoding="utf-8"))["surahs"]
+    e = _PRIMITIVES.get(str(u.sura), {}).get(str(u.aya - 1), {}).get("end")
+    return sorted(COUNTING_SYSTEMS - set(e["counted_by"])) if e else []
+
+
+def blocked(u: Aya, head: int = HEAD_AYAT) -> bool:
+    """No hizb or rub' may start at `u`: an opening aya of a surah, or a disputed aya end."""
+    return in_head(u, head) or bool(disputed_end(u))
+
+
 def _cut_phrases(us, c, a, b, parts, head=HEAD_AYAT):
     """Exact minimax-then-least-squares cut of ayat a..b-1 into `parts`, at phrase starts only,
     never at aya 2..head of a surah."""
@@ -168,7 +196,7 @@ def _cut_phrases(us, c, a, b, parts, head=HEAD_AYAT):
     BIG = 1e9  # deviation of a part starting at an inadmissible aya: never chosen while any other is feasible
 
     def dev(j, i):
-        if j > 0 and (not us[a + j].phrase_start or in_head(us[a + j], head)):
+        if j > 0 and (not us[a + j].phrase_start or blocked(us[a + j], head)):
             return BIG
         return abs(pre[i] - pre[j] - T)
 
@@ -187,7 +215,7 @@ def _cut(us, c, a, b, parts, pen_for, cap, head=HEAD_AYAT):
 
     def arr(p):
         cost = INF if p == INF else (p * T) ** 2
-        return [0.0] + [INF if in_head(us[i], head) else (0.0 if us[i].phrase_start else cost)
+        return [0.0] + [INF if blocked(us[i], head) else (0.0 if us[i].phrase_start else cost)
                         for i in range(a + 1, b)]
 
     cache = {}

@@ -142,6 +142,28 @@ def main() -> None:
     knee = min(curve, key=lambda x: abs(x[2] - 2.0 * float(m["CeilRubCV"])) if x[0] else 99)
     m["KneeSplits"], m["KneeWorst"], m["KneeCV"] = str(knee[0]), f"{knee[1]:.1f}", f"{knee[2]:.1f}"
 
+    # counting schools: every boundary must be an aya end agreed by all six systems
+    uc = rub.ayat()
+    prim = json.loads((DATA / "source" / "counting" / "book-boundary-primitives.json").read_text(encoding="utf-8"))["surahs"]
+    m["DisputedEnds"] = str(sum(1 for sv in prim.values() for v in sv.values()
+                                if "end" in v and set(v["end"]["counted_by"]) != rub.COUNTING_SYSTEMS))
+    tb = [i for i in scores.traditional_starts(1) if i]
+    m["TradBoundaries"] = str(len(tb))
+    m["TradDisputed"] = str(sum(1 for i in tb if rub.disputed_end(uc[i])))
+    cnow = rub.mix(uc)
+    dnow = rub.solve(uc)
+    m["NewDisputed"] = str(sum(1 for i in dnow.starts if rub.disputed_end(uc[i])))
+    keep = rub.disputed_end
+    rub.disputed_end = lambda u: []
+    try:
+        dfree = rub.solve(uc)
+    finally:
+        rub.disputed_end = keep
+    moved = [(uc[x].ref, uc[y].ref) for x, y in zip(dfree.starts, dnow.starts) if x != y]
+    m["CountMoved"] = str(len(moved))
+    m["CountMovedList"] = ", ".join(f"{x}$\\to${y}" for x, y in moved)
+    m["CountFreeRubCV"] = f"{st.pstdev(rub.relative(uc, dfree.starts, cnow, 4)) * 100:.1f}"
+
     out = ROOT / "paper" / "numbers.tex"
     out.parent.mkdir(exist_ok=True)
     with open(out, "w", encoding="utf-8") as fh:

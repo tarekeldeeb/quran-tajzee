@@ -23,3 +23,10 @@ and a closing `6237`. Every 4th rub' starts a hizb and every 8th a juz. Copied f
 (MIT). The juz starts (every 8th rub') are used as the fixed juz of Task 4; the hizb and
 rub' are the baseline the new ones are compared against. The Madina Mushaf takes these
 divisions from al-Ṣafāqusī's *Ghayth al-Nafʿ* (see `docs/research/ghayth-al-naf.md`).
+
+## counting/book-boundary-primitives.json
+
+Aya ends of the six counting systems (Kūfī, Madanī first and last, Makkī, Baṣrī, Dimashqī) after
+al-Dānī's *al-Bayān*, from [quranpedia/qiraat-ayah-map](https://github.com/quranpedia/qiraat-ayah-map),
+MIT licence (see `counting/README.md`). Used to require that every hizb and rubʿ boundary follows
+an aya end agreed by all systems.

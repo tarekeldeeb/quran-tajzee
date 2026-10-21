@@ -55,8 +55,8 @@ recitation and print width.
   from [Ghayth al-Nafʿ](docs/research/ghayth-al-naf.md)), the hizb and then their quarters are
   re-cut exactly, only at phrase starts. Hizb go from ±14% to ±3.6% of half a juz (CV 6.9% → 1.4%), after a
   hizb-by-hizb review that split 7 phrases at complete stops, and the
-  longest rubʿ from 2.19× the shortest to 1.52× (CV 11.7% → 6.4%) after a quarter review that
-  split 60 phrases at complete stops; no hizb or rubʿ starts at aya 2–7 of a surah (juz 28 exempt). The traditional hizb and rubʿ start inside a
+  longest rubʿ from 2.19× the shortest to 1.52× (CV 11.7% → 6.5%) after a quarter review that
+  split 60 phrases at complete stops; no hizb or rubʿ starts at aya 2–7 of a surah (juz 28 exempt), and every boundary follows an aya end agreed by all six counting systems (فاصلة بلا خلاف), as the traditional ones do. The traditional hizb and rubʿ start inside a
   subject phrase 79 times out of 210; the new ones never do. See the
   [final analysis](docs/final-analysis.md).
 
@@ -68,6 +68,7 @@ See the [roadmap](docs/roadmap.md) for what comes next.
 data/
   source/quran-uthmani.txt    Tanzil Uthmani text 1.1 (verbatim, licence header kept)
   source/hafs-rub-start-ayahs.json   traditional rub' starts (baseline for comparison)
+  source/counting/            aya ends of the six counting systems (al-Dānī, via qiraat-ayah-map, MIT)
   phrases/phrases.tsv         Task 1 output, the source of truth: sura, from, to, topic
   scores/                     Task 2 output: per-aya and per-phrase recitation and typesetting scores
   juz/juz.tsv                 Task 3 output: the 30 balanced juz (alternative)

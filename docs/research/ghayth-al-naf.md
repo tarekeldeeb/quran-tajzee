@@ -71,7 +71,7 @@ Rule 1 is about size. Rules 2 to 4 are about meaning.
 | traditional rule | Quran-Tajzee |
 |---|---|
 | size by letter count | size by recitation (harakat with madd) and print width (DigitalKhatt), mixed 50/50 |
-| an agreed aya end | every boundary is an aya end (Kufan count, Tanzil). Agreement across the counting schools is not yet checked. |
+| an agreed aya end | every boundary is an aya end agreed by all six counting systems (al-Dānī's *al-Bayān*, `data/source/counting/`); the traditional divisions keep this too. |
 | a complete pause | a phrase start: a new subject (Task 1). Every new hizb and rubʿ opens a phrase; the traditional ones start inside one 79 times out of 210. |
 | the well-known view among alternatives | the traditional juz are kept as they are (Task 4). Inside them, the exact solver chooses. |
 
@@ -86,8 +86,7 @@ traditional division is uneven: ±14% of half a juz and ±38% of a quarter-hizb.
   A table of every boundary would give the waqf grade at each traditional start. It would also give the
   Maghāriba and Mashāriqa alternatives, which are a set of boundaries that already have traditional
   standing. The solver could use them as preferred cut points.
-- **Agreement across the counting schools (فاصلة بلا خلاف).** Each boundary could be checked against the counting schools'
-  aya ends, so that no new boundary falls on an aya end that only the Kufan count has.
+- **Agreement across the counting schools (فاصلة بلا خلاف).** Checked: no traditional boundary and no new one follows a disputed aya end.
 
 ## Sources
 

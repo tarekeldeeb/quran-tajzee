@@ -64,7 +64,7 @@ Quran-Tajzee applies the same rule to every boundary: a quarter ends at the end 
 |---|---|---|
 | mean distance of a rubʿ start from equal position (within its juz) | 15% | 6% |
 | rubʿ starts inside a subject phrase (of 210 inside the juz) | 79 | 0; 57 at reviewed complete stops added in round 2026-10-18 |
-| rubʿ starts with a leaning first word (of 210) | 16 | 19 |
+| rubʿ starts with a leaning first word (of 210) | 16 | 20 |
 
 
 **How to read this table.** The phrase test cannot judge the new division: its boundaries are phrase starts by construction, and the phrases are one reading of the text, still under review. The wording test is independent of that reading, and on it the two divisions score alike. Most new flags are a resumptive «ف» at a new subject, such as «فاصدع» (15:94), «فلا تطع» (68:8) and «فإذا جاءت الطامة» (79:34). A few are real: 11:91, 12:77, 26:116 and 27:27 open on a reply inside a dialogue, because a 10-aya phrase limit splits long stories at turns of the dialogue. Two things would settle the meaning question independently. One is the pause grades of a classical *waqf* work (al-Dānī's *al-Muktafā*, al-Ushmūnī's *Manār al-Hudā*) at every candidate aya end. The other is a review of the new starts that open on a reply.

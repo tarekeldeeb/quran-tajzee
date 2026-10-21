@@ -73,6 +73,11 @@ def main() -> None:
       "47:4) and moved the quarters that started in those ayat; a supplementary reading (rows marked "
       "«قراءة تكميلية») accepted 4 more splits. The rule costs some balance: without it the quarter CV "
       "was 5.9% and the worst ±19.4%.\n\n"
+      "**Counting rule (added 2026-10-21).** Every quarter starts after an aya end that all six counting "
+      "systems agree on (فاصلة بلا خلاف, al-Dānī's *al-Bayān*, `data/source/counting/`). The traditional "
+      "quarters keep this everywhere. Two quarters here did not and moved: 20:42 → 20:49 and 74:42 → 74:38 "
+      "(quarter CV 6.4% → 6.5%). The supplementary candidate 20:41 was read and rejected "
+      "(«قراءة تكميلية بعد قاعدة العد»).\n\n"
       "The most uneven quarters now:\n\n| quarter | starts | against ¼ hizb |\n|---|---|---|\n"
       + "\n".join(f"| {i + 1} | {un[now.starts[i]].ref} | {rel[i] * 100:+.1f}% |" for i in worst)
       + "\n\nIn each, every closer start is either in ayat 2–7 of a surah, or a turn inside a "

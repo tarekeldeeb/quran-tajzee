@@ -8,14 +8,16 @@
 
 | | traditional | before this round | after |
 |---|---|---|---|
-| quarter CV (against ¼ of its hizb) | 11.7% | 9.2% | **6.4%** |
+| quarter CV (against ¼ of its hizb) | 11.7% | 9.2% | **6.5%** |
 | worst quarter | ±38.3% | ±23.8% | **±20.8%** |
 | longest / shortest quarter | 2.19× | 1.65× | **1.52×** |
 | boundaries inside a phrase | 79 of 210 | 0 | **0** |
 
-137 quarter boundaries were reviewed, with 464 candidates read. 60 splits are accepted and 77 boundaries kept as they were. The hizb approved on 2026-10-21 are fixed (`data/rub/hizb-approved.tsv`), so no split here moves a hizb.
+137 quarter boundaries were reviewed, with 465 candidates read. 60 splits are accepted and 77 boundaries kept as they were. The hizb approved on 2026-10-21 are fixed (`data/rub/hizb-approved.tsv`), so no split here moves a hizb.
 
 **Opening-ayat rule (added 2026-10-21).** No quarter starts at aya 2–7 of a surah: it starts at the surah itself or at aya 8 or later. Juz 28 is exempt (its surahs of 11–24 ayat leave too few admissible starts), and so are the traditional juz starts (11:6). The traditional quarters break the rule twice more (12:7, 13:5). Applying it rejected 5 accepted splits (5:3, 13:4, 29:5, 35:2, 47:4) and moved the quarters that started in those ayat; a supplementary reading (rows marked «قراءة تكميلية») accepted 4 more splits. The rule costs some balance: without it the quarter CV was 5.9% and the worst ±19.4%.
+
+**Counting rule (added 2026-10-21).** Every quarter starts after an aya end that all six counting systems agree on (فاصلة بلا خلاف, al-Dānī's *al-Bayān*, `data/source/counting/`). The traditional quarters keep this everywhere. Two quarters here did not and moved: 20:42 → 20:49 and 74:42 → 74:38 (quarter CV 6.4% → 6.5%). The supplementary candidate 20:41 was read and rejected («قراءة تكميلية بعد قاعدة العد»).
 
 The most uneven quarters now:
 
@@ -108,7 +110,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 70 | [30.3](#h30q3) | 7.5 | 18:27 (-10.1%) → 18:29 | split at 18:29 (gain 7.5) |
 | 71 | [48.3](#h48q3) | 7.5 | 41:1 (-10.0%) → 41:1 | kept (best rejected: 41:5, gain 7.5) |
 | 72 | [51.2](#h51q2) | 7.5 | 46:21 (+8.0%) → 46:20 | split at 46:20 (gain 7.5) |
-| 73 | [58.3](#h58q3) | 7.4 | 74:42 (-8.3%) → 74:42 | kept (best rejected: 74:48, gain 7.4) |
+| 73 | [58.3](#h58q3) | 7.4 | 74:42 (-8.3%) → 74:38 | kept (best rejected: 74:48, gain 7.4) |
 | 74 | [30.2](#h30q2) | 7.3 | 18:9 (-8.5%) → 18:13 | kept (best rejected: 18:11, gain 7.3) |
 | 75 | [54.2](#h54q2) | 7.3 | 56:11 (+7.3%) → 56:11 | kept (best rejected: 56:6, gain 7.3) |
 | 76 | [58.2](#h58q2) | 7.3 | 73:10 (-7.9%) → 73:10 | kept (best rejected: 73:14, gain 7.3) |
@@ -121,7 +123,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 83 | [8.2](#h8q2) | 6.9 | 3:181 (-7.9%) → 3:181 | kept (best rejected: 3:182, gain 6.9) |
 | 84 | [27.2](#h27q2) | 6.9 | 15:45 (+7.0%) → 15:39 | kept (best rejected: 15:42, gain 6.9) |
 | 85 | [11.4](#h11q4) | 6.8 | 5:12 (-10.6%) → 5:12 | kept (best rejected: 5:13, gain 6.8) |
-| 86 | [32.2](#h32q2) | 6.8 | 20:42 (-7.7%) → 20:42 | kept (best rejected: 20:46, gain 6.8) |
+| 86 | [32.2](#h32q2) | 6.8 | 20:42 (-7.7%) → 20:49 | kept (best rejected: 20:46, gain 6.8) |
 | 87 | [37.4](#h37q4) | 6.8 | 26:60 (+9.6%) → 26:52 | kept (best rejected: 26:55, gain 6.8) |
 | 88 | [52.4](#h52q4) | 6.8 | 50:23 (-7.2%) → 50:30 | kept (best rejected: 50:27, gain 6.8) |
 | 89 | [44.2](#h44q2) | 6.7 | 35:1 (-7.3%) → 35:1 | kept (best rejected: 35:2, gain 6.7) |
@@ -1969,7 +1971,7 @@ New phrases: 46:15–19 *الوصية بالوالدين، والولد البا
 
 
 <a id="h58q3"></a>
-### 73. Hizb 58, quarter 3: 74:42 (-8.3%) → 74:42 (-8.3%), at stake 7.4
+### 73. Hizb 58, quarter 3: 74:42 (-8.3%) → 74:38 (-12.7%), at stake 7.4
 
 
 ¶ *ما سلككم في سقر*  
@@ -2235,9 +2237,15 @@ New phrases: 41:25–25 *قرناء السوء* · 41:26–29 *الصد عن ا�
 
 
 <a id="h32q2"></a>
-### 86. Hizb 32, quarter 2: 20:42 (-7.7%) → 20:42 (-7.7%), at stake 6.8
+### 86. Hizb 32, quarter 2: 20:42 (-7.7%) → 20:49 (+11.8%), at stake 6.8
 
 
+¶ *منة الله على موسى في صغره*  
+· **20:37** (-27.4%) وَلَقَدْ مَنَنَّا عَلَيْكَ مَرَّةً أُخْرَىٰٓ  
+· **20:38** (-25.9%) إِذْ أَوْحَيْنَآ إِلَىٰٓ أُمِّكَ مَا يُوحَىٰٓ  
+· **20:39** (-24.1%) أَنِ ٱقْذِفِيهِ فِى ٱلتَّابُوتِ فَٱقْذِفِيهِ فِى ٱلْيَمِّ فَلْيُلْقِهِ ٱلْيَمُّ بِٱلسَّاحِلِ يَأْخُذْهُ عَدُوٌّ لِّى وَعَدُوٌّ لَّهُۥ وَأَلْقَيْتُ عَلَيْكَ مَحَبَّةً مِّنِّى وَلِتُصْنَعَ عَلَىٰ عَيْنِىٓ  
+· **20:40** (-18.1%) إِذْ تَمْشِىٓ أُخْتُكَ فَتَقُولُ هَلْ أَدُلُّكُمْ عَلَىٰ مَن يَكْفُلُهُۥ فَرَجَعْنَٰكَ إِلَىٰٓ أُمِّكَ كَىْ تَقَرَّ عَيْنُهَا وَلَا تَحْزَنَ وَقَتَلْتَ نَفْسًا فَنَجَّيْنَٰكَ مِنَ ٱلْغَمِّ وَفَتَنَّٰكَ فُتُونًا فَلَبِثْتَ سِنِينَ فِىٓ أَهْلِ مَدْيَنَ ثُمَّ جِئْتَ عَلَىٰ قَدَرٍ يَٰمُوسَىٰ  
+✗ **20:41** (-8.7%) وَٱصْطَنَعْتُكَ لِنَفْسِى  
 ¶ *إرسال موسى وهارون إلى فرعون بالقول اللين*  
 ▶ **20:42** (-7.7%) ٱذْهَبْ أَنتَ وَأَخُوكَ بِـَٔايَٰتِى وَلَا تَنِيَا فِى ذِكْرِى  
 ✗ **20:43** (-5.4%) ٱذْهَبَآ إِلَىٰ فِرْعَوْنَ إِنَّهُۥ طَغَىٰ  
@@ -2253,6 +2261,7 @@ New phrases: 41:25–25 *قرناء السوء* · 41:26–29 *الصد عن ا�
 | 20:45 | -1.7% | 6.0 | reject | «قالا ربنا» جواب |
 | 20:47 | +3.1% | 4.6 | reject | «فأتياه» تتمة الأمر |
 | 20:44 | -3.8% | 3.9 | reject | تتمة |
+| 20:41 | -8.7% | 3.1 | reject | (قراءة تكميلية بعد قاعدة العد) «واصطنعتك لنفسي» تتمة تعداد المنن على موسى في 20:37–41 |
 | 20:43 | -5.4% | 2.3 | reject | داخل الخطاب لموسى |
 
 
