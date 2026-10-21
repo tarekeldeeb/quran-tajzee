@@ -161,8 +161,10 @@ class RealDivisionTest(unittest.TestCase):
         self.assertTrue(all(self.us[s].phrase_start for s in self.d.starts if s not in jset))
 
     def test_no_rub_at_ayat_2_to_7(self):
-        short = next(u for u in self.us if u.sura == 61 and u.aya == 5)
-        self.assertTrue(rub.in_head(short))  # the rule holds in short surahs too
+        short = next(u for u in self.us if u.sura == 67 and u.aya == 5)
+        self.assertTrue(rub.in_head(short))  # the rule holds in short surahs too (Al-Mulk, juz 29)
+        exempt = next(u for u in self.us if u.sura == 61 and u.aya == 5)
+        self.assertFalse(rub.in_head(exempt))  # juz 28 is exempt
         jset = set(self.d.juz_starts)
         for d in (self.d, rub.solve(self.us, objective="penalized", cap=None)):
             bad = [self.us[i].ref for i in d.starts if i not in jset and rub.in_head(self.us[i])]

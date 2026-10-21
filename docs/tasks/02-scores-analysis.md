@@ -27,8 +27,8 @@ The line count leaves out surah header lines; with them it matches the 604-page 
 |---|---|---|---|---|---|---|---|---|---|---|
 | aya | Recitation (harakat) | 63.6 | 46.6 | 0.73 | 2 | 15.0 | 53.0 | 149 | 655 | 328× |
 | aya | Typesetting (px @24) | 530.5 | 380.4 | 0.72 | 44.9 | 147.6 | 438.4 | 1,224.2 | 5,296.8 | 118× |
-| phrase | Recitation (harakat) | 338.6 | 172.0 | 0.51 | 41 | 104 | 314 | 668.5 | 1,145 | 28× |
-| phrase | Typesetting (px @24) | 2,835.3 | 1,398.7 | 0.49 | 348 | 968.4 | 2,614.1 | 5,471.8 | 9,362.6 | 27× |
+| phrase | Recitation (harakat) | 338.3 | 171.9 | 0.51 | 41 | 104 | 313.5 | 668.5 | 1,145 | 28× |
+| phrase | Typesetting (px @24) | 2,832.9 | 1,398.3 | 0.49 | 348 | 968.6 | 2,614.1 | 5,471.7 | 9,362.6 | 27× |
 
 Phrases are far more even than ayat (CV about half), because the phrase rules group short ayat together. They still span a wide range, from one short aya to ten long ones.
 

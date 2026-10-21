@@ -22,8 +22,9 @@ stay as in the Madina Mushaf, and the hizb and rubʿ inside them are re-cut.
 - **Meaning:** every new boundary is a phrase start, so a hizb or rubʿ always opens a subject (Task 1).
   This is the analogue of al-Ṣafāqusī's *waqf tāmm*. The juz starts are fixed. In 11 of them the
   traditional start falls inside a phrase, and those phrases are proposed for splitting.
-- **Opening ayat:** no hizb or rubʿ starts at aya 2–7 of any surah. It starts at the surah itself or
-  at aya 8 or later. The traditional juz are exempt (juz 12 starts at 11:6).
+- **Opening ayat:** no hizb or rubʿ starts at aya 2–7 of a surah. It starts at the surah itself or
+  at aya 8 or later. Exempt: juz 28, whose surahs of 11–24 ayat leave too few admissible starts, and
+  the traditional juz starts (juz 12 starts at 11:6).
 - **Objective:** for each container, solved exactly by the Task 3 dynamic program:
 
 ```
@@ -37,11 +38,11 @@ cuts only at phrase starts
 | | traditional | new |
 |---|---|---|
 | hizb, worst (of ½ juz) | ±13.9% | ±3.6% |
-| hizb, CV | 6.9% | 1.6% |
-| rubʿ, worst (of ¼ hizb) | ±38% | ±30.7% |
-| rubʿ, CV | 11.7% | 6.9% |
-| longest/shortest rubʿ, whole Quran | 2.19× | 1.77× |
-| hizb and rubʿ at aya 2–7 of a surah (juz starts exempt) | 4 | **0** |
+| hizb, CV | 6.9% | 1.4% |
+| rubʿ, worst (of ¼ hizb) | ±38% | ±20.8% |
+| rubʿ, CV | 11.7% | 6.4% |
+| longest/shortest rubʿ, whole Quran | 2.19× | 1.52× |
+| hizb and rubʿ at aya 2–7 of a surah (juz 28 and juz starts exempt) | 2 | **0** |
 | hizb and rubʿ starting inside a phrase | 79 of 210 | **0** |
 
 ## Review round 1: hizb (2026-10-18, approved 2026-10-21)
@@ -59,9 +60,8 @@ With the approved hizb fixed (`data/rub/hizb-approved.tsv`), every quarter bound
 quarter from its even position was checked the same way. That was 132 boundaries and 422 candidates
 read. 61 phrases were split at complete stops, and 71 boundaries were kept because every closer point is
 a turn of a story or dialogue. Quarter CV went from 9.2% to 5.9% and the worst quarter from ±23.8% to
-±19.4%. The opening-ayat rule (no start at aya 2–7 of any surah), added the same day, then rejected 6 of
-those splits, moved the second hizb of juz 28 to 61:1, and a supplementary reading added 4: quarter
-CV 6.9%, worst ±30.7% (juz 28, whose short surahs leave few admissible starts). Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
+±19.4%. The opening-ayat rule (no start at aya 2–7 of a surah, juz 28 exempt), added the same day, then
+rejected 5 of those splits, and a supplementary reading added 4: quarter CV 6.4%, worst ±20.8%. Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
 
 ## Balance through review
 

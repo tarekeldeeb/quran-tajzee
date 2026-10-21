@@ -63,7 +63,7 @@ Quran-Tajzee applies the same rule to every boundary: a quarter ends at the end 
 | measure | traditional | Quran-Tajzee |
 |---|---|---|
 | mean distance of a rubʿ start from equal position (within its juz) | 15% | 6% |
-| rubʿ starts inside a subject phrase (of 210 inside the juz) | 79 | 0; 56 at reviewed complete stops added in round 2026-10-18 |
+| rubʿ starts inside a subject phrase (of 210 inside the juz) | 79 | 0; 57 at reviewed complete stops added in round 2026-10-18 |
 | rubʿ starts with a leaning first word (of 210) | 16 | 19 |
 
 

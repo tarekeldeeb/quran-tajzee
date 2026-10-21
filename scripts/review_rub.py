@@ -66,13 +66,13 @@ def main() -> None:
     w(f"{len(groups)} quarter boundaries were reviewed, with {len(rows)} candidates read. {len(acc)} splits are "
       f"accepted and {len(groups) - len(acc)} boundaries kept as they were. The hizb approved on 2026-10-21 "
       "are fixed (`data/rub/hizb-approved.tsv`), so no split here moves a hizb.\n\n"
-      "**Opening-ayat rule (added 2026-10-21).** No quarter starts at aya 2–7 of any surah: it starts "
-      "at the surah itself or at aya 8 or later. The traditional juz starts are fixed and exempt (11:6). "
-      "The traditional quarters break the rule 4 more times (12:7, 13:5, 60:7, 63:4). Applying it rejected "
-      "6 accepted splits (5:3, 13:4, 29:5, 35:2, 47:4, 64:7), moved the second hizb of juz 28 from 61:5 to "
-      "the opening of Aṣ-Ṣaff (61:1), and moved the quarters that started in those ayat; a supplementary "
-      "reading (rows marked «قراءة تكميلية») accepted 4 more splits. The rule costs some balance: without "
-      "it the quarter CV was 5.9% and the worst ±19.4%.\n\n"
+      "**Opening-ayat rule (added 2026-10-21).** No quarter starts at aya 2–7 of a surah: it starts at "
+      "the surah itself or at aya 8 or later. Juz 28 is exempt (its surahs of 11–24 ayat leave too few "
+      "admissible starts), and so are the traditional juz starts (11:6). The traditional quarters break "
+      "the rule twice more (12:7, 13:5). Applying it rejected 5 accepted splits (5:3, 13:4, 29:5, 35:2, "
+      "47:4) and moved the quarters that started in those ayat; a supplementary reading (rows marked "
+      "«قراءة تكميلية») accepted 4 more splits. The rule costs some balance: without it the quarter CV "
+      "was 5.9% and the worst ±19.4%.\n\n"
       "The most uneven quarters now:\n\n| quarter | starts | against ¼ hizb |\n|---|---|---|\n"
       + "\n".join(f"| {i + 1} | {un[now.starts[i]].ref} | {rel[i] * 100:+.1f}% |" for i in worst)
       + "\n\nIn each, every closer start is either in ayat 2–7 of a surah, or a turn inside a "
@@ -115,7 +115,7 @@ def main() -> None:
       "it is marked as a judgment call. The last aya of a surah is not used to open a quarter on its own.\n"
       "5. **Choice.** The closest acceptable candidate is accepted. If none qualifies, the current start "
       "is kept.\n"
-      "6. **Opening ayat.** No candidate at aya 2–7 of a surah is admissible.\n")
+      "6. **Opening ayat.** No candidate at aya 2–7 of a surah is admissible (juz 28 exempt).\n")
 
     w("## Reading `splits.tsv`\n")
     w("Same columns as the hizb round, plus `hizb` and `boundary` (1, 2 or 3: the start of the 2nd, 3rd or "
