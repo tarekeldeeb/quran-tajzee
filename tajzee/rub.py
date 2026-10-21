@@ -36,8 +36,7 @@ T_G = (size of G) / k. Exactly, for each container independently:
 m is the mid-phrase penalty: starting a rub' inside a subject phrase (at an aya end, as
 the traditional rub' do) costs as much as a rub' m off its target. A hizb start uses its
 own penalty, by default infinite: a hizb always opens a phrase. No hizb or rub' starts at
-aya 2..10 of a surah of 50+ ayat (HEAD_AYAT, HEAD_MIN_SURAH): it starts at the surah itself
-or 10+ ayat in. The juz
+aya 2..7 of any surah (HEAD_AYAT): it starts at the surah itself or at aya 8 or later. The juz
 starts are fixed and exempt; where one falls inside a phrase the phrase is split there.
 
 The same exact dynamic program as Task 3 (tajzee.juz._dp) solves each container.
@@ -58,8 +57,8 @@ METHOD = "nested"
 OBJECTIVE = "minimax+lsq"  # every boundary at a phrase start; 'penalized' allows mid-phrase rub'
 MID_PHRASE = 0.10      # a rub' starting inside a phrase costs like a rub' 10% off target
 HIZB_MID_PHRASE = INF  # a hizb must start at a phrase start
-HEAD_AYAT = 10         # no rub' starts at aya 2..10 of a long surah: at the surah start, or 10+ ayat in
-HEAD_MIN_SURAH = 50    # ... the rule applies to surahs of 50 ayat or more
+HEAD_AYAT = 7          # no rub' starts at aya 2..7 of a surah: at the surah start, or at aya 8 or later
+HEAD_MIN_SURAH = 0     # ... in every surah, whatever its length
 CAP = 0.10             # every rub' within 10% of its target (1/4 of its hizb; joint: 1/8 of its juz)
 
 
@@ -190,7 +189,13 @@ def _cut(us, c, a, b, parts, pen_for, cap, head=HEAD_AYAT):
         cache[p] = arr(p)
     pen = [cache[pen_for(1)]] + [cache[pen_for(k)] for k in range(1, parts + 1)]
     bound = cap * T if cap is not None else INF
-    cuts, _ = juz_mod._dp(pre, parts, T, "lsq", bound=bound, window=b - a, pen=pen)
+    try:
+        cuts, _ = juz_mod._dp(pre, parts, T, "lsq", bound=bound, window=b - a, pen=pen)
+    except ValueError:
+        if bound == INF:
+            raise
+        # the cap cannot be met here (e.g. under the opening-ayat rule): solve this container without it
+        cuts, _ = juz_mod._dp(pre, parts, T, "lsq", bound=INF, window=b - a, pen=pen)
     return [a] + [a + x for x in cuts]
 
 

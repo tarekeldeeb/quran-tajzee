@@ -41,5 +41,5 @@ python scripts/review_hizb.py             # refresh the round's README
 
 | round | scope | outcome |
 |-------|-------|---------|
-| `2026-10-21-rub-splits` | Every quarter boundary more than 3% off, inside the approved hizb | 137 boundaries, 463 candidates read: 63 splits accepted, 74 boundaries kept, with the first-ten-ayat rule for surahs of 50+ ayat. Quarter CV 9.2% → 6.6%. Awaiting review. See its README. |
+| `2026-10-21-rub-splits` | Every quarter boundary more than 3% off, inside the approved hizb | 137 boundaries, 464 candidates read: 59 splits accepted, 78 boundaries kept, with the opening-ayat rule (no start at aya 2–7). Quarter CV 9.2% → 6.9%. Approved 2026-10-21. See its README. |
 | `2026-10-18-hizb-splits` | The second hizb of every juz, and the 11 traditional juz starts inside a phrase | 61 candidates read: 7 hizb splits accepted, 54 rejected with reasons; 11 juz splits. Worst hizb ±3.6%. Approved 2026-10-21. See its README. |
