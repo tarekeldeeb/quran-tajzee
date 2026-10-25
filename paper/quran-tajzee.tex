@@ -130,6 +130,18 @@ solution is the global optimum; tests check it against exhaustive search. A \emp
 variant also admits any aya end at a cost $m^2$ per mid-phrase start; we use it only to
 \emph{propose} phrase splits.
 
+\textbf{Implementation.} The solver is plain Python~3 (3.10 or later) using only the standard
+library (\texttt{csv}, \texttt{json}, \texttt{bisect}, \texttt{dataclasses}); it uses no numerical,
+LP or MIP package, since the problem needs none. Each container is solved in two passes of the same
+DP: the first finds the optimal worst deviation $M^\ast$; the second minimises the sum of squares
+over cuts whose every part stays within $M^\ast$ (pruned by that bound, tolerance $10^{-12}$),
+which gives the lexicographic optimum of (1). A pass costs $O(k\,n^2)$ for $n$ admissible starts
+in a container of $k$ parts; the nested solution of all 30 juz takes about a second on one CPU
+core. Unit tests compare the DP with exhaustive search (\texttt{itertools.combinations}) on small
+inputs. The two length scores are computed once by external tools (tajweed-embeddings and
+Quran-Nazm with DigitalKhatt~\cite{tajemb,nazm,digitalkhatt}) and stored per aya, so the solver
+reads only tables. Code and data are open~\cite{repo}.
+
 \textbf{Review process.}\label{sec:review} Balance is limited by how fine the phrases are, so
 phrases are refined where the divisions need it, one container at a time. (1)~For every aya end
 in the container, the balance is computed if the next unit started there. (2)~The candidates are
@@ -181,9 +193,9 @@ Starts inside a phrase (of 210) & \TradInnerCuts & \NewInnerCuts \\
 \end{table}
 
 \textbf{Quarters.} With the hizb fixed and phrase starts only, a hizb holds about 18 phrases, 4.6
-per quarter, and one long phrase can be a fifth of a quarter: the quarter CV is 9.2\%, the worst
-quarter $\pm$23.8\%. Fig.~\ref{fig:curve} shows what splits could buy if every one proposed by
-the penalized solver were accepted: about a hundred bring the CV to about 4.6\%, near the
+per quarter, and one long phrase can be a fifth of a quarter: the quarter CV is \StartRubCV\%, the worst
+quarter $\pm$\StartRubWorst\%. Fig.~\ref{fig:curve} shows what splits could buy if every one proposed by
+the penalized solver were accepted: \HundredSplits{} bring the CV to \HundredCV\%, near the
 \CeilRubCV\% reached when every aya end is allowed (going lower would require cutting inside an
 aya). The
 review applies the meaning test to each: of \RubRoundBoundaries{} boundaries more than 3\% off,
@@ -194,7 +206,7 @@ because every closer point is a turn of a dialogue or story: Mūsā at the fire 
 $\pm$\NewRubWorst\%, lies above the curve by the stops that meaning forbids, and by one more
 rule set in review: no quarter starts at aya 2--7 of a surah; it opens the surah or starts at
 aya 8 or later (the traditional quarters break this twice). Juz~28 is exempt: its surahs of 11--24
-ayat leave too few admissible starts. The rule costs the quarters half a point of CV (5.9\% without it).
+ayat leave too few admissible starts. With the accepted splits, the rule costs the quarters \NoHeadRubCV\% $\to$ \NewRubCV\% CV.
 
 \begin{figure}[t]
 \centering

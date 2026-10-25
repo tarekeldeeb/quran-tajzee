@@ -140,6 +140,9 @@ def main() -> None:
     m["CurveCV"] = "".join(f"({n},{cv:.2f})" for n, _, cv in curve)
     m["CurveWorst"] = "".join(f"({n},{w:.2f})" for n, w, _ in curve)
     m["CurveRows"] = r" \\ ".join(f"{n} & $\\pm${w:.1f}\\% & {cv:.1f}\\%" for n, w, cv in curve)
+    m["StartRubCV"], m["StartRubWorst"] = f"{curve[0][2]:.1f}", f"{curve[0][1]:.1f}"
+    hund = min(curve[1:], key=lambda x: abs(x[0] - 100))
+    m["HundredSplits"], m["HundredCV"] = str(hund[0]), f"{hund[2]:.1f}"
     knee = min(curve, key=lambda x: abs(x[2] - 2.0 * float(m["CeilRubCV"])) if x[0] else 99)
     m["KneeSplits"], m["KneeWorst"], m["KneeCV"] = str(knee[0]), f"{knee[1]:.1f}", f"{knee[2]:.1f}"
 
@@ -163,6 +166,8 @@ def main() -> None:
     moved = [(uc[x].ref, uc[y].ref) for x, y in zip(dfree.starts, dnow.starts) if x != y]
     m["CountMoved"] = str(len(moved))
     m["CountMovedList"] = ", ".join(f"{x}$\\to${y}" for x, y in moved)
+    dh = rub.solve(uc, head_ayat=0)
+    m["NoHeadRubCV"] = f"{st.pstdev(rub.relative(uc, dh.starts, rub.mix(uc), 4)) * 100:.1f}"
     m["CountFreeRubCV"] = f"{st.pstdev(rub.relative(uc, dfree.starts, cnow, 4)) * 100:.1f}"
 
     # classical pause grades at every boundary (al-Muktafā, Manār al-Hudā) and Ghayth's quarters

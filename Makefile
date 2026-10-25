@@ -29,9 +29,9 @@ rub:                 ## hizb and rub' inside the traditional juz, and the analys
 waqf:                ## data/source/waqf/ from the OpenITI texts (downloads them into build/)
 	$(PY) scripts/extract_waqf.py
 
-paper:               ## paper/numbers.tex from the data, then paper/main.pdf (XeLaTeX)
+paper:               ## paper/numbers.tex from the data, then paper/quran-tajzee.pdf (XeLaTeX)
 	$(PY) scripts/paper_numbers.py
-	cd paper && latexmk -xelatex -interaction=nonstopmode main.tex
+	cd paper && latexmk -xelatex -interaction=nonstopmode quran-tajzee.tex
 
 check: validate test review
 
