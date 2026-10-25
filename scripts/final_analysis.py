@@ -177,14 +177,14 @@ def main() -> None:
     n_juz = sum(1 for s in jset if not us[s].phrase_start)
     hint = rub.solve(us, objective="penalized")
     hm = rub.relative(us, hint.starts, c, 4)
-    w(f"1. **Phrase review, round 2.** `data/rub/phrase-splits.tsv` lists {n_juz + len(hint.mid_phrase)} "
-      f"proposed splits. {n_juz} are where a traditional juz starts inside a phrase. "
-      f"{len(hint.mid_phrase)} are splits that would let the rubʿ balance better: with all of them "
-      f"accepted, the worst rubʿ falls from ±{fr_rel['worst'] * 100:.0f}% to about "
-      f"±{max(abs(x) for x in hm) * 100:.0f}%, still with no boundary inside a phrase.\n"
+    w("1. **Phrase review**: done. The remaining split hints in `data/rub/phrase-splits.tsv` "
+      f"({len(hint.mid_phrase)}) would leave the worst rubʿ at about ±{max(abs(x) for x in hm) * 100:.0f}% "
+      f"(now ±{fr_rel['worst'] * 100:.0f}%), so they are not pursued.\n"
       "2. **Surah preference for hizb** (section 4), if openings matter more than balance at that level.\n"
-      "3. **Ghayth al-Nafʿ table.** Al-Ṣafāqusī's 240 boundaries, with the Maghāriba and Mashāriqa "
-      "alternatives, as preferred cut points with traditional standing.\n"
+      "3. **Ghayth al-Nafʿ table and the classical grades**: done. Al-Ṣafāqusī's quarter ends, with their "
+      "standing and alternatives, are in `data/source/waqf/ghayth-quarters.tsv`, and every boundary is graded "
+      "by al-Muktafā and Manār al-Hudā ([analysis](research/stop-grades-analysis.md)). The new boundaries "
+      "graded below كاف are the next review round.\n"
       "4. **Agreement across the counting schools** (فاصلة بلا خلاف): checked. Every boundary, traditional "
       "and new, is an aya end in all six counting systems.\n")
 

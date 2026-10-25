@@ -218,13 +218,43 @@ solver proposes were accepted (lines), and after the text-checked review (triang
 
 \section{Discussion and limitations}
 \textbf{The phrase test is ours.} That no new boundary falls inside a phrase holds by
-construction; the phrases are one reading of the text, under review. A wording check independent
+construction; the phrases are one reading of the text, reviewed by one reader. A wording check independent
 of it, a first word that leans on the previous aya (a reply such as ``\ar{قال}'' or a linking
 ``\ar{ف}'', ``\ar{ثم}''), flags \TradLeaning{} traditional starts and a similar number of new ones,
 most of them a resumptive ``\ar{ف}'' at a new subject (``\ar{فاصدع بما تؤمر}''), but a few real: the
-10-aya phrase limit splits long stories at turns of dialogue. An independent judge is the pause
-grades of the classical \emph{waqf} works, al-Dānī's \emph{al-Muktafā} and al-Ushmūnī's
-\emph{Manār al-Hudā}~\cite{muktafa,manar}, at every candidate aya end.
+10-aya phrase limit splits long stories at turns of dialogue.
+
+\textbf{The classical grades.} An independent judge is the pause grades of the \emph{waqf} works.
+We extracted, from the OpenITI texts~\cite{openiti}, the grade al-Dānī's \emph{al-Muktafā} gives
+\StopsMuktafa{} aya ends and al-Ushmūnī's \emph{Manār al-Hudā} \StopsManar~\cite{muktafa,manar};
+where both grade an end they agree within one grade \StopsNear\% of the time. Table~\ref{tab:grades}
+grades the aya end before every boundary. \GradeNewStrong\% of the new boundaries follow a surah
+end, a complete (\ar{تام}) or a sufficient (\ar{كاف}) stop, against \GradeTradStrong\% of the
+traditional ones: drawn for balance, the new division is placed as well as the one drawn by stops.
+The \GradeNewWeak{} new boundaries graded lower (e.g.\ 37:27, where the people of the Fire turn to
+one another) are the next review round. The juz openings inside a dialogue (18:75, 51:31) follow a
+sufficient and a complete stop: the classical grade asks for a new sentence, the phrase test for a
+new subject. Al-Ṣafāqusī's own note on the last word of each quarter was located for
+\GhaythLocated{} quarters: \GhaythSame{} are the Madina ends. Of the other \GhaythDiff, he reports
+the Madina end as an alternative (of the Mashāriqa, the Maghāriba or ``some'') in \GhaythAlt; in
+\GhaythDepart{} the Madina Mushaf departs from him.
+
+\begin{table}[t]
+\caption{The aya end before each of the 239 inner boundaries, graded by \emph{al-Muktafā} and \emph{Manār al-Hudā} (the stronger grade)}
+\label{tab:grades}
+\centering
+\begin{tabular}{lrr}
+\toprule
+grade & traditional & new \\
+\midrule
+surah end & \GradeTradSurah & \GradeNewSurah \\
+complete (\ar{تام}) & \GradeTradTamm & \GradeNewTamm \\
+sufficient (\ar{كاف}) & \GradeTradKafi & \GradeNewKafi \\
+weaker: \ar{حسن}, \ar{جائز}, \ar{ليس بوقف} & \GradeTradWeak & \GradeNewWeak \\
+not graded & \GradeTradNone & \GradeNewNone \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \textbf{Counting schools.} The text is in the Kufan count, but al-Ṣafāqusī also asks whether a
 quarter's last word ends an aya in every count (\ar{فاصلة بلا خلاف}). We check each boundary
@@ -242,7 +272,7 @@ Al-Ṣafāqusī's rule, that a quarter ends where a thought ends, is sound, but 
 quarters keep it only partly and vary more than twofold in length. Applying the rule to every
 boundary and choosing among the admissible stops by measured length gives hizb within
 $\pm$\NewHizbWorst\% of half their juz, and quarters with a CV of \NewRubCV\% against
-\TradRubCV\%, with no boundary inside a phrase, after a disputed aya end or, outside juz~28, at ayat 2--7 of a surah. The remaining unevenness
+\TradRubCV\%, with no boundary inside a phrase, after a disputed aya end or, outside juz~28, at ayat 2--7 of a surah, and \GradeNewStrong\% of them at a stop the classical works grade complete or sufficient. The remaining unevenness
 is the price of not cutting a story or a dialogue, a choice the review tables make explicit
 for a human reviewer to keep or overturn.
 
@@ -255,6 +285,7 @@ for a human reviewer to keep or overturn.
 \bibitem{muktafa} Abū ʿAmr al-Dānī, \emph{al-Muktafā fī al-Waqf wa-l-Ibtidāʾ}.
 \bibitem{manar} A. al-Ushmūnī, \emph{Manār al-Hudā fī Bayān al-Waqf wa-l-Ibtidāʾ}.
 \bibitem{qiraatmap} Quranpedia, ``qiraat-ayah-map: aya boundaries of the counting systems,'' \url{https://github.com/quranpedia/qiraat-ayah-map}.
+\bibitem{openiti} OpenITI, ``Open Islamicate Texts Initiative corpus, \url{https://github.com/OpenITI}.
 \bibitem{tanzil} Tanzil Project, ``Quran text, Uthmani, version 1.1,'' \url{https://tanzil.net}.
 \bibitem{digitalkhatt} A. Anane, ``DigitalKhatt,'' \url{https://digitalkhatt.org}.
 \bibitem{tajemb} T. Eldeeb, ``tajweed-embeddings,'' \url{https://github.com/tarekeldeeb/tajweed-embeddings}.

@@ -42,7 +42,7 @@ recitation and print width.
 ## Status
 
 - **Task 1 — subject phrases**: drafted for the whole Quran, 6,236 ayat in 1,172 phrases of
-  1–10 ayat, under review.
+  1–10 ayat, reviewed.
 - **Task 2 — length scores**: every aya and phrase scored for recitation (Hafs madd-weighted
   phonemes, via tajweed-embeddings) and typesetting (DigitalKhatt width, via quran-nazm).
   See the [analysis](docs/tasks/02-scores-analysis.md).
@@ -60,6 +60,12 @@ recitation and print width.
   subject phrase 79 times out of 210; the new ones never do. See the
   [final analysis](docs/final-analysis.md).
 
+- **Task 6 — classical stop grades**: every boundary graded by al-Dānī's *al-Muktafā* and
+  al-Ushmūnī's *Manār al-Hudā*, and al-Ṣafāqusī's own note on each quarter end tabulated with its
+  standing and the Maghāriba/Mashāriqa alternatives (texts from OpenITI). 96% of the new boundaries
+  follow a surah end, a complete or a sufficient stop (traditional: 97%). See the
+  [stop-grade analysis](docs/research/stop-grades-analysis.md).
+
 See the [roadmap](docs/roadmap.md) for what comes next.
 
 ## Layout
@@ -69,6 +75,7 @@ data/
   source/quran-uthmani.txt    Tanzil Uthmani text 1.1 (verbatim, licence header kept)
   source/hafs-rub-start-ayahs.json   traditional rub' starts (baseline for comparison)
   source/counting/            aya ends of the six counting systems (al-Dānī, via qiraat-ayah-map, MIT)
+  source/waqf/                pause grades of al-Muktafā and Manār al-Hudā; Ghayth al-Nafʿ's quarter ends
   phrases/phrases.tsv         Task 1 output, the source of truth: sura, from, to, topic
   scores/                     Task 2 output: per-aya and per-phrase recitation and typesetting scores
   juz/juz.tsv                 Task 3 output: the 30 balanced juz (alternative)
@@ -82,6 +89,7 @@ tajzee/                       shared Python library (no dependencies)
   scores.py                   read the length scores; score any range of ayat
   juz.py                      exact partition solver (minimax + least squares DP)
   rub.py                      hizb and rubʿ inside the traditional juz
+  waqf.py                     classical pause grades and Ghayth al-Nafʿ's quarter ends
 scripts/                      command-line entry points, one per job
   validate_phrases.py         coverage and size checks
   dump_text.py                compact reading view of a passage
@@ -98,6 +106,8 @@ scripts/                      command-line entry points, one per job
   final_analysis.py           final analysis of the complete division
   analyze_traditional.py      the traditional rubʿ measured: letter counts, stops, phrases
   apply_splits.py             apply a round of phrase splits with new topics
+  extract_waqf.py             data/source/waqf/ from the OpenITI texts of the pause works
+  analyze_stops.py            every boundary graded by the classical pause works
   paper_numbers.py            paper/numbers.tex: every number the paper quotes
 review/template.html          the review page (marks stored by the hosting artifact)
 reviews/                      one folder per review round: marks and the list reviewed

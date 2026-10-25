@@ -7,6 +7,7 @@ The paper uses only these macros for results, so `make paper` keeps it in sync w
 """
 
 import bisect
+import collections
 import csv
 import dataclasses
 import json
@@ -17,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from tajzee import DATA, phrases, quran, reviews, rub, scores  # noqa: E402
+from tajzee import DATA, phrases, quran, reviews, rub, scores, waqf  # noqa: E402
 
 INF = float("inf")
 
@@ -163,6 +164,31 @@ def main() -> None:
     m["CountMoved"] = str(len(moved))
     m["CountMovedList"] = ", ".join(f"{x}$\\to${y}" for x, y in moved)
     m["CountFreeRubCV"] = f"{st.pstdev(rub.relative(uc, dfree.starts, cnow, 4)) * 100:.1f}"
+
+    # classical pause grades at every boundary (al-Muktafā, Manār al-Hudā) and Ghayth's quarters
+    S = waqf.stops()
+    both = [(waqf.RANK[v["muktafa"]], waqf.RANK[v["manar"]]) for v in S.values() if len(v) == 2]
+    m["StopsMuktafa"] = f"{sum('muktafa' in v for v in S.values()):,}"
+    m["StopsManar"] = f"{sum('manar' in v for v in S.values()):,}"
+    m["StopsNear"] = f"{sum(abs(a - b) <= 1 for a, b in both) / len(both) * 100:.0f}"
+    for name, starts in (("Trad", [i for i in scores.traditional_starts(1) if i]), ("New", [i for i in dnow.starts if i])):
+        c = collections.Counter(waqf.boundary(uc, i)[0] for i in starts)
+        n = len(starts)
+        m[f"Grade{name}Surah"] = str(c["surah end"])
+        m[f"Grade{name}Tamm"] = str(c["تام"])
+        m[f"Grade{name}Kafi"] = str(c["كاف"])
+        m[f"Grade{name}Weak"] = str(c["حسن"] + c["جائز/صالح"] + c["ليس بوقف"])
+        m[f"Grade{name}None"] = str(c["not graded"])
+        m[f"Grade{name}Strong"] = f"{(c['surah end'] + c['تام'] + c['كاف']) / n * 100:.0f}"
+    qs = waqf.quarters()
+    loc = [x for x in qs if x.ghayth_end]
+    m["GhaythLocated"] = str(len(loc))
+    m["GhaythSame"] = str(sum(x.ghayth_end == x.madina_end for x in loc))
+    m["GhaythConsensus"] = str(sum(x.standing == "consensus" for x in loc))
+    diff = [x for x in loc if x.ghayth_end != x.madina_end]
+    m["GhaythDiff"] = str(len(diff))
+    m["GhaythAlt"] = str(sum(waqf.madina_named(x) for x in diff))
+    m["GhaythDepart"] = str(len(diff) - int(m["GhaythAlt"]))
 
     out = ROOT / "paper" / "numbers.tex"
     out.parent.mkdir(exist_ok=True)

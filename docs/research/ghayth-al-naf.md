@@ -82,10 +82,10 @@ traditional division is uneven: ±14% of half a juz and ±38% of a quarter-hizb.
 
 ## Open points
 
-- **A full table of Ghayth al-Nafʿ's 240 boundaries.** Online, only two of his passages could be read in full here.
-  A table of every boundary would give the waqf grade at each traditional start. It would also give the
-  Maghāriba and Mashāriqa alternatives, which are a set of boundaries that already have traditional
-  standing. The solver could use them as preferred cut points.
+- **A full table of Ghayth al-Nafʿ's 240 boundaries.** Done, from the full OpenITI text:
+  `data/source/waqf/ghayth-quarters.tsv` gives, for each quarter, the end he names, his grade, how widely
+  he says it is accepted, and the alternatives. 194 of the 233 located ends are the Madina ends; see the
+  [stop-grade analysis](stop-grades-analysis.md).
 - **Agreement across the counting schools (فاصلة بلا خلاف).** Checked: no traditional boundary and no new one follows a disputed aya end.
 
 ## Sources

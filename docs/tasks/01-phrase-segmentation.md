@@ -1,6 +1,6 @@
 # Task 1 — Subject phrases
 
-**Status:** draft complete for the whole Quran, under review.
+**Status:** complete for the whole Quran and reviewed.
 
 ## Goal
 

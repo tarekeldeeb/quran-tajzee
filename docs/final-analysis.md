@@ -108,9 +108,9 @@ Hizb: the start of the second hizb and the larger deviation of the two from ½ j
 
 ## 6. Open items
 
-1. **Phrase review, round 2.** `data/rub/phrase-splits.tsv` lists 23 proposed splits. 0 are where a traditional juz starts inside a phrase. 23 are splits that would let the rubʿ balance better: with all of them accepted, the worst rubʿ falls from ±21% to about ±21%, still with no boundary inside a phrase.
+1. **Phrase review**: done. The remaining split hints in `data/rub/phrase-splits.tsv` (23) would leave the worst rubʿ at about ±21% (now ±21%), so they are not pursued.
 2. **Surah preference for hizb** (section 4), if openings matter more than balance at that level.
-3. **Ghayth al-Nafʿ table.** Al-Ṣafāqusī's 240 boundaries, with the Maghāriba and Mashāriqa alternatives, as preferred cut points with traditional standing.
+3. **Ghayth al-Nafʿ table and the classical grades**: done. Al-Ṣafāqusī's quarter ends, with their standing and alternatives, are in `data/source/waqf/ghayth-quarters.tsv`, and every boundary is graded by al-Muktafā and Manār al-Hudā ([analysis](research/stop-grades-analysis.md)). The new boundaries graded below كاف are the next review round.
 4. **Agreement across the counting schools** (فاصلة بلا خلاف): checked. Every boundary, traditional and new, is an aya end in all six counting systems.
 
 ## 7. Reproduce
