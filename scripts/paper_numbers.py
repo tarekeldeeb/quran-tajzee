@@ -195,6 +195,19 @@ def main() -> None:
     m["GhaythAlt"] = str(sum(waqf.madina_named(x) for x in diff))
     m["GhaythDepart"] = str(len(diff) - int(m["GhaythAlt"]))
 
+    # the pause term of the quarter objective, against the mix-only objective
+    dmix = rub.solve(uc, objective="minimax+lsq")
+    pts = lambda d: sum(waqf.points(uc, i) for i in d.starts if i)  # noqa: E731
+    weak = lambda d: [i for i in d.starts if i and waqf.points(uc, i) >= 5]  # noqa: E731
+    m["PointValue"] = f"{rub.POINT_VALUE * 100:.0f}"
+    m["MixRubCV"] = f"{st.pstdev(rub.relative(uc, dmix.starts, cnow, 4)) * 100:.1f}"
+    m["MixPts"], m["NewPts"] = str(pts(dmix)), str(pts(dnow))
+    m["MixWeak"], m["NewWeakN"] = str(len(weak(dmix))), str(len(weak(dnow)))
+    m["MixStrong"] = f"{sum(1 for i in dmix.starts if i and waqf.points(uc, i) <= 3) / (len(dmix.starts) - 1) * 100:.0f}"
+    m["PauseMoved"] = str(sum(a != b for a, b in zip(dmix.starts, dnow.starts)))
+    hz = set(dnow.hizb_starts())
+    m["NewWeakList"] = ", ".join(uc[i].ref + (" (a hizb)" if i in hz else "") for i in weak(dnow))
+
     out = ROOT / "paper" / "numbers.tex"
     out.parent.mkdir(exist_ok=True)
     with open(out, "w", encoding="utf-8") as fh:

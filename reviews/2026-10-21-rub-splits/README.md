@@ -8,9 +8,9 @@
 
 | | traditional | before this round | after |
 |---|---|---|---|
-| quarter CV (against ¼ of its hizb) | 11.7% | 9.2% | **6.5%** |
+| quarter CV (against ¼ of its hizb) | 11.7% | 9.2% | **6.8%** |
 | worst quarter | ±38.3% | ±23.8% | **±20.8%** |
-| longest / shortest quarter | 2.19× | 1.65× | **1.52×** |
+| longest / shortest quarter | 2.19× | 1.65× | **1.57×** |
 | boundaries inside a phrase | 79 of 210 | 0 | **0** |
 
 137 quarter boundaries were reviewed, with 465 candidates read. 60 splits are accepted and 77 boundaries kept as they were. The hizb approved on 2026-10-21 are fixed (`data/rub/hizb-approved.tsv`), so no split here moves a hizb.
@@ -24,11 +24,11 @@ The most uneven quarters now:
 | quarter | starts | against ¼ hizb |
 |---|---|---|
 | 100 | 13:1 | +20.8% |
-| 156 | 28:36 | -19.4% |
-| 155 | 28:15 | +18.7% |
+| 156 | 28:29 | +20.2% |
 | 98 | 12:77 | -18.1% |
+| 180 | 37:83 | +17.2% |
+| 155 | 28:14 | -17.2% |
 | 64 | 7:73 | -16.9% |
-| 41 | 4:148 | -16.8% |
 
 In each, every closer start is either in ayat 2–7 of a surah, or a turn inside a story or dialogue.
 
@@ -46,7 +46,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 6 | [14.2](#h14q2) | 20.9 | 6:50 (-22.2%) → 6:54 | split at 6:54 (gain 20.9) |
 | 7 | [52.2](#h52q2) | 20.9 | 48:25 (-21.9%) → 48:27 | split at 48:27 (gain 20.9) |
 | 8 | [48.2](#h48q2) | 20.8 | 40:60 (-21.9%) → 40:64 | split at 40:64 (gain 16.2) |
-| 9 | [39.4](#h39q4) | 19.8 | 28:29 (-20.2%) → 28:36 | kept (best rejected: 28:32, gain 19.8) |
+| 9 | [39.4](#h39q4) | 19.8 | 28:29 (-20.2%) → 28:29 | kept (best rejected: 28:32, gain 19.8) |
 | 10 | [8.4](#h8q4) | 19.4 | 4:11 (-23.0%) → 4:12 | split at 4:12 (gain 19.4) |
 | 11 | [2.3](#h2q3) | 19.2 | 2:111 (+19.5%) → 2:109 | split at 2:109 (gain 14.3) |
 | 12 | [56.3](#h56q3) | 17.6 | 64:5 (-19.3%) → 64:7 | split at 64:7 (gain 9.3) |
@@ -74,9 +74,9 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 34 | [37.2](#h37q2) | 12.4 | 25:56 (+13.0%) → 25:53 | split at 25:53 (gain 11.3) |
 | 35 | [9.3](#h9q3) | 12.2 | 4:51 (-12.4%) → 4:51 | split at 4:56 (gain 2.9) |
 | 36 | [10.3](#h10q3) | 12.1 | 4:110 (-16.2%) → 4:114 | split at 4:114 (gain 12.1) |
-| 37 | [57.3](#h57q3) | 12.1 | 69:1 (-14.8%) → 69:11 | split at 69:11 (gain 12.1) |
+| 37 | [57.3](#h57q3) | 12.1 | 69:1 (-14.8%) → 69:1 | split at 69:11 (gain 12.1) |
 | 38 | [6.3](#h6q3) | 11.8 | 3:52 (-13.5%) → 3:55 | split at 3:55 (gain 11.8) |
-| 39 | [57.4](#h57q4) | 11.5 | 70:19 (-12.2%) → 70:29 | kept (best rejected: 70:28, gain 11.5) |
+| 39 | [57.4](#h57q4) | 11.5 | 70:19 (-12.2%) → 70:19 | kept (best rejected: 70:28, gain 11.5) |
 | 40 | [18.3](#h18q3) | 11.4 | 8:1 (+13.4%) → 7:204 | split at 7:204 (gain 11.4) |
 | 41 | [28.2](#h28q2) | 11.3 | 16:65 (-12.8%) → 16:68 | split at 16:68 (gain 11.3) |
 | 42 | [8.3](#h8q3) | 11.1 | 3:196 (-15.1%) → 3:199 | split at 3:199 (gain 10.5) |
@@ -85,7 +85,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 45 | [24.3](#h24q3) | 10.5 | 12:19 (+11.0%) → 12:16 | split at 12:16 (gain 8.8) |
 | 46 | [17.3](#h17q3) | 10.4 | 7:138 (+10.9%) → 7:138 | kept (best rejected: 7:137, gain 10.4) |
 | 47 | [36.3](#h36q3) | 10.4 | 24:47 (-11.9%) → 24:47 | split at 24:51 (gain 8.6) |
-| 48 | [27.3](#h27q3) | 10.3 | 15:94 (+11.3%) → 15:87 | split at 15:87 (gain 7.7) |
+| 48 | [27.3](#h27q3) | 10.3 | 15:94 (+11.3%) → 15:94 | split at 15:87 (gain 7.7) |
 | 49 | [40.4](#h40q4) | 10.1 | 29:28 (+11.5%) → 29:28 | kept (best rejected: 29:26, gain 10.1) |
 | 50 | [19.3](#h19q3) | 9.9 | 9:1 (+12.2%) → 9:1 | kept (best rejected: 8:74, gain 9.9) |
 | 51 | [55.3](#h55q3) | 9.6 | 59:11 (+13.3%) → 59:11 | kept (best rejected: 59:9, gain 9.6) |
@@ -104,16 +104,16 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 64 | [43.3](#h43q3) | 8.2 | 33:63 (-8.2%) → 33:64 | split at 33:64 (gain 4.0) |
 | 65 | [12.3](#h12q3) | 8.0 | 5:51 (-11.3%) → 5:51 | kept (best rejected: 5:52, gain 8.0) |
 | 66 | [49.3](#h49q3) | 8.0 | 42:32 (-10.8%) → 42:36 | kept (best rejected: 42:35, gain 8.0) |
-| 67 | [58.4](#h58q4) | 8.0 | 76:13 (-8.7%) → 76:13 | kept (best rejected: 76:16, gain 8.0) |
+| 67 | [58.4](#h58q4) | 8.0 | 76:13 (-8.7%) → 76:23 | kept (best rejected: 76:16, gain 8.0) |
 | 68 | [22.3](#h22q3) | 7.9 | 10:71 (-8.8%) → 10:71 | kept (best rejected: 10:72, gain 7.9) |
 | 69 | [19.4](#h19q4) | 7.7 | 9:17 (+9.0%) → 9:17 | kept (best rejected: 9:16, gain 7.7) |
 | 70 | [30.3](#h30q3) | 7.5 | 18:27 (-10.1%) → 18:29 | split at 18:29 (gain 7.5) |
 | 71 | [48.3](#h48q3) | 7.5 | 41:1 (-10.0%) → 41:1 | kept (best rejected: 41:5, gain 7.5) |
 | 72 | [51.2](#h51q2) | 7.5 | 46:21 (+8.0%) → 46:20 | split at 46:20 (gain 7.5) |
-| 73 | [58.3](#h58q3) | 7.4 | 74:42 (-8.3%) → 74:38 | kept (best rejected: 74:48, gain 7.4) |
+| 73 | [58.3](#h58q3) | 7.4 | 74:42 (-8.3%) → 75:1 | kept (best rejected: 74:48, gain 7.4) |
 | 74 | [30.2](#h30q2) | 7.3 | 18:9 (-8.5%) → 18:13 | kept (best rejected: 18:11, gain 7.3) |
-| 75 | [54.2](#h54q2) | 7.3 | 56:11 (+7.3%) → 56:11 | kept (best rejected: 56:6, gain 7.3) |
-| 76 | [58.2](#h58q2) | 7.3 | 73:10 (-7.9%) → 73:10 | kept (best rejected: 73:14, gain 7.3) |
+| 75 | [54.2](#h54q2) | 7.3 | 56:11 (+7.3%) → 56:1 | kept (best rejected: 56:6, gain 7.3) |
+| 76 | [58.2](#h58q2) | 7.3 | 73:10 (-7.9%) → 73:15 | kept (best rejected: 73:14, gain 7.3) |
 | 77 | [25.4](#h25q4) | 7.2 | 13:5 (+7.8%) → 13:1 | kept (best rejected: 13:4, gain 7.2) |
 | 78 | [28.3](#h28q3) | 7.2 | 16:84 (-9.2%) → 16:84 | kept (best rejected: 16:86, gain 7.2) |
 | 79 | [29.2](#h29q2) | 7.2 | 17:26 (+10.9%) → 17:23 | split at 17:23 (gain 7.1) |
@@ -121,17 +121,17 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 81 | [48.4](#h48q4) | 7.1 | 41:25 (-7.1%) → 41:25 | split at 41:26 (gain 7.1) |
 | 82 | [5.2](#h5q2) | 6.9 | 2:261 (-8.4%) → 2:261 | kept (best rejected: 2:262, gain 6.9) |
 | 83 | [8.2](#h8q2) | 6.9 | 3:181 (-7.9%) → 3:181 | kept (best rejected: 3:182, gain 6.9) |
-| 84 | [27.2](#h27q2) | 6.9 | 15:45 (+7.0%) → 15:39 | kept (best rejected: 15:42, gain 6.9) |
+| 84 | [27.2](#h27q2) | 6.9 | 15:45 (+7.0%) → 15:45 | kept (best rejected: 15:42, gain 6.9) |
 | 85 | [11.4](#h11q4) | 6.8 | 5:12 (-10.6%) → 5:12 | kept (best rejected: 5:13, gain 6.8) |
 | 86 | [32.2](#h32q2) | 6.8 | 20:42 (-7.7%) → 20:49 | kept (best rejected: 20:46, gain 6.8) |
 | 87 | [37.4](#h37q4) | 6.8 | 26:60 (+9.6%) → 26:52 | kept (best rejected: 26:55, gain 6.8) |
 | 88 | [52.4](#h52q4) | 6.8 | 50:23 (-7.2%) → 50:30 | kept (best rejected: 50:27, gain 6.8) |
 | 89 | [44.2](#h44q2) | 6.7 | 35:1 (-7.3%) → 35:1 | kept (best rejected: 35:2, gain 6.7) |
-| 90 | [54.3](#h54q3) | 6.7 | 56:83 (+6.8%) → 56:83 | kept (best rejected: 56:78, gain 6.7) |
+| 90 | [54.3](#h54q3) | 6.7 | 56:83 (+6.8%) → 56:75 | kept (best rejected: 56:78, gain 6.7) |
 | 91 | [22.2](#h22q2) | 6.6 | 10:48 (-7.4%) → 10:48 | kept (best rejected: 10:50, gain 6.6) |
 | 92 | [35.2](#h35q2) | 6.5 | 23:37 (+6.6%) → 23:37 | kept (best rejected: 23:34, gain 6.5) |
 | 93 | [43.4](#h43q4) | 6.4 | 34:15 (+7.0%) → 34:15 | kept (best rejected: 34:14, gain 6.4) |
-| 94 | [45.4](#h45q4) | 6.4 | 37:91 (-6.7%) → 37:91 | kept (best rejected: 37:96, gain 6.4) |
+| 94 | [45.4](#h45q4) | 6.4 | 37:91 (-6.7%) → 37:83 | kept (best rejected: 37:96, gain 6.4) |
 | 95 | [41.4](#h41q4) | 6.2 | 30:46 (-6.6%) → 30:47 | split at 30:47 (gain 6.2) |
 | 96 | [56.2](#h56q2) | 6.2 | 62:9 (-7.3%) → 62:9 | kept (best rejected: 62:10, gain 6.2) |
 | 97 | [35.3](#h35q3) | 5.9 | 23:75 (+6.5%) → 23:75 | kept (best rejected: 23:72, gain 5.9) |
@@ -144,7 +144,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 104 | [4.2](#h4q2) | 5.4 | 2:219 (+10.8%) → 2:219 | kept (best rejected: 2:218, gain 5.4) |
 | 105 | [34.4](#h34q4) | 5.4 | 22:58 (-5.5%) → 22:58 | kept (best rejected: 22:59, gain 5.4) |
 | 106 | [38.4](#h38q4) | 5.4 | 27:27 (-6.0%) → 27:29 | split at 27:29 (gain 5.4) |
-| 107 | [45.3](#h45q3) | 5.4 | 37:27 (-6.1%) → 37:27 | kept (best rejected: 37:30, gain 5.4) |
+| 107 | [45.3](#h45q3) | 5.4 | 37:27 (-6.1%) → 37:19 | kept (best rejected: 37:30, gain 5.4) |
 | 108 | [17.2](#h17q2) | 5.0 | 7:113 (+5.7%) → 7:113 | kept (best rejected: 7:110, gain 5.0) |
 | 109 | [39.2](#h39q2) | 5.0 | 27:82 (-6.4%) → 27:83 | split at 27:83 (gain 5.0) |
 | 110 | [41.2](#h41q2) | 5.0 | 29:67 (-6.5%) → 29:68 | split at 29:68 (gain 5.0) |
@@ -164,7 +164,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 124 | [31.3](#h31q3) | 3.6 | 19:27 (+4.3%) → 19:27 | kept (best rejected: 19:26, gain 3.6) |
 | 125 | [38.2](#h38q2) | 3.6 | 26:176 (+4.1%) → 26:176 | kept (best rejected: 26:174, gain 3.6) |
 | 126 | [46.4](#h46q4) | 3.6 | 39:13 (+23.2%) → 39:8 | split at 39:11 (gain 3.6) |
-| 127 | [60.2](#h60q2) | 3.6 | 90:11 (+4.0%) → 90:11 | kept (best rejected: 90:7, gain 3.6) |
+| 127 | [60.2](#h60q2) | 3.6 | 90:11 (+4.0%) → 90:1 | kept (best rejected: 90:7, gain 3.6) |
 | 128 | [32.4](#h32q4) | 3.4 | 20:105 (-4.1%) → 20:105 | kept (best rejected: 20:108, gain 3.4) |
 | 129 | [21.4](#h21q4) | 3.1 | 10:15 (+4.9%) → 10:15 | kept (best rejected: 10:14, gain 3.1) |
 | 130 | [59.4](#h59q4) | 3.1 | 84:1 (+3.2%) → 84:1 | kept (best rejected: 83:35, gain 3.1) |
@@ -174,7 +174,7 @@ Each boundary with what is at stake: the gain of its best candidate, in points o
 | 134 | [35.4](#h35q4) | 2.6 | 23:112 (+3.9%) → 23:112 | kept (best rejected: 23:111, gain 2.6) |
 | 135 | [23.2](#h23q2) | 2.5 | 11:25 (-3.0%) → 11:25 | kept (best rejected: 11:26, gain 2.5) |
 | 136 | [31.4](#h31q4) | 2.3 | 19:58 (-5.6%) → 19:59 | split at 19:59 (gain 2.3) |
-| 137 | [39.3](#h39q3) | 2.3 | 28:14 (-3.1%) → 28:15 | split at 28:15 (gain 2.3) |
+| 137 | [39.3](#h39q3) | 2.3 | 28:14 (-3.1%) → 28:14 | split at 28:15 (gain 2.3) |
 
 ## What was done
 
@@ -434,7 +434,7 @@ New phrases: 40:60–63 *ادعوني أستجب لكم، وآية الليل و
 
 
 <a id="h39q4"></a>
-### 9. Hizb 39, quarter 4: 28:29 (-20.2%) → 28:36 (+19.4%), at stake 19.8
+### 9. Hizb 39, quarter 4: 28:29 (-20.2%) → 28:29 (-20.2%), at stake 19.8
 
 
 ¶ *النار بجانب الطور، والعصا واليد، وشد العضد بهارون*  
@@ -1126,7 +1126,7 @@ New phrases: 4:110–113 *الاستغفار، وكسب الإثم، وفضل ا
 
 
 <a id="h57q3"></a>
-### 37. Hizb 57, quarter 3: 69:1 (-14.8%) → 69:11 (+2.7%), at stake 12.1
+### 37. Hizb 57, quarter 3: 69:1 (-14.8%) → 69:1 (-14.8%), at stake 12.1
 
 
 ¶ *الحاقة، وإهلاك ثمود وعاد*  
@@ -1188,7 +1188,7 @@ New phrases: 3:52–54 *أنصار عيسى، ومكر الكافرين* · 3:55
 
 
 <a id="h57q4"></a>
-### 39. Hizb 57, quarter 4: 70:19 (-12.2%) → 70:29 (+0.7%), at stake 11.5
+### 39. Hizb 57, quarter 4: 70:19 (-12.2%) → 70:19 (-12.2%), at stake 11.5
 
 
 ¶ *الإنسان هلوع إلا المصلين*  
@@ -1421,7 +1421,7 @@ New phrases: 24:47–50 *المعرضون عن حكم الله ورسوله* · 
 
 
 <a id="h27q3"></a>
-### 48. Hizb 27, quarter 3: 15:94 (+11.3%) → 15:87 (-3.6%), at stake 10.3
+### 48. Hizb 27, quarter 3: 15:94 (+11.3%) → 15:94 (+11.3%), at stake 10.3
 
 
 ¶ *الخلق بالحق، والصفح الجميل*  
@@ -1847,7 +1847,7 @@ New phrases: 33:63–63 *السؤال عن الساعة* · 33:64–68 *لعن �
 
 
 <a id="h58q4"></a>
-### 67. Hizb 58, quarter 4: 76:13 (-8.7%) → 76:13 (-8.7%), at stake 8.0
+### 67. Hizb 58, quarter 4: 76:13 (-8.7%) → 76:23 (+16.2%), at stake 8.0
 
 
 ¶ *نعيم الأبرار في الجنة*  
@@ -1971,7 +1971,7 @@ New phrases: 46:15–19 *الوصية بالوالدين، والولد البا
 
 
 <a id="h58q3"></a>
-### 73. Hizb 58, quarter 3: 74:42 (-8.3%) → 74:38 (-12.7%), at stake 7.4
+### 73. Hizb 58, quarter 3: 74:42 (-8.3%) → 75:1 (+12.1%), at stake 7.4
 
 
 ¶ *ما سلككم في سقر*  
@@ -2018,7 +2018,7 @@ New phrases: 46:15–19 *الوصية بالوالدين، والولد البا
 
 
 <a id="h54q2"></a>
-### 75. Hizb 54, quarter 2: 56:11 (+7.3%) → 56:11 (+7.3%), at stake 7.3
+### 75. Hizb 54, quarter 2: 56:11 (+7.3%) → 56:1 (-5.3%), at stake 7.3
 
 
 ¶ *إذا وقعت الواقعة، والأزواج الثلاثة*  
@@ -2048,7 +2048,7 @@ New phrases: 46:15–19 *الوصية بالوالدين، والولد البا
 
 
 <a id="h58q2"></a>
-### 76. Hizb 58, quarter 2: 73:10 (-7.9%) → 73:10 (-7.9%), at stake 7.3
+### 76. Hizb 58, quarter 2: 73:10 (-7.9%) → 73:15 (+2.1%), at stake 7.3
 
 
 ¶ *الصبر والهجر الجميل، ووعيد المكذبين*  
@@ -2199,7 +2199,7 @@ New phrases: 41:25–25 *قرناء السوء* · 41:26–29 *الصد عن ا�
 
 
 <a id="h27q2"></a>
-### 84. Hizb 27, quarter 2: 15:45 (+7.0%) → 15:39 (-6.5%), at stake 6.9
+### 84. Hizb 27, quarter 2: 15:45 (+7.0%) → 15:45 (+7.0%), at stake 6.9
 
 
 ¶ *وعيد إبليس، وسلطانه على الغاوين، وأبواب جهنم*  
@@ -2339,7 +2339,7 @@ New phrases: 41:25–25 *قرناء السوء* · 41:26–29 *الصد عن ا�
 
 
 <a id="h54q3"></a>
-### 90. Hizb 54, quarter 3: 56:83 (+6.8%) → 56:83 (+6.8%), at stake 6.7
+### 90. Hizb 54, quarter 3: 56:83 (+6.8%) → 56:75 (-4.2%), at stake 6.7
 
 
 ¶ *القسم بمواقع النجوم، وإنه لقرآن كريم*  
@@ -2424,7 +2424,7 @@ New phrases: 41:25–25 *قرناء السوء* · 41:26–29 *الصد عن ا�
 
 
 <a id="h45q4"></a>
-### 94. Hizb 45, quarter 4: 37:91 (-6.7%) → 37:91 (-6.7%), at stake 6.4
+### 94. Hizb 45, quarter 4: 37:91 (-6.7%) → 37:83 (-17.2%), at stake 6.4
 
 
 ¶ *تحطيم الأصنام، والبنيان والإلقاء*  
@@ -2680,7 +2680,7 @@ New phrases: 27:27–28 *سليمان يرسل كتابه مع الهدهد* · 
 
 
 <a id="h45q3"></a>
-### 107. Hizb 45, quarter 3: 37:27 (-6.1%) → 37:27 (-6.1%), at stake 5.4
+### 107. Hizb 45, quarter 3: 37:27 (-6.1%) → 37:19 (-20.3%), at stake 5.4
 
 
 ¶ *تساؤل المجرمين وتلاومهم*  
@@ -3083,7 +3083,7 @@ New phrases: 39:8–10 *الإنسان عند الضر، والقانت آناء
 
 
 <a id="h60q2"></a>
-### 127. Hizb 60, quarter 2: 90:11 (+4.0%) → 90:11 (+4.0%), at stake 3.6
+### 127. Hizb 60, quarter 2: 90:11 (+4.0%) → 90:1 (-8.5%), at stake 3.6
 
 
 ¶ *القسم بالبلد، وغرور الإنسان ونعم الحواس*  
@@ -3277,7 +3277,7 @@ New phrases: 19:58–58 *المنعم عليهم من النبيين* · 19:59�
 
 
 <a id="h39q3"></a>
-### 137. Hizb 39, quarter 3: 28:14 (-3.1%) → 28:15 (+0.8%), at stake 2.3
+### 137. Hizb 39, quarter 3: 28:14 (-3.1%) → 28:14 (-3.1%), at stake 2.3
 
 
 ¶ *بلوغ موسى أشده*  

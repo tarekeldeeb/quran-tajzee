@@ -23,17 +23,17 @@ The 239 inner boundaries of each division (hizb and quarter starts; the 30 juz s
 
 | grade of the aya end before it | traditional |  | new |  |
 |---|---|---|---|---|
-| surah end | 40 | 17% | 21 | 9% |
-| تام | 162 | 68% | 173 | 72% |
-| كاف | 30 | 13% | 36 | 15% |
-| حسن | 3 | 1% | 3 | 1% |
-| جائز/صالح | 1 | 0% | 3 | 1% |
+| surah end | 40 | 17% | 26 | 11% |
+| تام | 162 | 68% | 178 | 74% |
+| كاف | 30 | 13% | 32 | 13% |
+| حسن | 3 | 1% | 0 | 0% |
+| جائز/صالح | 1 | 0% | 2 | 1% |
 | ليس بوقف | 1 | 0% | 0 | 0% |
-| not graded | 2 | 1% | 3 | 1% |
-| **surah end, تام or كاف** | **232** | **97%** | **230** | **96%** |
+| not graded | 2 | 1% | 1 | 0% |
+| **surah end, تام or كاف** | **232** | **97%** | **236** | **99%** |
 
 
-Both divisions end almost every quarter at a complete or sufficient stop: 96% of the new boundaries against 97% of the traditional ones. The new division, though drawn for balance, is placed as well by the classical grades as the one drawn by them; it has more تام stops and fewer surah ends.
+Both divisions end almost every quarter at a complete or sufficient stop: 99% of the new boundaries against 97% of the traditional ones; the new division has more تام stops and fewer surah ends. The quarters are solved with pause points taken from these grades, so for them this is not an independent check. Solved on size alone (the 50/50 mix, `objective="minimax+lsq"`), the quarters already reach 96%: the phrase test by itself places the boundaries as well as the classical stops do.
 
 
 ### New boundaries the books grade below كاف
@@ -45,12 +45,6 @@ These are the cases where the classical grade is weaker than the phrase test ass
 | 23:37 | new | جائز/صالح | – | جائز | … هيهات هيهات لما توعدون | إن هى إلا حياتنا … |
 | 26:116 | new | جائز/صالح | – | جائز | … أنا إلا نذير مبين | قالوا لئن لم تنته … |
 | 26:176 | new | not graded | – | – | … ربك لهو العزيز الرحيم | كذب أصحب ليكة المرسلين … |
-| 36:65 | new | not graded | – | – | … اليوم بما كنتم تكفرون | اليوم نختم على أفوههم … |
-| 37:27 | new | حسن | – | حسن | … بل هم اليوم مستسلمون | وأقبل بعضهم على بعض … |
-| 37:91 | new | not graded | – | – | … فتولوا عنه مدبرين | فراغ إلى ءالهتهم فقال … |
-| 70:29 | new | حسن | – | حسن | … عذاب ربهم غير مأمون | والذين هم لفروجهم حفظون … |
-| 76:13 | new | حسن | – | حسن | … بما صبروا جنة وحريرا | متكين فيها على الأرائك … |
-| 90:11 | new | جائز/صالح | – | جائز | … وهدينه النجدين | فلا اقتحم العقبة … |
 
 
 The traditional boundaries graded below كاف: 15:50 (ليس بوقف), 16:111 (حسن), 23:36 (جائز/صالح), 26:111 (حسن), 38:52 (حسن).
@@ -132,4 +126,4 @@ Not located (7): quarters 112, 117, 123, 137, 209, 229, 232, where the note does
 
 ## 4. New boundaries on traditional positions
 
-76 of the new boundaries fall on a Madina quarter end and 10 more on an end that only al-Ṣafāqusī gives. The rest are new positions, chosen for balance among the complete stops.
+85 of the new boundaries fall on a Madina quarter end and 10 more on an end that only al-Ṣafāqusī gives. The rest are new positions, chosen for balance among the complete stops.

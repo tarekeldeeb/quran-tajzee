@@ -52,8 +52,11 @@ def main() -> None:
     # methods and settings
     pz = dict(objective="penalized")
     variants = [
-        ("**default**: nested, phrase starts only, minimax + least squares", d),
-        ("joint (8 rubʿ per juz at once), phrase starts only", rub.solve(us, method="joint")),
+        ("**default**: nested, phrase starts only, recitation, print and pause points ⅓ each", d),
+        ("nested, phrase starts only, minimax + least squares on the 50/50 mix",
+         rub.solve(us, objective="minimax+lsq")),
+        ("joint (8 rubʿ per juz at once), phrase starts only, minimax + least squares",
+         rub.solve(us, method="joint", objective="minimax+lsq")),
         ("nested, phrase starts only, least squares", rub.solve(us, mid_phrase=INF, cap=None, **pz)),
         ("penalized: mid-phrase rubʿ at m 15%", rub.solve(us, mid_phrase=0.15, cap=None, **pz)),
         ("penalized: m 10%, cap ±10%", rub.solve(us, **pz)),

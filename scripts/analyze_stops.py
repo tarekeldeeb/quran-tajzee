@@ -49,6 +49,8 @@ def main() -> None:
     n_mn = sum("manar" in v for v in S.values())
 
     ct, nt = summary(us, trad)
+    cm, nm = summary(us, rub.solve(us, objective="minimax+lsq").starts)
+    mix_strong = (cm["surah end"] + cm["تام"] + cm["كاف"]) / nm * 100
     cn, nn = summary(us, new)
     strong = lambda c: c["surah end"] + c["تام"] + c["كاف"]  # noqa: E731
 
@@ -87,9 +89,11 @@ def main() -> None:
                  f"**{strong(cn)}**", f"**{strong(cn) / nn * 100:.0f}%**"])
     w(table(rows, ["grade of the aya end before it", "traditional", "", "new", ""]))
     w(f"\nBoth divisions end almost every quarter at a complete or sufficient stop: {strong(cn) / nn * 100:.0f}% of "
-      f"the new boundaries against {strong(ct) / nt * 100:.0f}% of the traditional ones. The new division, though "
-      "drawn for balance, is placed as well by the classical grades as the one drawn by them; it has "
-      "more تام stops and fewer surah ends.\n")
+      f"the new boundaries against {strong(ct) / nt * 100:.0f}% of the traditional ones; the new division has "
+      "more تام stops and fewer surah ends. The quarters are solved with pause points taken from these "
+      "grades, so for them this is not an independent check. Solved on size alone (the 50/50 mix, "
+      f"`objective=\"minimax+lsq\"`), the quarters already reach {mix_strong:.0f}%: the phrase test by itself "
+      "places the boundaries as well as the classical stops do.\n")
 
     weak = []
     for i in new:

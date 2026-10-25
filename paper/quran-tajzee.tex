@@ -119,12 +119,24 @@ kept; the imbalance is in the finer divisions.
 
 \textbf{Nested exact cuts.} Each juz is cut into two hizb, then each hizb into four quarters, the
 way the divisions nest. A container $G$ of ayat cut into $k$ parts has target $T=|G|/k$ and the
-admissible cuts $\mathcal{S}$ are phrase starts that follow an agreed aya end (below), outside ayat 2--7 of a surah (juz~28 exempt). Lexicographically we
+admissible cuts $\mathcal{S}$ are phrase starts that follow an agreed aya end (below), outside ayat 2--7 of a surah (juz~28 exempt). For the hizb, lexicographically we
 \begin{equation}
 \min_{\text{cuts}\subset\mathcal{S}}\ \max_q \frac{|S_q - T|}{T},\quad\text{then}\quad
 \min \sum_q (S_q-T)^2 ,
 \end{equation}
-both by the dynamic program $F_k(i)=\min_{j<i}\,[F_{k-1}(j)\oplus g(C_i-C_j)]$ over prefix sums $C$,
+on the 50/50 mix $S$. The quarters weigh three terms equally: recitation $R$, print $P$ (each
+against its own target) and the pause before each cut $j$,
+\begin{multline}
+\min_{\text{cuts}\subset\mathcal{S}}\ \tfrac13\sum_q\Big(\frac{R_q-T_R}{T_R}\Big)^{\!2}
++\tfrac13\sum_q\Big(\frac{P_q-T_P}{T_P}\Big)^{\!2}\\
++\tfrac13\sum_j (v\,\pi_j)^2 ,
+\end{multline}
+where $\pi_j$ are pause points of the aya end before the cut, from the classical grades
+(below): 1 for a surah end, 2 complete (\ar{تام}), 3 sufficient (\ar{كاف}), 5 weaker (\ar{حسن}, \ar{جائز}, or
+not graded), 9 not a stop (\ar{ليس بوقف}). One point is worth $v=\PointValue\%$ of a quarter, so a
+sufficient stop must buy more than 5\% of balance to be preferred to a complete one. All 1{,}172
+phrase starts carry their points (\texttt{data/rub/phrase-pauses.tsv}). Both objectives are solved
+by the dynamic program $F_k(i)=\min_{j<i}\,[F_{k-1}(j)\oplus g(j,i)]$ over prefix sums,
 with $\oplus=\max$ or $+$~\cite{bellman}. Contiguous partitioning has optimal substructure, so the
 solution is the global optimum; tests check it against exhaustive search. A \emph{penalized}
 variant also admits any aya end at a cost $m^2$ per mid-phrase start; we use it only to
@@ -132,10 +144,11 @@ variant also admits any aya end at a cost $m^2$ per mid-phrase start; we use it 
 
 \textbf{Implementation.} The solver is plain Python~3 (3.10 or later) using only the standard
 library (\texttt{csv}, \texttt{json}, \texttt{bisect}, \texttt{dataclasses}); it uses no numerical,
-LP or MIP package, since the problem needs none. Each container is solved in two passes of the same
+LP or MIP package, since the problem needs none. A hizb container is solved in two passes of the same
 DP: the first finds the optimal worst deviation $M^\ast$; the second minimises the sum of squares
 over cuts whose every part stays within $M^\ast$ (pruned by that bound, tolerance $10^{-12}$),
-which gives the lexicographic optimum of (1). A pass costs $O(k\,n^2)$ for $n$ admissible starts
+which gives the lexicographic optimum of (1). A quarter container needs one pass, since every
+term of (2) is a sum over parts and cuts. A pass costs $O(k\,n^2)$ for $n$ admissible starts
 in a container of $k$ parts; the nested solution of all 30 juz takes about a second on one CPU
 core. Unit tests compare the DP with exhaustive search (\texttt{itertools.combinations}) on small
 inputs. The two length scores are computed once by external tools (tajweed-embeddings and
@@ -203,8 +216,8 @@ with \RubRoundCandidates{} candidates read, \RubRoundSplits{} were split at comp
 4:12, the share of spouses, which turns a $-23\%$ boundary into $-3.6\%$) and \RubRoundKept{} kept,
 because every closer point is a turn of a dialogue or story: Mūsā at the fire (28:29--35), Hūd
 (7:65--72), the messengers and their peoples (14:9--12). The result, CV \NewRubCV\% and worst
-$\pm$\NewRubWorst\%, lies above the curve by the stops that meaning forbids, and by one more
-rule set in review: no quarter starts at aya 2--7 of a surah; it opens the surah or starts at
+$\pm$\NewRubWorst\%, lies above the curve by the stops that meaning forbids, by the pause term of (2)
+(\MixRubCV\% without it), and by one more rule set in review: no quarter starts at aya 2--7 of a surah; it opens the surah or starts at
 aya 8 or later (the traditional quarters break this twice). Juz~28 is exempt: its surahs of 11--24
 ayat leave too few admissible starts. With the accepted splits, the rule costs the quarters \NoHeadRubCV\% $\to$ \NewRubCV\% CV.
 
@@ -242,9 +255,13 @@ We extracted, from the OpenITI texts~\cite{openiti}, the grade al-Dānī's \emph
 where both grade an end they agree within one grade \StopsNear\% of the time. Table~\ref{tab:grades}
 grades the aya end before every boundary. \GradeNewStrong\% of the new boundaries follow a surah
 end, a complete (\ar{تام}) or a sufficient (\ar{كاف}) stop, against \GradeTradStrong\% of the
-traditional ones: drawn for balance, the new division is placed as well as the one drawn by stops.
-The \GradeNewWeak{} new boundaries graded lower (e.g.\ 37:27, where the people of the Fire turn to
-one another) are the next review round. The juz openings inside a dialogue (18:75, 51:31) follow a
+traditional ones. Since (2) uses these grades, the independent test is the mix-only objective (1)
+for the quarters, which knows nothing of them: it already reaches \MixStrong\%, so the division
+drawn for balance at phrase starts is placed as well as the one drawn by stops.
+The pause term of (2) does this at a small cost: against the mix-only objective it moves
+\PauseMoved{} quarters, lowers the pause points from \MixPts{} to \NewPts{} and the starts graded
+below \ar{كاف} from \MixWeak{} to \NewWeakN{} (\NewWeakList), for a quarter CV of \MixRubCV\%
+$\to$ \NewRubCV\%. The juz openings inside a dialogue (18:75, 51:31) follow a
 sufficient and a complete stop: the classical grade asks for a new sentence, the phrase test for a
 new subject. Al-Ṣafāqusī's own note on the last word of each quarter was located for
 \GhaythLocated{} quarters: \GhaythSame{} are the Madina ends. Of the other \GhaythDiff, he reports
@@ -272,11 +289,12 @@ not graded & \GradeTradNone & \GradeNewNone \\
 quarter's last word ends an aya in every count (\ar{فاصلة بلا خلاف}). We check each boundary
 against the six systems of al-Dānī's \emph{al-Bayān}~\cite{bayan,qiraatmap}: \DisputedEnds{} Kufan
 aya ends are not counted by some system. None of the \TradBoundaries{} traditional boundaries
-follows one, which confirms the rule in the transmitted divisions. Two of our first quarters did,
-so disputed ends were removed from $\mathcal{S}$; the quarters moved (\CountMovedList) at
-\CountFreeRubCV\% $\to$ \NewRubCV\% CV, and now \NewDisputed{} boundaries follow a disputed end.
+follows one, which confirms the rule in the transmitted divisions. Disputed ends are therefore removed
+from $\mathcal{S}$: without that, the solver would start a quarter after one (\CountMovedList),
+at \CountFreeRubCV\% $\to$ \NewRubCV\% CV; now \NewDisputed{} boundaries follow a disputed end.
 \textbf{Weights.} Recitation and
-print agree so closely that the 50/50 mix is not sensitive; header lines of surahs, if counted in
+print agree so closely that their weights (50/50 for the hizb, $\tfrac13$ each with the pause for the
+quarters) matter little; header lines of surahs, if counted in
 print, lengthen juz~30.
 
 \section{Conclusion}

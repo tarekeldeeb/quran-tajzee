@@ -133,3 +133,20 @@ def madina_named(qr: Quarter) -> bool:
     note = [x.lstrip("وف") for x in skeleton(qr.note).split()]
     last_of_surah = e.aya == max(a.aya for a in ayat.values() if a.sura == e.sura)
     return last in note or (last_of_surah and "خر" in note)
+
+
+# Pause points for the solver: the cost of starting a hizb or rubʿ after this kind of aya end.
+PAUSE_POINTS = {"surah end": 1, "تام": 2, "كاف": 3, "حسن": 5, "جائز/صالح": 5, "ليس بوقف": 9}
+UNGRADED_POINTS = 5     # an aya end neither book grades counts as a weaker stop
+
+
+def category(us, i: int) -> str:
+    """Pause category of a start at aya index i (the aya end before it): surah end, تام, كاف,
+    حسن, جائز/صالح, ليس بوقف (also لا وقف، لا يوقف، قبيح), or not graded."""
+    if i == 0 or us[i].aya == 1:
+        return "surah end"
+    return boundary(us, i)[0]
+
+
+def points(us, i: int) -> int:
+    return PAUSE_POINTS.get(category(us, i), UNGRADED_POINTS)

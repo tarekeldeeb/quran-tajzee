@@ -59,11 +59,11 @@
     "ratio": 1.092397124063026
    },
    "rub": {
-    "cv": 0.06599021698595081,
-    "worst": 0.18274415817855005,
+    "cv": 0.07046464379762644,
+    "worst": 0.21869382863990405,
     "min": -0.17982587811468032,
-    "max": 0.18274415817855005,
-    "ratio": 1.442064711161329
+    "max": 0.21869382863990405,
+    "ratio": 1.4858964652999709
    }
   },
   "typesetting": {
@@ -75,11 +75,11 @@
     "ratio": 1.0756348648226342
    },
    "rub": {
-    "cv": 0.06545079836694029,
+    "cv": 0.06824115858528654,
     "worst": 0.24305029745808726,
-    "min": -0.20994985894966767,
+    "min": -0.189601341998885,
     "max": 0.24305029745808726,
-    "ratio": 1.5733815271591671
+    "ratio": 1.5338750689989136
    }
   },
   "combined": {
@@ -91,23 +91,29 @@
     "ratio": 1.0747245385720348
    },
    "rub": {
-    "cv": 0.06458848070429885,
+    "cv": 0.06829646369216064,
     "worst": 0.20777796848501273,
-    "min": -0.19440725244039736,
+    "min": -0.18089264301612795,
     "max": 0.20777796848501273,
-    "ratio": 1.499241362516926
+    "ratio": 1.474505091655273
    }
   }
  },
  "variants": [
   {
-   "name": "**default**: nested, phrase starts only, minimax + least squares",
+   "name": "**default**: nested, phrase starts only, recitation, print and pause points ⅓ each",
    "hizb_worst": 0.036016607112318355,
    "rub_worst": 0.20777796848501273,
    "inside": 0
   },
   {
-   "name": "joint (8 rubʿ per juz at once), phrase starts only",
+   "name": "nested, phrase starts only, minimax + least squares on the 50/50 mix",
+   "hizb_worst": 0.036016607112318355,
+   "rub_worst": 0.20777796848501273,
+   "inside": 0
+  },
+  {
+   "name": "joint (8 rubʿ per juz at once), phrase starts only, minimax + least squares",
    "hizb_worst": 0.05980299189479554,
    "rub_worst": 0.20777796848501273,
    "inside": 0
@@ -143,7 +149,7 @@
    "inside": 119
   }
  ],
- "same_rub_starts": 77,
+ "same_rub_starts": 86,
  "same_hizb_starts": 36,
  "median_shift_ayat": 2.0,
  "juz_start_inside_phrase": [],

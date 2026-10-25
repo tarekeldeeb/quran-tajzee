@@ -3,9 +3,12 @@
 The 30 juz are the traditional ones (the Madina Mushaf, after Ghayth al-Naf'); only the
 hizb and rub' inside each juz are re-cut. A juz holds 2 hizb of 4 rub'.
 
-Every new boundary opens a phrase (a hard rule, objective 'minimax+lsq', the default). The
-older 'penalized' objective may start a rub' inside a phrase at a penalty; it is kept to
-suggest phrase splits that would improve the balance.
+Every new boundary opens a phrase (a hard rule). Three objectives:
+
+* waqf (default): the rubʿ balance recitation, print and the pause at each start, one third
+  each (see below);
+* minimax+lsq: the balance of the 50/50 mix only; it drew the hizb approved in review;
+* penalized: may start a rub' inside a phrase at a penalty; kept to suggest phrase splits.
 
 Two methods, both exact:
 
@@ -26,7 +29,14 @@ follows it). The mix is the Task 3 one, as shares of the whole Quran:
 A container G (a juz, or a hizb) is cut into k parts (2 hizb, or 4 rub') with target
 T_G = (size of G) / k. Exactly, for each container independently:
 
-    minimax+lsq (default): cuts only at phrase starts;
+    waqf (default): cuts only at phrase starts; minimise, over the parts q and the cuts j,
+        1/3 sum_q ((R_q - T_R) / T_R)^2 + 1/3 sum_q ((P_q - T_P) / T_P)^2 + 1/3 sum_j (v * points_j)^2
+        where R and P are recitation and print sizes (each against its own target), points_j
+        the pause points of the aya end before cut j (tajzee.waqf.PAUSE_POINTS: surah end 1,
+        تام 2, كاف 3, weaker 5, ليس بوقف 9; ungraded 5) and v = POINT_VALUE, the size
+        deviation one point is worth (5% of a part). Quarters only: the approved hizb are kept
+        (and, where there are none, the hizb are cut by minimax+lsq).
+    minimax+lsq: cuts only at phrase starts;
         1. minimise the worst  |S_q - T_G| / T_G,
         2. among those, minimise  sum_q (S_q - T_G)^2.
     penalized:
@@ -58,7 +68,9 @@ INF = float("inf")
 RUB_PER_JUZ = 8
 HIZB_PART = 5          # joint method: the rub' (1-based, within the juz) that opens the second hizb
 METHOD = "nested"
-OBJECTIVE = "minimax+lsq"  # every boundary at a phrase start; 'penalized' allows mid-phrase rub'
+OBJECTIVE = "waqf"     # recitation, print and pause, 1/3 each; 'minimax+lsq' balances the mix only
+SHARES = (1 / 3, 1 / 3, 1 / 3)  # waqf objective: weight of pause points, recitation size, print size
+POINT_VALUE = 0.05     # one pause point costs like a part 5% off its target
 MID_PHRASE = 0.10      # a rub' starting inside a phrase costs like a rub' 10% off target
 HIZB_MID_PHRASE = INF  # a hizb must start at a phrase start
 HEAD_AYAT = 7          # no rub' starts at aya 2..7 of a surah: at the surah start, or at aya 8 or later
@@ -207,6 +219,47 @@ def _cut_phrases(us, c, a, b, parts, head=HEAD_AYAT):
     return [a] + [a + x for x in cuts]
 
 
+def _cut_waqf(us, a, b, parts, head=HEAD_AYAT, shares=SHARES, value=POINT_VALUE):
+    """Exact cut of ayat a..b-1 into `parts` at admissible phrase starts, minimising the
+    weighted sum of the squared relative recitation and print deviations of the parts and
+    the squared pause points (times `value`) of the cuts (the 'waqf' objective)."""
+    from . import waqf
+    wp, wr, wt = shares
+    R, P = [0.0], [0.0]
+    for u in us[a:b]:
+        R.append(R[-1] + u.recitation)
+        P.append(P[-1] + u.typeset_px)
+    tr, tp = R[-1] / parts, P[-1] / parts
+    adm = [j for j in range(1, b - a) if us[a + j].phrase_start and not blocked(us[a + j], head)]
+    pen = {j: wp * (value * waqf.points(us, a + j)) ** 2 for j in adm}
+    pen[0] = 0.0
+    m = b - a
+    cost = [{0: 0.0}]
+    back = [{}]
+    for k in range(1, parts + 1):
+        f, bk = {}, {}
+        for i in ([m] if k == parts else adm):
+            best, arg = INF, None
+            for j, fj in cost[k - 1].items():
+                if j >= i:
+                    continue
+                c = (fj + wr * ((R[i] - R[j] - tr) / tr) ** 2 + wt * ((P[i] - P[j] - tp) / tp) ** 2
+                     + pen[j])
+                if c < best:
+                    best, arg = c, j
+            if arg is not None:
+                f[i], bk[i] = best, arg
+        cost.append(f)
+        back.append(bk)
+    if m not in cost[parts]:
+        raise ValueError("no feasible division")
+    cuts, i = [], m
+    for k in range(parts, 0, -1):
+        i = back[k][i]
+        cuts.append(a + i)
+    return sorted(cuts)
+
+
 def _cut(us, c, a, b, parts, pen_for, cap, head=HEAD_AYAT):
     """Exact cut of ayat a..b-1 into `parts`; pen_for(k) is the mid-phrase penalty of part k.
     No part starts at aya 2..head of a surah."""
@@ -252,7 +305,17 @@ def solve(us: list[Aya] | None = None, weight: float = 0.5, mid_phrase: float = 
     c = mix(us, weight)
     end = [len(us)]
     starts = []
-    if objective == "minimax+lsq":
+    if objective == "waqf":
+        if method != "nested":
+            raise ValueError("the waqf objective is nested only")
+        hizb = fixed_hizb(us) if (juz_starts is None and pin_hizb) else None
+        if hizb is None:
+            hizb = []
+            for a, b in zip(js, js[1:] + end):   # the hizb keep their own rule: the pause points are for rubʿ only
+                hizb += _cut_phrases(us, c, a, b, 2, head_ayat)
+        for a, b in zip(hizb, hizb[1:] + end):
+            starts += _cut_waqf(us, a, b, 4, head_ayat)
+    elif objective == "minimax+lsq":
         parts_by = {"nested": None, "joint": RUB_PER_JUZ}
         if method not in parts_by:
             raise ValueError(f"unknown method {method!r}")

@@ -9,6 +9,7 @@ The default objective starts every hizb and rub' at a phrase start. Writes:
 * data/rub/hizb.tsv: 60 hizb, deviation from 1/2 of their juz;
 * data/rub/rub.tsv: 240 rub', deviation from 1/4 of their hizb;
 * data/rub/solution.json;
+* data/rub/phrase-pauses.tsv: every phrase with the pause category and points of its start;
 * data/rub/phrase-splits.tsv: proposals for the next phrase review. These are the phrases a
   traditional juz start falls inside (reason juz), and the splits that would let the rub'
   balance better (reason balance, taken from the penalized objective).
@@ -25,10 +26,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from tajzee import DATA, phrases, rub  # noqa: E402
+from tajzee import DATA, phrases, rub, waqf  # noqa: E402
 
 COLUMNS = ["start", "end", "ayat", "recitation", "typeset_px", "recitation_dev_pct", "typeset_dev_pct",
-           "combined_dev_pct", "at_phrase", "at_surah", "traditional_start", "first_topic"]
+           "combined_dev_pct", "at_phrase", "at_surah", "traditional_start", "pause", "pause_points", "first_topic"]
+
+
+def write_pauses(path, us):
+    """Every phrase, with the pause category and points of the aya end before its start."""
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        w = csv.writer(fh, delimiter="\t", lineterminator="\n")
+        w.writerow(["start", "end", "pause", "pause_points", "muktafa", "manar", "topic"])
+        starts = [u.index for u in us if u.phrase_start] + [len(us)]
+        for a, b in zip(starts, starts[1:]):
+            _, mk, mn = waqf.boundary(us, a) if a else ("", "", "")
+            w.writerow([us[a].ref, us[b - 1].ref, waqf.category(us, a), waqf.points(us, a), mk, mn, us[a].topic])
 
 
 def write(path, us, starts, group, trad, weight, rub_rows):
@@ -47,7 +59,8 @@ def write(path, us, starts, group, trad, weight, rub_rows):
             ids = [n + 1, n // 8 + 1, n // 4 + 1, n % 4 + 1] if rub_rows else [n + 1, n // 2 + 1, n % 2 + 1]
             w.writerow(ids + [us[a].ref, us[b - 1].ref, b - a, int(round(rs[n])), f"{ps[n]:.1f}",
                               f"{rec[n] * 100:+.2f}", f"{px[n] * 100:+.2f}", f"{mixv[n] * 100:+.2f}",
-                              int(us[a].phrase_start), int(us[a].aya == 1), int(a in trad), us[a].topic])
+                              int(us[a].phrase_start), int(us[a].aya == 1), int(a in trad),
+                              waqf.category(us, a), waqf.points(us, a), us[a].topic])
 
 
 def main() -> None:
@@ -55,8 +68,9 @@ def main() -> None:
     ap.add_argument("--weight", type=float, default=0.5)
     ap.add_argument("--method", default=rub.METHOD, choices=["nested", "joint"],
                     help="nested: hizb first, then 4 rub' per hizb; joint: 8 rub' per juz at once")
-    ap.add_argument("--objective", default=rub.OBJECTIVE, choices=["minimax+lsq", "penalized"],
-                    help="minimax+lsq: every boundary at a phrase start; penalized: mid-phrase rub' at a cost")
+    ap.add_argument("--objective", default=rub.OBJECTIVE, choices=["waqf", "minimax+lsq", "penalized"],
+                    help="waqf: recitation, print and pause points 1/3 each; minimax+lsq: the 50/50 mix only; "
+                         "penalized: mid-phrase rub' at a cost")
     ap.add_argument("--mid-phrase", type=float, default=rub.MID_PHRASE,
                     help="a rub' starting inside a phrase costs like a rub' this far off (fraction; inf = never)")
     ap.add_argument("--hizb-mid-phrase", type=float, default=rub.HIZB_MID_PHRASE,
@@ -77,6 +91,7 @@ def main() -> None:
     trad = rub.scores.traditional_starts(1)
     # rub' against 1/4 of their hizb; hizb against 1/2 of their juz
     write(out, us, d.starts, 4, set(trad), args.weight, rub_rows=True)
+    write_pauses(out.parent / "phrase-pauses.tsv", us)
     write(out.parent / "hizb.tsv", us, d.hizb_starts(), 2, set(trad[::4]), args.weight, rub_rows=False)
 
     # phrases cut by a juz start (traditional, fixed) or by a rub' start (solver)

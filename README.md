@@ -55,15 +55,16 @@ recitation and print width.
   from [Ghayth al-Nafʿ](docs/research/ghayth-al-naf.md)), the hizb and then their quarters are
   re-cut exactly, only at phrase starts. Hizb go from ±14% to ±3.6% of half a juz (CV 6.9% → 1.4%), after a
   hizb-by-hizb review that split 7 phrases at complete stops, and the
-  longest rubʿ from 2.19× the shortest to 1.52× (CV 11.7% → 6.5%) after a quarter review that
+  longest rubʿ from 2.19× the shortest to 1.57× (CV 11.7% → 6.8%) after a quarter review that
   split 60 phrases at complete stops; no hizb or rubʿ starts at aya 2–7 of a surah (juz 28 exempt), and every boundary follows an aya end agreed by all six counting systems (فاصلة بلا خلاف), as the traditional ones do. The traditional hizb and rubʿ start inside a
   subject phrase 79 times out of 210; the new ones never do. See the
   [final analysis](docs/final-analysis.md).
 
 - **Task 6 — classical stop grades**: every boundary graded by al-Dānī's *al-Muktafā* and
   al-Ushmūnī's *Manār al-Hudā*, and al-Ṣafāqusī's own note on each quarter end tabulated with its
-  standing and the Maghāriba/Mashāriqa alternatives (texts from OpenITI). 96% of the new boundaries
-  follow a surah end, a complete or a sufficient stop (traditional: 97%). See the
+  standing and the Maghāriba/Mashāriqa alternatives (texts from OpenITI). 99% of the new boundaries
+  follow a surah end, a complete or a sufficient stop (traditional: 97%): the quarters are solved on
+  recitation, print and pause points (surah end 1, تام 2, كاف 3, weaker 5, ليس بوقف 9), ⅓ each. See the
   [stop-grade analysis](docs/research/stop-grades-analysis.md).
 
 See the [roadmap](docs/roadmap.md) for what comes next.

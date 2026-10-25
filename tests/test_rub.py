@@ -116,8 +116,49 @@ class RubSolverTest(unittest.TestCase):
             want = []
             for a, e in zip(hizb, hizb[1:] + [len(us)]):
                 want += best(us, c, a, e, 4)
-            got = rub.solve(us, juz_starts=js, head_ayat=0).starts
+            got = rub.solve(us, juz_starts=js, head_ayat=0, objective="minimax+lsq").starts
             self.assertEqual(got, want)
+
+
+class WaqfObjectiveTest(unittest.TestCase):
+    def test_matches_brute_force(self):
+        # toy surah 0 has no grades: every start costs the ungraded points, except aya 1 (a surah end)
+        from tajzee import waqf
+        rnd = random.Random(11)
+        wp, wr, wt = rub.SHARES
+        for _ in range(5):
+            us = toy(20, rnd, phrase_every=1)
+            js = [0, 10]
+
+            def cost(a, b, cuts):
+                bs = [a] + list(cuts) + [b]
+                R = [sum(u.recitation for u in us[x:y]) for x, y in zip(bs, bs[1:])]
+                P = [sum(u.typeset_px for u in us[x:y]) for x, y in zip(bs, bs[1:])]
+                tr, tp = sum(R) / len(R), sum(P) / len(P)
+                return (sum(wr * ((r - tr) / tr) ** 2 for r in R) + sum(wt * ((x - tp) / tp) ** 2 for x in P)
+                        + sum(wp * (rub.POINT_VALUE * waqf.points(us, j)) ** 2 for j in cuts))
+
+            def best(a, b, parts):
+                cand = [i for i in range(a + 1, b) if us[i].phrase_start]
+                return min(itertools.combinations(cand, parts - 1), key=lambda cs: cost(a, b, cs))
+
+            c = rub.mix(us)
+            hz = []
+            for a, b in zip(js, js[1:] + [20]):        # hizb: unchanged rule (minimax + least squares)
+                hz += rub._cut_phrases(us, c, a, b, 2, 0)
+            want = []
+            for a, b in zip(hz, hz[1:] + [20]):
+                want += [a, *best(a, b, 4)]
+            self.assertEqual(rub.solve(us, juz_starts=js, head_ayat=0).starts, want)
+
+    def test_pause_points(self):
+        from tajzee import waqf
+        us = rub.ayat()
+        at = {u.ref: u.index for u in us}
+        self.assertEqual(waqf.points(us, at["3:1"]), 1)     # surah end
+        self.assertEqual(waqf.points(us, at["2:26"]), 2)    # 2:25 خالدون: تام
+        self.assertEqual(waqf.points(us, at["26:116"]), 5)  # 26:115: جائز
+        self.assertEqual(waqf.PAUSE_POINTS["ليس بوقف"], 9)
 
 
 class HeadRuleTest(unittest.TestCase):
@@ -136,7 +177,7 @@ class HeadRuleTest(unittest.TestCase):
             key = (round(max(abs(x - T) for x in s), 12), sum((x - T) ** 2 for x in s))
             if best is None or key < best[0]:
                 best = (key, [0] + list(cuts))
-        got = rub.solve(us, juz_starts=[0], method="joint").starts
+        got = rub.solve(us, juz_starts=[0], method="joint", objective="minimax+lsq").starts
         self.assertEqual(got, best[1])
 
 

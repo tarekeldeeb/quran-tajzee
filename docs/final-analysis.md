@@ -20,8 +20,8 @@ Each unit against its share of its parent (hizb against ½ juz, rubʿ against ¼
 | division | worst juz | worst hizb | hizb CV | worst rubʿ | rubʿ CV |
 |---|---|---|---|---|---|
 | traditional | ±6.2% | ±13.9% | 6.9% | ±38.3% | 11.7% |
-| final: traditional juz, new hizb and rubʿ | ±6.2% | ±3.6% | 1.4% | ±20.8% | 6.5% |
-| alternative: Task 3 juz, new hizb and rubʿ | ±5.0% | ±4.5% | 1.8% | ±25.8% | 8.2% |
+| final: traditional juz, new hizb and rubʿ | ±6.2% | ±3.6% | 1.4% | ±20.8% | 6.8% |
+| alternative: Task 3 juz, new hizb and rubʿ | ±5.0% | ±4.5% | 1.8% | ±25.8% | 8.4% |
 
 
 Each unit against the mean of its level (all hizb against 1/60, all rubʿ against 1/240). This includes the juz-to-juz differences:
@@ -30,19 +30,19 @@ Each unit against the mean of its level (all hizb against 1/60, all rubʿ agains
 | division | worst hizb | longest/shortest hizb | worst rubʿ | longest/shortest rubʿ |
 |---|---|---|---|---|
 | traditional | ±16.6% | 1.36× | ±37.7% | 2.19× |
-| final: traditional juz, new hizb and rubʿ | ±7.7% | 1.17× | ±21.0% | 1.52× |
-| alternative: Task 3 juz, new hizb and rubʿ | ±6.5% | 1.13× | ±25.9% | 1.68× |
+| final: traditional juz, new hizb and rubʿ | ±7.7% | 1.17× | ±23.8% | 1.57× |
+| alternative: Task 3 juz, new hizb and rubʿ | ±6.5% | 1.13× | ±25.9% | 1.69× |
 
 
-Traditionally the longest rubʿ is 2.19× the shortest. In the final division it is 1.52×, and the longest hizb goes from 1.36× the shortest to 1.17×. Re-optimising the juz as well would make the hizb more even, but the rubʿ less so, and it would leave the traditional juz.
+Traditionally the longest rubʿ is 2.19× the shortest. In the final division it is 1.57×, and the longest hizb goes from 1.36× the shortest to 1.17×. Re-optimising the juz as well would make the hizb more even, but the rubʿ less so, and it would leave the traditional juz.
 
 ## 3. Recitation and print separately
 
 | score | worst hizb (½ juz) | worst rubʿ (¼ hizb) | longest/shortest rubʿ |
 |---|---|---|---|
-| recitation | ±14.7% → ±4.4% | ±38.0% → ±18.3% | 2.18× → 1.55× |
-| print | ±13.7% → ±3.6% | ±38.5% → ±24.3% | 2.19× → 1.57× |
-| mix | ±13.9% → ±3.6% | ±38.3% → ±20.8% | 2.19× → 1.52× |
+| recitation | ±14.7% → ±4.4% | ±38.0% → ±21.9% | 2.18× → 1.59× |
+| print | ±13.7% → ±3.6% | ±38.5% → ±24.3% | 2.19× → 1.54× |
+| mix | ±13.9% → ±3.6% | ±38.3% → ±20.8% | 2.19× → 1.57× |
 
 
 The two scores agree closely, so a division that balances the mix balances each one.
@@ -57,7 +57,7 @@ The two scores agree closely, so a division that balances the mix balances each 
 | second hizb of a juz (30) opens a phrase | 19 | 30 |
 | second hizb of a juz (30) opens a surah | 7 | 2 |
 | inner rubʿ (180) opens a phrase | 121 | 180 |
-| inner rubʿ (180) opens a surah | 25 | 11 |
+| inner rubʿ (180) opens a surah | 25 | 16 |
 | juz (30) opens a phrase | 30 | same |
 | juz (30) opens a surah | 9 | same |
 
@@ -65,7 +65,7 @@ The two scores agree closely, so a division that balances the mix balances each 
 Traditionally 90 of the 240 rubʿ starts (all levels) fall inside a subject phrase, typically halfway through it, so the new unit opens in the middle of a subject. **In the final division no hizb or rubʿ does:** every boundary it adds opens a phrase. The 11 cases left are traditional juz starts, kept as they are. Splitting those phrases in review makes the whole division phrase-aligned. Every traditional case is listed in `data/rub/traditional-phrase-cuts.tsv`.
 
 
-6 of the 30 second-hizb starts and 41 of the 180 inner rubʿ starts are unchanged. The final division opens fewer hizb at a surah than the tradition does: the traditional hizb often start at a surah and accept the imbalance (juz 28: ±13.9%). A surah preference for hizb, like the juz penalty of Task 3, would trade some of that balance back.
+6 of the 30 second-hizb starts and 50 of the 180 inner rubʿ starts are unchanged. The final division opens fewer hizb at a surah than the tradition does: the traditional hizb often start at a surah and accept the imbalance (juz 28: ±13.9%). A surah preference for hizb, like the juz penalty of Task 3, would trade some of that balance back.
 
 ## 5. Juz by juz
 
@@ -93,17 +93,17 @@ Hizb: the start of the second hizb and the larger deviation of the two from ½ j
 | 17 | 21:1 الأنبياء | -5.5% | 22:1 | 22:1 | ±0.4% | ±0.4% | ±12.2% | ±5.9% | 0 |
 | 18 | 23:1 المؤمنون | +3.3% | 24:21 | 24:19 | ±1.7% | ±0.3% | ±16.2% | ±10.6% | 0 |
 | 19 | 25:21 الفرقان | +4.5% | 26:111 | 26:116 | ±1.9% | ±0.2% | ±18.1% | ±7.5% | 0 |
-| 20 | 27:56 النمل | -2.3% | 28:51 | 28:52 | ±1.4% | ±1.9% | ±22.8% | ±19.4% | 0 |
+| 20 | 27:56 النمل | -2.3% | 28:51 | 28:52 | ±1.4% | ±1.9% | ±22.8% | ±20.2% | 0 |
 | 21 | 29:46 العنكبوت | -1.2% | 31:22 | 31:12 | ±13.6% | ±0.1% | ±15.9% | ±13.9% | 0 |
 | 22 | 33:31 الأحزاب | +0.4% | 34:24 | 34:34 | ±9.4% | ±2.9% | ±29.4% | ±11.2% | 0 |
-| 23 | 36:28 يس | +5.4% | 37:145 | 37:158 | ±4.7% | ±0.2% | ±9.3% | ±12.2% | 0 |
+| 23 | 36:28 يس | +5.4% | 37:145 | 37:158 | ±4.7% | ±0.2% | ±9.3% | ±17.2% | 0 |
 | 24 | 39:32 الزمر | -3.5% | 40:41 | 40:41 | ±1.3% | ±1.3% | ±21.8% | ±7.5% | 0 |
 | 25 | 41:47 فصلت | +3.6% | 43:24 | 43:40 | ±11.8% | ±1.4% | ±9.1% | ±5.5% | 0 |
 | 26 | 46:1 الأحقاف | +2.0% | 48:18 | 48:11 | ±12.7% | ±0.6% | ±13.3% | ±9.3% | 0 |
-| 27 | 51:31 الذاريات | +4.2% | 55:1 | 55:24 | ±7.5% | ±0.5% | ±17.5% | ±7.3% | 0 |
+| 27 | 51:31 الذاريات | +4.2% | 55:1 | 55:24 | ±7.5% | ±0.5% | ±17.5% | ±9.9% | 0 |
 | 28 | 58:1 المجادلة | +2.4% | 62:1 | 61:5 | ±13.9% | ±0.4% | ±38.3% | ±16.7% | 0 |
-| 29 | 67:1 الملك | +6.2% | 72:1 | 72:1 | ±1.4% | ±1.4% | ±14.4% | ±8.7% | 0 |
-| 30 | 78:1 النبأ | -3.1% | 87:1 | 87:9 | ±2.7% | ±0.0% | ±28.7% | ±5.3% | 0 |
+| 29 | 67:1 الملك | +6.2% | 72:1 | 72:1 | ±1.4% | ±1.4% | ±14.4% | ±16.2% | 0 |
+| 30 | 78:1 النبأ | -3.1% | 87:1 | 87:9 | ±2.7% | ±0.0% | ±28.7% | ±9.6% | 0 |
 
 
 ## 6. Open items

@@ -29,13 +29,25 @@ stay as in the Madina Mushaf, and the hizb and rubʿ inside them are re-cut.
   checked against al-Dānī's *al-Bayān* (`data/source/counting/`). 134 Kūfī aya ends are disputed; the
   traditional divisions never start after one, and two first solutions (20:42, 74:42) did, so the
   solver excludes them.
-- **Objective:** for each container, solved exactly by the Task 3 dynamic program:
+- **Objective:** for each container, solved exactly by the Task 3 dynamic program, cuts only at
+  phrase starts. The hizb (approved in review, kept fixed) on the 50/50 mix S:
 
 ```
-cuts only at phrase starts
 1. minimise   max_q |S_q − T| / T          (the worst unit)
 2. then       Σ_q (S_q − T)²               (among cuts reaching that worst)
 ```
+
+  The quarters weigh recitation R, print P and the pause before each cut, ⅓ each:
+
+```
+minimise  ⅓ Σ_q ((R_q − T_R)/T_R)²  +  ⅓ Σ_q ((P_q − T_P)/T_P)²  +  ⅓ Σ_cuts (0.05 · points)²
+points:   surah end 1, تام 2, كاف 3, weaker (حسن، جائز، or not graded) 5, ليس بوقف 9
+```
+
+  One point is worth 5% of a quarter (`rub.POINT_VALUE`). Every phrase start's category and points
+  are in `data/rub/phrase-pauses.tsv`. Against the mix-only objective the pause term moves 16 quarters,
+  lowers the pause points from 520 to 493 and the starts below كاف from 9 to 3, at a quarter CV of
+  6.5% → 6.8%.
 
 ## Results
 
@@ -44,8 +56,8 @@ cuts only at phrase starts
 | hizb, worst (of ½ juz) | ±13.9% | ±3.6% |
 | hizb, CV | 6.9% | 1.4% |
 | rubʿ, worst (of ¼ hizb) | ±38% | ±20.8% |
-| rubʿ, CV | 11.7% | 6.5% |
-| longest/shortest rubʿ, whole Quran | 2.19× | 1.52× |
+| rubʿ, CV | 11.7% | 6.8% |
+| longest/shortest rubʿ, whole Quran | 2.19× | 1.57× |
 | hizb and rubʿ at aya 2–7 of a surah (juz 28 and juz starts exempt) | 2 | **0** |
 | hizb and rubʿ starting inside a phrase | 79 of 210 | **0** |
 
@@ -65,7 +77,7 @@ quarter from its even position was checked the same way. That was 132 boundaries
 read. 61 phrases were split at complete stops, and 71 boundaries were kept because every closer point is
 a turn of a story or dialogue. Quarter CV went from 9.2% to 5.9% and the worst quarter from ±23.8% to
 ±19.4%. The opening-ayat rule (no start at aya 2–7 of a surah, juz 28 exempt), added the same day, then
-rejected 5 of those splits, and a supplementary reading added 4: quarter CV 6.4%, worst ±20.8%; the counting rule then moved two quarters (20:42 → 20:49, 74:42 → 74:38): CV 6.5%. Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
+rejected 5 of those splits, and a supplementary reading added 4: quarter CV 6.4%, worst ±20.8%; the counting rule then moved two quarters (20:42 → 20:49, 74:42 → 74:38): CV 6.5%; the pause points (2026-10-25) then moved 16 quarters: CV 6.8%. Decisions: [reviews/2026-10-21-rub-splits](../../reviews/2026-10-21-rub-splits/README.md).
 
 ## Balance through review
 
