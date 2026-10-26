@@ -184,6 +184,7 @@ def main() -> None:
         m[f"Grade{name}Kafi"] = str(c["كاف"])
         m[f"Grade{name}Weak"] = str(c["حسن"] + c["جائز/صالح"] + c["ليس بوقف"])
         m[f"Grade{name}None"] = str(c["not graded"])
+        m[f"Grade{name}Bars"] = "".join(f"({x},{c[k]})" for x, k in zip("stkhjln", waqf.CLASSES))
         m[f"Grade{name}Strong"] = f"{(c['surah end'] + c['تام'] + c['كاف']) / n * 100:.0f}"
     qs = waqf.quarters()
     loc = [x for x in qs if x.ghayth_end]
